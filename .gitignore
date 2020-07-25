@@ -1,0 +1,10 @@
+.*.pdf
+*.md
+.DS_Store
+*.out
+*.swp
+.vscode
+*.o
+*.a
+*.gch
+main.c
