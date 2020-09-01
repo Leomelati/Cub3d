@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2020/09/01 08:45:56 by lmartins         ###   ########.fr       */
+/*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
+/*   Updated: 2020/09/01 09:04:41 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "cub3d.h"
 
-# include "libft.h"
-# include "mlx.h"
-# include <stdio.h>
-
-
-#endif
+int		main(int argc, char **argv)
+{
+	void * mlx;
+	mlx = mlx_init();
+	mlx_new_window(mlx, 500, 500, "cub3D");
+	mlx_loop(mlx);
+	return (0);	
+}

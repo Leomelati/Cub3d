@@ -7,4 +7,4 @@
 *.o
 *.a
 *.gch
-main.c
+cub3D

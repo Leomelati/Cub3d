@@ -6,7 +6,7 @@
 #    By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/24 10:59:55 by lmartins          #+#    #+#              #
-#    Updated: 2020/08/13 10:30:51 by lmartins         ###   ########.fr        #
+#    Updated: 2020/09/01 08:58:18 by lmartins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ LIBFT = libft/libft.a
 MLX = minilibx-linux/libmlx.a
 
 INCLUDES = -I./include -I./minilibx-linux
+INCLUDE_LIBS = -L. $(LIBFT) -L. $(MLX) -lmlx -lXext -lX11
 
 RM = rm -rf
 
@@ -32,11 +33,12 @@ all:	$(NAME)
 
 $(NAME): $(OBJ_FILES)
 	@make -sC libft/
-	@cp $(LIBFT) ./srcs
-	$(CC) -o $(NAME) $(SRC) $(INCLUDES) -L. -llibft.a
+	@make -sC minilibx-linux/
+	@$(CC) -o $(NAME) $(SRC) $(INCLUDES) $(INCLUDE_LIBS)
 	
 clean:
 	@make -sC libft/ clean
+	@make -sC minilibx-linux/ clean
 	@$(RM) $(OBJ_FILES)
 
 lclean: clean
