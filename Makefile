@@ -32,8 +32,11 @@ RM = rm -rf
 all:	$(NAME)
 
 $(NAME): $(OBJ_FILES)
-	@make -sC libft/
-	@make -sC minilibx-linux/
+	$(info Making libft)
+	@make -C libft/
+	$(info Making minilibx)
+	@make -C minilibx-linux
+	$(info Making cub3d)
 	@$(CC) -o $(NAME) $(SRC) $(INCLUDES) $(INCLUDE_LIBS)
 	
 clean:
