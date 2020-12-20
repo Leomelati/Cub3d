@@ -6,7 +6,7 @@
 #    By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/24 10:59:55 by lmartins          #+#    #+#              #
-#    Updated: 2020/09/01 08:58:18 by lmartins         ###   ########.fr        #
+#    Updated: 2020/12/20 08:08:56 by lmartins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CC = gcc
 NAME = cub3D
 
 LIBFT = libft/libft.a
-MLX = minilibx-linux/libmlx.a
+MLX = minilibx-linux/libmlx_Linux.a
 
 INCLUDES = -I./include -I./minilibx-linux
 INCLUDE_LIBS = -L. $(LIBFT) -L. $(MLX) -lmlx -lXext -lX11
