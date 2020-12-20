@@ -6,14 +6,14 @@
 #    By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/24 10:59:55 by lmartins          #+#    #+#              #
-#    Updated: 2020/12/20 09:06:14 by lmartins         ###   ########.fr        #
+#    Updated: 2020/12/20 09:33:44 by lmartins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 # Cub3d Infos
 
-CUB_DIR = src/
+CUB_DIR = ./src
 CUB = $(CUB_DIR)/main.c
 
 OBJ_FILES = $(CUB:.c=.o)
@@ -32,7 +32,7 @@ MLX = $(MLX_DIR)/libmlx_Linux.a
 CC = gcc
 
 INCLUDE = -I ./include -I $(LIB_DIR) -I $(MLX_DIR)
-INCLUDE_FLAGS = -L $(LIB_DIR) -L $(MLX_DIR) -lmlx-Linux - lXext -lX11 -lm -lz
+INCLUDE_FLAGS = -L $(LIB_DIR) -lft -L $(MLX_DIR) -lmlx -lm -lbsd -lX11 -lXext
 
 NAME = cub3D
 
@@ -45,12 +45,12 @@ RM = rm -rf
 all:	$(NAME)
 
 $(NAME): $(OBJ_FILES) $(LIB) $(MLX)
-	@$(CC) $(INCLUDE_FLAGS) -o $(NAME) $(OBJ_FILES) $(LIB) $(MLX)
+	@$(CC) $(OBJ_FILES) $(LIB) $(MLX) $(INCLUDE_FLAGS) -o $(NAME)
 
 $(LIB):
 	$(MAKE) -C $(LIB_DIR)
 
-$(MLX)
+$(MLX):
 	$(MAKE) -C $(MLX_DIR)
 	
 clean:
@@ -61,12 +61,12 @@ clean:
 lclean: clean
 	$(MAKE) -C libft/ lclean
 	$(MAKE) -C minilibx-linux/ lclean
+	$(RM) $(NAME)
 
 fclean:	clean lclean
 	$(MAKE) -C libft/ fclean
-	$(RM) $(NAME)
 	
 re:	fclean all
 
 .c.o:
-	@$(CC) -c $< -o $(<:.c=.o) $(INCLUDES)
+	@$(CC) -c $< -o $(<:.c=.o) $(INCLUDE)
