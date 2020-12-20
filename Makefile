@@ -6,51 +6,65 @@
 #    By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/24 10:59:55 by lmartins          #+#    #+#              #
-#    Updated: 2020/12/20 08:08:56 by lmartins         ###   ########.fr        #
+#    Updated: 2020/12/20 09:06:14 by lmartins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC_DIR = srcs/
-SRC_FILES = main.c
-SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-OBJ_FILES = $(SRC:.c=.o)
+# Cub3d Infos
+
+CUB_DIR = src/
+CUB = $(CUB_DIR)/main.c
+
+OBJ_FILES = $(CUB:.c=.o)
+
+# Libft Infos
+LIB_DIR = ./libft
+LIB = $(LIB_DIR)/libft.a
+
+# Minilibx Infos
+MLX_DIR = ./minilibx-linux
+MLX = $(MLX_DIR)/libmlx_Linux.a
+
+# Compiler Infos
 
 # CC = gcc -Wall -Wextra -Werror -fsanitize=address
 CC = gcc
 
+INCLUDE = -I ./include -I $(LIB_DIR) -I $(MLX_DIR)
+INCLUDE_FLAGS = -L $(LIB_DIR) -L $(MLX_DIR) -lmlx-Linux - lXext -lX11 -lm -lz
+
 NAME = cub3D
 
-LIBFT = libft/libft.a
-MLX = minilibx-linux/libmlx_Linux.a
-
-INCLUDES = -I./include -I./minilibx-linux
-INCLUDE_LIBS = -L. $(LIBFT) -L. $(MLX) -lmlx -lXext -lX11
+# Rules flags
 
 RM = rm -rf
 
+# Rules
+
 all:	$(NAME)
 
-$(NAME): $(OBJ_FILES)
-	$(info Making libft)
-	@make -C libft/
-	$(info Making minilibx)
-	@make -C minilibx-linux
-	$(info Making cub3d)
-	@$(CC) -o $(NAME) $(SRC) $(INCLUDES) $(INCLUDE_LIBS)
+$(NAME): $(OBJ_FILES) $(LIB) $(MLX)
+	@$(CC) $(INCLUDE_FLAGS) -o $(NAME) $(OBJ_FILES) $(LIB) $(MLX)
+
+$(LIB):
+	$(MAKE) -C $(LIB_DIR)
+
+$(MLX)
+	$(MAKE) -C $(MLX_DIR)
 	
 clean:
-	@make -sC libft/ clean
-	@make -sC minilibx-linux/ clean
-	@$(RM) $(OBJ_FILES)
+	$(MAKE) -C libft/ clean
+	$(MAKE) -C minilibx-linux/ clean
+	$(RM) $(OBJ_FILES)
 
 lclean: clean
-	@make -sC libft/ lclean
-	@$(RM) ./srcs/libft.a
+	$(MAKE) -C libft/ lclean
+	$(MAKE) -C minilibx-linux/ lclean
 
 fclean:	clean lclean
-	@make -sC libft/ fclean
-	@$(RM) $(NAME)
+	$(MAKE) -C libft/ fclean
+	$(RM) $(NAME)
 	
 re:	fclean all
 
