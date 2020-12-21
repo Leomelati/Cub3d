@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2020/12/21 07:31:10 by lmartins         ###   ########.fr       */
+/*   Updated: 2020/12/21 15:28:18 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct 	s_parameters
 ** Defines
 */
 
-#define ESC 65307
+#define key_ESC 65307
+#define X_window_button 1321069248
 
 #endif
