@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2020/12/21 15:28:18 by lmartins         ###   ########.fr       */
+/*   Updated: 2020/12/22 09:15:42 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 typedef struct 	s_parameters
 {
 	void *mlx;
-	void *window;
+	void *win;
 	int	width;
 	int height;
 	int floor_color;
@@ -39,6 +39,7 @@ typedef struct 	s_parameters
 	char *west_texture;
 	char *east_texture;
 	char *sprite_texture;
+	int valid;
 
 }				t_parameters;
 
@@ -46,6 +47,9 @@ typedef struct 	s_parameters
 ** Defines
 */
 
+#define MISS -1
+#define TRUE 1
+#define FALSE 0
 #define key_ESC 65307
 #define X_window_button 1321069248
 
