@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2020/12/22 09:15:42 by lmartins         ###   ########.fr       */
+/*   Updated: 2020/12/27 03:27:17 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	define_resolution(t_parameters *info, char *readed)
 	int		y;
 	int		elements;
 
-	x = 0;
-	y = 0;
+	if ((info->width != MISS) || (info->height != MISS))
+		info->valid = FALSE;
 	mlx_get_screen_size(info->mlx, &x, &y);
 	string = ft_split(readed, ' ');
 	elements = 0;
@@ -43,6 +43,23 @@ void	define_resolution(t_parameters *info, char *readed)
 	free(string);
 }
 
+char	*read_image_path(char *readed, t_parameters *info)
+{
+	int		img_width;
+	int		img_height;
+	void	*image;
+
+	// if (image != NULL)
+		// info->valid = FALSE;
+	readed = &readed[3];
+	printf("Readed:%s\n", readed);
+	image = mlx_xpm_file_to_image(info->mlx, readed, &img_width, &img_height);
+	// if (image == NULL)
+		// info->valid = FALSE;
+	printf("Path: %p\n", image);
+	return(image);
+}
+
 int		key_hook(int keycode, t_parameters *info)
 {
 	if (keycode == key_ESC)
@@ -55,8 +72,10 @@ void	read_infos(int fd, t_parameters *info)
 
 	while ((info->valid == TRUE) && (get_next_line(fd, &readed) == 1))
 	{
-		if (readed[0] == 'R' && info->width == MISS && info->height == MISS)
+		if (readed[0] == 'R')
 			define_resolution(info, readed);
+		else if (readed[0] == 'N' && readed[1] == 'O' && readed[2] == ' ')
+			info->north_texture = read_image_path(readed, info);
 	}
 }
 
