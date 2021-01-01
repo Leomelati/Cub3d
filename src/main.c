@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/01 22:46:42 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/01 22:50:10 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	draw2dMap(t_img	*img, t_parameters *info)
 	int tam_largura = info->width / mapX;
 }
 
-char	*read_image_path(char *readed, t_parameters *info)
+char	*read_image_path(char *readed, t_parameters *info) // Fix this later
 {
 	int		img_width;
 	int		img_height;
