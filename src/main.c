@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2020/12/27 03:27:17 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/01 03:16:51 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,40 @@ char	*read_image_path(char *readed, t_parameters *info)
 	// if (image != NULL)
 		// info->valid = FALSE;
 	readed = &readed[3];
-	printf("Readed:%s\n", readed);
+	// printf("Readed:%s\n", readed);
 	image = mlx_xpm_file_to_image(info->mlx, readed, &img_width, &img_height);
 	// if (image == NULL)
 		// info->valid = FALSE;
-	printf("Path: %p\n", image);
+	// printf("Path: %p\n", image);
 	return(image);
 }
 
-int		key_hook(int keycode, t_parameters *info)
+int		key_hook(int keycode, t_parameters *info, t_player *player, t_img *img)
 {
-	if (keycode == key_ESC)
+	// printf("%d\n", keycode);
+	if (keycode == KEY_ESC)
 		destroy_window(info);
+	else if (keycode == KEY_A)
+	{
+		ft_run(info, player, img);
+		player->pos_x -= 5;
+	}
+	else if (keycode == KEY_D)
+	{
+		ft_run(info, player, img);
+		player->pos_x += 5;
+	}
+	else if (keycode == KEY_W)
+	{
+		ft_run(info, player, img);
+		player->pos_y -= 5;
+	}
+	else if (keycode == KEY_S)
+	{
+		ft_run(info, player, img);
+		player->pos_y += 5;
+	}
+	return (1);
 }
 
 void	read_infos(int fd, t_parameters *info)
@@ -77,9 +99,10 @@ void	read_infos(int fd, t_parameters *info)
 		else if (readed[0] == 'N' && readed[1] == 'O' && readed[2] == ' ')
 			info->north_texture = read_image_path(readed, info);
 	}
+	free(readed);
 }
 
-void	start_infos(t_parameters *info)
+void	start_infos(t_parameters *info, t_player *player)
 {
 	info->mlx = NULL;
 	info->win = NULL;
@@ -92,14 +115,65 @@ void	start_infos(t_parameters *info)
 	info->west_texture = NULL;
 	info->east_texture = NULL;
 	info->sprite_texture = NULL;
+	info->img = NULL;
 	info->valid = TRUE;
+
+	player->pos_x = 200;
+	player->pos_y = 300;
+}
+
+void	ft_pixel_put(t_img *data, int x, int y, int color)
+{
+	char *dst;
+	
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
+void	ft_free_img(t_parameters *info, t_img *img)
+{
+	if (img)
+	{
+		mlx_destroy_image(info->mlx, img->img);
+		free(img);
+		img = NULL;
+	}
+}
+
+t_img	*ft_new_image(t_parameters *info, int width, int height, t_player *player)
+{
+	t_img	*img;
+	
+	if (!(img = malloc(sizeof(t_img))))
+		return (NULL);
+	if (!(img->img = mlx_new_image(info->mlx, width, height)))
+		return (NULL);
+	if (!(img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
+		&img->line_length, &img->endian)))
+		return (NULL);
+	img->width = width;
+	img->height = height;
+	for (int i = 0; i <= 10; i++) // WILL BE REMOVED
+		for (int j = 0; j <= 10; j++) // WILL BE REMOVED
+			ft_pixel_put(img, player->pos_x + i, player->pos_y + j, 0x00FF0000);
+	return (img); 
+}
+
+int		ft_run(t_parameters *info, t_player *player, t_img *img)
+{
+	ft_free_img(info, info->img);
+	info->img = ft_new_image(info, info->width, info->height, player);
+	mlx_put_image_to_window(info->mlx, info->win, info->img->img, 0, 0);
+	return (1);
 }
 
 int		main(int argc, char **argv)
 {
 	t_parameters	info;
+	t_player		player;
+	t_img			img;
 
-	start_infos(&info);
+	start_infos(&info, &player);
 	info.mlx = mlx_init();
 	read_infos(open(argv[1], O_RDONLY), &info);
 	if (info.valid == TRUE)
