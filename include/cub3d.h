@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/01 03:00:50 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/01 06:02:08 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct 	s_player
 ** Cub3D Prototypes
 */
 
+void	draw2dMap(t_img	*img, t_parameters *info);
 int		destroy_window(t_parameters *info);
 void	define_resolution(t_parameters *info, char *readed);
 char	*read_image_path(char *readed, t_parameters *info);

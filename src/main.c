@@ -6,14 +6,52 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/01 03:16:51 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/01 06:48:09 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	draw2dMap(t_img	*img, t_parameters *info)
+{
+	// WILL BE REMOVED
+	int mapX = 8;
+	int mapY = 1;
+	int mapS = 64;
+	int map[1][8] =
+	{
+		{1, 1, 1, 1, 1, 1, 1, 1}
+		// {1, 0, 1, 0, 0, 0, 0, 1},
+		// {1, 0, 1, 0, 0, 0, 0, 1},
+		// {1, 0, 1, 0, 0, 0, 0, 1},
+		// {1, 0, 0, 0, 0, 0, 0, 1},
+		// {1, 0, 0, 0, 0, 1, 0, 1},
+		// {1, 0, 0, 0, 0, 0, 0, 1},
+		// {1, 1, 1, 1, 1, 1, 1, 1}
+	};
+
+	int tam_altura = info->height / mapY;
+	int tam_largura = info->width / mapX;
+
+	for (int y = 0; y < mapY; y++) // WILL BE REMOVED
+		for (int x = 0; x < mapX; x++) // WILL BE REMOVED
+		{
+			if (map[y][x] == 1) // WILL BE REMOVED
+				for (int i = 0; i <= tam_altura; i++)
+					for (int j = 0; j <= tam_largura; j++)
+					{
+						printf("Tam_altura:%d\n", tam_altura);
+						printf("Tam_largura:%d\n", tam_largura);
+						printf("Pintando Pixel x:%d\n", i);
+						printf("Pintando Pixel y:%d\n", j);
+						ft_pixel_put(img, i, j, 0x00FF0000);
+					}
+		}
+}
+
 int		destroy_window(t_parameters *info)
 {
+	ft_free_img(info, info->img);
 	mlx_destroy_window(info->mlx, info->win);
 	exit(0);
 	return (0);
@@ -153,6 +191,7 @@ t_img	*ft_new_image(t_parameters *info, int width, int height, t_player *player)
 		return (NULL);
 	img->width = width;
 	img->height = height;
+	draw2dMap(img, info);
 	for (int i = 0; i <= 10; i++) // WILL BE REMOVED
 		for (int j = 0; j <= 10; j++) // WILL BE REMOVED
 			ft_pixel_put(img, player->pos_x + i, player->pos_y + j, 0x00FF0000);
