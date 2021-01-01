@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/01 06:02:08 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/01 22:46:53 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,30 @@ typedef struct 	s_img
 	int width;
 	int height;
 }				t_img;
-typedef struct 	s_parameters
-{
-	void *mlx;
-	void *win;
-	int	width;
-	int height;
-	int floor_color;
-	int ceilling_color;
-	char *north_texture;
-	char *south_texture;
-	char *west_texture;
-	char *east_texture;
-	char *sprite_texture;
-	t_img	*img;
-	int valid;
-
-}				t_parameters;
 
 typedef struct 	s_player
 {
 	int pos_x;
 	int pos_y;
 }				t_player;
+typedef struct 	s_parameters
+{
+	void		*mlx;
+	void		*win;
+	int			width;
+	int			height;
+	int			floor_color;
+	int			ceilling_color;
+	char		*north_texture;
+	char		*south_texture;
+	char		*west_texture;
+	char		*east_texture;
+	char		*sprite_texture;
+	t_img		*img;
+	t_player	*player;
+	int 		valid;
+
+}				t_parameters;
 
 /*
 ** Defines
@@ -77,16 +78,31 @@ typedef struct 	s_player
 ** Cub3D Prototypes
 */
 
+/*
+** main.c
+*/
+
 void	draw2dMap(t_img	*img, t_parameters *info);
-int		destroy_window(t_parameters *info);
-void	define_resolution(t_parameters *info, char *readed);
 char	*read_image_path(char *readed, t_parameters *info);
-int		key_hook(int keycode, t_parameters *info, t_player *player, t_img *img);
-void	read_infos(int fd, t_parameters *info);
-void	start_infos(t_parameters *info, t_player *player);
+int		key_hook(int keycode, t_parameters *info, t_img *img);
 void	ft_pixel_put(t_img *data, int x, int y, int color);
+t_img	*ft_new_image(t_parameters *info, int width, int height);
+int		ft_run(t_parameters *info, t_img *img);
+
+/*
+** init.c
+*/
+
+void	define_resolution(t_parameters *info, char *readed);
+t_player	*start_player();
+void		read_infos(int fd, t_parameters *info);
+void		start_infos(t_parameters *info);
+
+/*
+** free.c
+*/
+
 void	ft_free_img(t_parameters *info, t_img *img);
-t_img	*ft_new_image(t_parameters *info, int width, int height, t_player *player);
-int		ft_run(t_parameters *info, t_player *player, t_img *img);
+int		destroy_window(t_parameters *info);
 
 #endif
