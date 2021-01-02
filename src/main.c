@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/01 22:50:10 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/02 03:28:02 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,30 @@ void	draw2dMap(t_img	*img, t_parameters *info)
 {
 	// WILL BE REMOVED
 	int mapX = 8;
-	int mapY = 1;
+	int mapY = 8;
 	int mapS = 64;
-	int map[1][8] =
+	int map[8][8] =
 	{
+		{1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 0, 1, 0, 0, 0, 0, 1},
+		{1, 0, 1, 0, 0, 0, 0, 1},
+		{1, 0, 1, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 1, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1}
-		// {1, 0, 1, 0, 0, 0, 0, 1},
-		// {1, 0, 1, 0, 0, 0, 0, 1},
-		// {1, 0, 1, 0, 0, 0, 0, 1},
-		// {1, 0, 0, 0, 0, 0, 0, 1},
-		// {1, 0, 0, 0, 0, 1, 0, 1},
-		// {1, 0, 0, 0, 0, 0, 0, 1},
-		// {1, 1, 1, 1, 1, 1, 1, 1}
 	};
 
 	int tam_altura = info->height / mapY;
 	int tam_largura = info->width / mapX;
+	printf("Altura: %d\n", tam_altura);
+	printf("Largura: %d\n", tam_largura);
+	for (int y = 0; y < mapY; y++)
+		for (int x = 0; x < mapX; x++)
+			if (map[y][x] == 1)
+				for (int i = 0; i < tam_altura; i++)
+					for (int j = 0; j < tam_largura; j++)
+						ft_pixel_put(img, (x * tam_largura) + j, (y * tam_altura) + i, 0x00FFFF00);
 }
 
 char	*read_image_path(char *readed, t_parameters *info) // Fix this later

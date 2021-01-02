@@ -6,7 +6,7 @@
 #    By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/24 10:59:55 by lmartins          #+#    #+#              #
-#    Updated: 2021/01/01 22:47:35 by lmartins         ###   ########.fr        #
+#    Updated: 2021/01/02 03:13:36 by lmartins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ TEST_FLAGS = -g
 # Cub3d Infos
 
 CUB_DIR = ./src
-CUB = $(CUB_DIR)/main.c
+CUB = $(CUB_DIR)/main.c $(CUB_DIR)/free.c $(CUB_DIR)/init.c
 
 OBJ_FILES = $(CUB:.c=.o)
 
