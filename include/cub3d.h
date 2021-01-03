@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/01 22:46:53 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/03 08:51:15 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # include "libft.h"
 # include "mlx.h"
-# include <stdio.h>
+# include <stdio.h> // Will be removed
 # include <math.h>
 
 /*
@@ -39,8 +39,12 @@ typedef struct 	s_img
 
 typedef struct 	s_player
 {
-	int pos_x;
-	int pos_y;
+	double pos_x;
+	double pos_y;
+	double pdx;
+	double pdy;
+	double angle;
+
 }				t_player;
 typedef struct 	s_parameters
 {
@@ -68,6 +72,7 @@ typedef struct 	s_parameters
 #define MISS -1
 #define TRUE 1
 #define FALSE 0
+#define PI 3.1415926535
 #define KEY_ESC 65307
 #define KEY_W 119
 #define KEY_A 97
@@ -83,6 +88,8 @@ typedef struct 	s_parameters
 */
 
 void	draw2dMap(t_img	*img, t_parameters *info);
+void	draw3dRays(t_img	*img, t_parameters *info);
+void	draw_player(t_img	*img, t_parameters *info);
 char	*read_image_path(char *readed, t_parameters *info);
 int		key_hook(int keycode, t_parameters *info, t_img *img);
 void	ft_pixel_put(t_img *data, int x, int y, int color);

@@ -6,11 +6,74 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/02 03:28:02 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/03 09:28:22 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	draw3dRays(t_img	*img, t_parameters *info)
+{
+	int mapX = 8;
+	int mapY = 8;
+	int mapS = 64;
+	int map[] =
+	{
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 0, 1, 0, 0, 0, 0, 1,
+		1, 0, 1, 0, 0, 0, 0, 1,
+		1, 0, 1, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 1, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 1,
+		1, 1, 1, 1, 1, 1, 1, 1
+	};
+
+	int ray_quantity,mx,my,mp,deapth_of_field;
+	float r_pos_x, r_pos_y, ray_angle, x_offset, y_offset;
+	float angle_tangent;
+
+	ray_angle = info->player->angle;
+	for ( ray_quantity = 0; ray_quantity < 1; ray_quantity++)
+	{
+		deapth_of_field = 0;
+		angle_tangent = -1/tan(ray_angle);
+		if (ray_angle > PI) // looking down
+		{
+			r_pos_y = (((int)r_pos_y>>6)<<6)-0.0001;
+			r_pos_x = (info->player->pos_y - r_pos_y) * angle_tangent + info->player->pos_x;
+			y_offset = -64;
+			x_offset = -y_offset * angle_tangent;
+		}
+		else if (ray_angle < PI) // looking up
+		{
+			r_pos_y = (((int)r_pos_y>>6)<<6)+64;
+			r_pos_x = (info->player->pos_y - r_pos_y) * angle_tangent + info->player->pos_x;
+			y_offset = 64;
+			x_offset = -y_offset * angle_tangent;
+		}
+		else if (ray_angle == 0 || ray_angle == PI) // looking left or right
+		{
+			r_pos_x = info->player->pos_x;
+			r_pos_y = info->player->pos_y;
+			deapth_of_field = 8;
+		}
+		while (deapth_of_field < 8)
+		{
+			mx = (int)(r_pos_x)>>6;
+			my = (int)(r_pos_y)>>6;
+			mp = my * mapX + mx;
+			if ((mp < mapX * mapY) && (map[mp] == 1)) // hit wall
+				deapth_of_field = 8;
+			else // next line
+			{
+				r_pos_x += x_offset;
+				r_pos_y += y_offset;
+				deapth_of_field++;
+			}
+		}
+	}
+}
 
 void	draw2dMap(t_img	*img, t_parameters *info)
 {
@@ -32,14 +95,19 @@ void	draw2dMap(t_img	*img, t_parameters *info)
 
 	int tam_altura = info->height / mapY;
 	int tam_largura = info->width / mapX;
-	printf("Altura: %d\n", tam_altura);
-	printf("Largura: %d\n", tam_largura);
 	for (int y = 0; y < mapY; y++)
 		for (int x = 0; x < mapX; x++)
 			if (map[y][x] == 1)
 				for (int i = 0; i < tam_altura; i++)
 					for (int j = 0; j < tam_largura; j++)
 						ft_pixel_put(img, (x * tam_largura) + j, (y * tam_altura) + i, 0x00FFFF00);
+}
+
+void	draw_player(t_img	*img, t_parameters *info)
+{
+	for (int i = 0; i <= 10; i++) // WILL BE REMOVED
+		for (int j = 0; j <= 10; j++) // WILL BE REMOVED
+			ft_pixel_put(img, info->player->pos_x + i, info->player->pos_y + j, 0x00FF0000);
 }
 
 char	*read_image_path(char *readed, t_parameters *info) // Fix this later
@@ -65,22 +133,32 @@ int		key_hook(int keycode, t_parameters *info, t_img *img)
 		destroy_window(info);
 	else if (keycode == KEY_A)
 	{
-		info->player->pos_x -= 5;
+		info->player->angle -= 0.1;
+		if (info->player->angle < 0)
+			info->player->angle += 2 * PI;
+		info->player->pdx = cos(info->player->angle) * 5;
+		info->player->pdy = sin(info->player->angle) * 5;
 		ft_run(info, img);
 	}
 	else if (keycode == KEY_D)
 	{
-		info->player->pos_x += 5;
+		info->player->angle += 0.1;
+		if (info->player->angle > (2 * PI))
+			info->player->angle -= 2 * PI;
+		info->player->pdx = cos(info->player->angle) * 5;
+		info->player->pdy = sin(info->player->angle) * 5;
 		ft_run(info, img);
 	}
 	else if (keycode == KEY_W)
 	{
-		info->player->pos_y -= 5;
+		info->player->pos_x += info->player->pdx;
+		info->player->pos_y += info->player->pdy;
 		ft_run(info, img);
 	}
 	else if (keycode == KEY_S)
 	{
-		info->player->pos_y += 5;
+		info->player->pos_x -= info->player->pdx;
+		info->player->pos_y -= info->player->pdy;
 		ft_run(info, img);
 	}
 	return (1);
@@ -108,9 +186,8 @@ t_img	*ft_new_image(t_parameters *info, int width, int height)
 	img->width = width;
 	img->height = height;
 	draw2dMap(img, info);
-	for (int i = 0; i <= 10; i++) // WILL BE REMOVED
-		for (int j = 0; j <= 10; j++) // WILL BE REMOVED
-			ft_pixel_put(img, info->player->pos_x + i, info->player->pos_y + j, 0x00FF0000);
+	draw_player(img, info);
+	draw3dRays(img, info);
 	return (img); 
 }
 
