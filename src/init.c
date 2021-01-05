@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/03 09:30:30 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/05 06:34:12 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,12 @@ t_player	*start_player()
 		return (NULL);
 	player->pos_x = 200;
 	player->pos_y = 300;
-	player->angle = PI;
-	player->pdx = cos(player->angle) * 5;
-	player->pdy = sin(player->angle) * 5;
+	player->size = 5;
+	player->turn_direction = FALSE;
+	player->walk_direction = FALSE;
+	player->rotation_angle = PI / 2;
+	player->move_speed = 2;
+	player->rotation_speed = 2 * (PI / 180);
 	return (player);
 }
 

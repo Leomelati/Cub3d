@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/03 08:51:15 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/05 06:44:02 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,17 @@ typedef struct 	s_img
 
 typedef struct 	s_player
 {
-	double pos_x;
-	double pos_y;
-	double pdx;
-	double pdy;
-	double angle;
+	int		pos_x;
+	int		pos_y;
+	int		size;
+	int		turn_direction;
+	int		walk_direction;
+	double	rotation_angle;
+	double	move_speed;
+	double	rotation_speed;
+	double	pdx; // Talvez saia
+	double	pdy; // Talvez saia
+	double	angle; // Talvez saia
 
 }				t_player;
 typedef struct 	s_parameters
@@ -72,12 +78,20 @@ typedef struct 	s_parameters
 #define MISS -1
 #define TRUE 1
 #define FALSE 0
-#define PI 3.1415926535
+#define PI 3.14159265358979323846
+#define LEFT -1
+#define RIGHT 1
+#define BACK -1
+#define FRONT 1
 #define KEY_ESC 65307
 #define KEY_W 119
 #define KEY_A 97
 #define KEY_S 115
 #define KEY_D 100
+#define KEY_PRESS 2
+#define KEY_RELEASE 3
+#define KEYPRESS_MASK 1
+#define KEYRELEASE_MASK 10
 
 /*
 ** Cub3D Prototypes
@@ -88,10 +102,7 @@ typedef struct 	s_parameters
 */
 
 void	draw2dMap(t_img	*img, t_parameters *info);
-void	draw3dRays(t_img	*img, t_parameters *info);
-void	draw_player(t_img	*img, t_parameters *info);
 char	*read_image_path(char *readed, t_parameters *info);
-int		key_hook(int keycode, t_parameters *info, t_img *img);
 void	ft_pixel_put(t_img *data, int x, int y, int color);
 t_img	*ft_new_image(t_parameters *info, int width, int height);
 int		ft_run(t_parameters *info, t_img *img);
@@ -104,6 +115,20 @@ void	define_resolution(t_parameters *info, char *readed);
 t_player	*start_player();
 void		read_infos(int fd, t_parameters *info);
 void		start_infos(t_parameters *info);
+
+/*
+** key.c
+*/
+
+int		key_press(int keycode, t_parameters *info, t_img *img);
+int		key_release(int keycode, t_parameters *info, t_img *img);
+
+/*
+** player.c
+*/
+
+void	draw_player(t_img	*img, t_parameters *info);
+void	ft_update_player(t_parameters *info);
 
 /*
 ** free.c
