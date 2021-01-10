@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/05 06:34:12 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/10 07:42:58 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,33 @@ t_player	*start_player()
 	return (player);
 }
 
+t_map	*start_map(t_parameters *info)
+{
+	t_map *map;
+	if (!(map = malloc(sizeof(t_map))))
+		return (NULL);
+	int mapa[11][15] =
+	{
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+		{1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+		{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	};
+	map->map = &mapa;
+	map->mapX = 15;
+	map->mapY = 11;
+	map->tam_altura = info->height / map->mapY;
+	map->tam_largura = info->width / map->mapX;
+	return (map);
+}
+
 void	read_infos(int fd, t_parameters *info)
 {
 	char *readed;
@@ -80,6 +107,7 @@ void	start_infos(t_parameters *info)
 	info->east_texture = NULL;
 	info->sprite_texture = NULL;
 	info->img = NULL;
-	info->player = start_player();
 	info->valid = TRUE;
+	info->player = start_player();
+	info->map = start_map(info);
 }

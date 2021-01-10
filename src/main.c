@@ -6,61 +6,11 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/05 06:42:53 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/10 06:52:02 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	draw2dMap(t_img	*img, t_parameters *info)
-{
-	// WILL BE REMOVED
-	int mapX = 15;
-	int mapY = 11;
-	int map[11][15] =
-	{
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-		{1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-		{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-	};
-
-	int tam_altura = info->height / mapY;
-	int tam_largura = info->width / mapX;
-	int y = 0;
-	int x, color;
-	while (y < mapY)
-	{
-		x = 0;
-		while (x < mapX)
-		{
-			if(map[y][x] == 1)
-				color = 0x00000000;
-			else
-				color = 0x00FFFFFF;
-			int i = 0;
-			while (i < tam_altura)
-			{
-				int j = 0;
-				while (j < tam_largura)
-				{
-					ft_pixel_put(img, (x * tam_largura) + j, (y * tam_altura) + i, color);
-					j++;
-				}
-				i++;
-			}
-			x++;
-		}
-		y++;
-	}
-}
 
 char	*read_image_path(char *readed, t_parameters *info) // Fix this later
 {

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/05 06:44:02 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/10 07:43:12 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ typedef struct 	s_player
 	double	angle; // Talvez saia
 
 }				t_player;
+
+typedef struct 	s_map
+{
+	int			*map;
+	int			mapX;
+	int			mapY;
+	int			tam_altura;
+	int			tam_largura;
+
+}				t_map;
 typedef struct 	s_parameters
 {
 	void		*mlx;
@@ -67,6 +77,7 @@ typedef struct 	s_parameters
 	char		*sprite_texture;
 	t_img		*img;
 	t_player	*player;
+	t_map		*map;
 	int 		valid;
 
 }				t_parameters;
@@ -92,6 +103,7 @@ typedef struct 	s_parameters
 #define KEY_RELEASE 3
 #define KEYPRESS_MASK 1
 #define KEYRELEASE_MASK 10
+#define WALL 1
 
 /*
 ** Cub3D Prototypes
@@ -101,7 +113,6 @@ typedef struct 	s_parameters
 ** main.c
 */
 
-void	draw2dMap(t_img	*img, t_parameters *info);
 char	*read_image_path(char *readed, t_parameters *info);
 void	ft_pixel_put(t_img *data, int x, int y, int color);
 t_img	*ft_new_image(t_parameters *info, int width, int height);
@@ -111,10 +122,18 @@ int		ft_run(t_parameters *info, t_img *img);
 ** init.c
 */
 
-void	define_resolution(t_parameters *info, char *readed);
+void		define_resolution(t_parameters *info, char *readed);
+t_map		*start_map();
 t_player	*start_player();
 void		read_infos(int fd, t_parameters *info);
 void		start_infos(t_parameters *info);
+
+/*
+** map.c
+*/
+
+int		ft_check_wall(int x, int y, t_parameters *info);
+void	draw2dMap(t_img	*img, t_parameters *info);
 
 /*
 ** key.c
