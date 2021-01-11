@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/10 07:42:58 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/11 05:33:32 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,43 +52,57 @@ t_player	*start_player()
 	return (player);
 }
 
+void	update_infos(t_parameters *info) // WILL BE REMOVED
+{
+	info->map->mapX = 15;
+	info->map->mapY = 11;
+	info->map->tam_altura = info->height / info->map->mapY;
+	info->map->tam_largura = info->width / info->map->mapX;
+}
+
 t_map	*start_map(t_parameters *info)
 {
 	t_map *map;
 	if (!(map = malloc(sizeof(t_map))))
 		return (NULL);
-	int mapa[11][15] =
-	{
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-		{1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-		{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-	};
-	map->map = &mapa;
-	map->mapX = 15;
-	map->mapY = 11;
-	map->tam_altura = info->height / map->mapY;
-	map->tam_largura = info->width / map->mapX;
 	return (map);
+}
+
+int		is_map_line(char *readed)
+{
+	int i;
+
+	i = 0;
+	while(readed[i] != '\0')
+	{
+		if (ft_strchr(VALID_MAP_CHARS, readed[i]))
+			return(TRUE);
+		i++;
+	}
+	return (FALSE);
 }
 
 void	read_infos(int fd, t_parameters *info)
 {
 	char *readed;
+	int i;
 
+	i = 0;
 	while ((info->valid == TRUE) && (get_next_line(fd, &readed) == 1))
 	{
 		if (readed[0] == 'R')
 			define_resolution(info, readed);
 		else if (readed[0] == 'N' && readed[1] == 'O' && readed[2] == ' ')
-			info->north_texture = read_image_path(readed, info);
+			info->north_texture = read_image_path(readed, info);  // NOT WORKING YET
+		else
+		{
+			if(is_map_line(readed))
+			{
+				info->map->map = malloc(sizeof(char **));
+				info->map->map[i] = (char *)malloc(ft_strlen(readed) + 1);
+				ft_memcpy(info->map->map[i], readed, ft_strlen(readed));
+			}
+		}
 	}
 	free(readed);
 }

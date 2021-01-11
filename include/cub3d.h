@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/10 07:43:12 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/11 05:34:01 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct 	s_player
 
 typedef struct 	s_map
 {
-	int			*map;
+	char		**map;
 	int			mapX;
 	int			mapY;
 	int			tam_altura;
@@ -103,7 +103,9 @@ typedef struct 	s_parameters
 #define KEY_RELEASE 3
 #define KEYPRESS_MASK 1
 #define KEYRELEASE_MASK 10
-#define WALL 1
+#define VALID_MAP_CHARS "012NSEW"
+#define WALL '1'
+#define EMPTY '0'
 
 /*
 ** Cub3D Prototypes
@@ -125,6 +127,8 @@ int		ft_run(t_parameters *info, t_img *img);
 void		define_resolution(t_parameters *info, char *readed);
 t_map		*start_map();
 t_player	*start_player();
+void		update_infos(t_parameters *info);
+int			is_map_line(char *readed);
 void		read_infos(int fd, t_parameters *info);
 void		start_infos(t_parameters *info);
 
