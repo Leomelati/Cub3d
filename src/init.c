@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/11 05:33:32 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/12 05:12:01 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,17 @@ int		is_map_line(char *readed)
 	return (FALSE);
 }
 
+void	print_array(t_parameters *info)
+{
+	for (int i = 0; info->map->map; i++)
+	{
+		for (int j = 0; info->map->map[i][j] != '\0'; j++)
+		{
+			printf("%c\n", info->map->map[i][j]);
+		}
+	}
+}
+
 void	read_infos(int fd, t_parameters *info)
 {
 	char *readed;
@@ -98,12 +109,22 @@ void	read_infos(int fd, t_parameters *info)
 		{
 			if(is_map_line(readed))
 			{
+				printf("Tamanho linha: %ld\n", ft_strlen(readed));
+				printf("Alocando linha: %d\n", i);
 				info->map->map = malloc(sizeof(char **));
-				info->map->map[i] = (char *)malloc(ft_strlen(readed) + 1);
-				ft_memcpy(info->map->map[i], readed, ft_strlen(readed));
+				info->map->map[i] = malloc(ft_strlen(readed) + 1);
+				for (int j = 0; j <= ft_strlen(readed); j++)
+				{
+					printf("Alocando coluna: %d\n", j);
+					info->map->map[i][j] = 't';
+				}
+				
+				// ft_memcpy(info->map->map[i], readed, ft_strlen(readed));
+				i++;
 			}
 		}
 	}
+	print_array(info);
 	free(readed);
 }
 
