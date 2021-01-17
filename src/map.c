@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/17 08:13:41 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/18 00:01:42 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ void	draw2dMap(t_img	*img, t_parameters *info)
 	while (y < info->map->mapY)
 	{
 		x = 0;
+		// printf("Preenchendo linha: %d\n", y);
 		while (x < info->map->mapX)
 		{
-			if(ft_check_wall(x, y, info))
+			// printf("Preenchendo coluna: %d\n", x);
+			if(info->map->map[y][x] == WALL)
 				color = 0x00000000;
 			else
 				color = 0x00FFFFFF;

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/17 08:23:37 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/17 23:58:14 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_img	*ft_new_image(t_parameters *info, int width, int height)
 	img->width = width;
 	img->height = height;
 	draw2dMap(img, info);
+	printf("Mapa Concluido\n");
 	draw_player(img, info);
 	return (img); 
 }

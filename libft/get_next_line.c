@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 02:14:58 by lmartins          #+#    #+#             */
-/*   Updated: 2020/08/13 09:03:16 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/17 23:41:06 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		get_line(char **str, char **line, int ret)
 		return (1);
 	}
 	ft_strdel(str);
-	return (0);
+	return (1);
 }
 
 int		get_next_line(int fd, char **line)
