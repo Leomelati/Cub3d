@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/17 08:07:54 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/17 08:35:50 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,24 @@ char	**malloc_map(t_parameters *info, char *readed, int line)
 	return (tmp);
 }
 
+int		print_map(t_parameters *info, int i)
+{
+	for (int z = 0; z <= i; z++)
+	{
+		for (int j = 0; j <= 15; j++)
+			printf("%c", info->map->map[z][j]);
+		printf("\n");
+	}
+	
+}
+
 void	read_infos(int fd, t_parameters *info)
 {
 	char *readed;
 	int i;
-	int len;
 
 	i = 0;
-	while ((info->valid == TRUE) && (get_next_line(fd, &readed) == 1))
+	while (get_next_line(fd, &readed))
 	{
 		if (readed[0] == 'R')
 			define_resolution(info, readed);
@@ -122,15 +132,9 @@ void	read_infos(int fd, t_parameters *info)
 		{
 			if(is_map_line(readed))
 			{
-				len = ft_strlen(readed);
-				printf("Tamanho linha: %d\n", len);
-				printf("Alocando linha: %d\n", i);
 				info->map->map = malloc_map(info, readed, i);
-				for (int j = 0; j < ft_strlen(readed); j++)
-				{
-					printf("Alocando coluna: %d\n", j);
-					info->map->map[i][j] = 't';
-				}
+				print_map(info, i);
+				printf("\n");
 				i++;
 			}
 		}

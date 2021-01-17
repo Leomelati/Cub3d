@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/11 05:42:53 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/17 08:23:37 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,17 @@ int		ft_run(t_parameters *info, t_img *img)
 	return (1);
 }
 
+// int		print_map(t_parameters *info, int i)
+// {
+// 	for (int z = 0; z <= i; z++)
+// 	{
+// 		for (int j = 0; j <= info->map->tam_largura; j++)
+// 			printf("%c", info->map->map[z][j]);
+// 		printf("\n");
+// 	}
+	
+// }
+
 int		main(int argc, char **argv)
 {
 	t_parameters	info;
@@ -72,6 +83,7 @@ int		main(int argc, char **argv)
 	info.mlx = mlx_init();
 	read_infos(open(argv[1], O_RDONLY), &info);
 	update_infos(&info);
+	// print_map(&info);
 	if (info.valid == TRUE)
 	{
 		info.win = mlx_new_window(info.mlx, info.width, info.height, "cub3D");
