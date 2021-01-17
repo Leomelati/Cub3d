@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/12 05:12:01 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/17 08:07:54 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,34 @@ int		is_map_line(char *readed)
 	return (FALSE);
 }
 
-void	print_array(t_parameters *info)
+char	**malloc_map(t_parameters *info, char *readed, int line)
 {
-	for (int i = 0; info->map->map; i++)
+	char **tmp;
+	int i;
+	int len;
+
+	len = ft_strlen(readed);
+	if (!(tmp = malloc(sizeof(char **) * line)))
+		return (NULL);	
+	i = 0;
+	while (i <= line)
 	{
-		for (int j = 0; info->map->map[i][j] != '\0'; j++)
-		{
-			printf("%c\n", info->map->map[i][j]);
-		}
+		tmp[i] = malloc(sizeof(char *) * len + 1);
+		if (i == line)
+			ft_memcpy(tmp[i], readed, len + 1);
+		else
+			ft_memcpy(tmp[i], info->map->map[i], ft_strlen(info->map->map[i]));
+		i++;
 	}
+	free(info->map->map);
+	return (tmp);
 }
 
 void	read_infos(int fd, t_parameters *info)
 {
 	char *readed;
 	int i;
+	int len;
 
 	i = 0;
 	while ((info->valid == TRUE) && (get_next_line(fd, &readed) == 1))
@@ -109,22 +122,19 @@ void	read_infos(int fd, t_parameters *info)
 		{
 			if(is_map_line(readed))
 			{
-				printf("Tamanho linha: %ld\n", ft_strlen(readed));
+				len = ft_strlen(readed);
+				printf("Tamanho linha: %d\n", len);
 				printf("Alocando linha: %d\n", i);
-				info->map->map = malloc(sizeof(char **));
-				info->map->map[i] = malloc(ft_strlen(readed) + 1);
-				for (int j = 0; j <= ft_strlen(readed); j++)
+				info->map->map = malloc_map(info, readed, i);
+				for (int j = 0; j < ft_strlen(readed); j++)
 				{
 					printf("Alocando coluna: %d\n", j);
 					info->map->map[i][j] = 't';
 				}
-				
-				// ft_memcpy(info->map->map[i], readed, ft_strlen(readed));
 				i++;
 			}
 		}
 	}
-	print_array(info);
 	free(readed);
 }
 

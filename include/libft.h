@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 11:51:35 by lmartins          #+#    #+#             */
-/*   Updated: 2020/12/22 08:36:12 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/17 07:44:57 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char				*ft_itoa_base(size_t nb, int base);
 ** Get_Next_Line Project
 */
 
-# define BUFFER_SIZE 100
+# define BUFFER_SIZE 1000
 # define OPEN_MAX 10
 
 char	*ft_join(char const *s1, char const *s2);
