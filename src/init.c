@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/18 00:01:37 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/22 07:22:26 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	update_infos(t_parameters *info) // WILL BE REMOVED
 {
 	info->map->mapX = 15;
 	info->map->mapY = 11;
-	info->map->tam_altura = info->height / info->map->mapY;
-	info->map->tam_largura = info->width / info->map->mapX;
+	info->map->tam_altura = floor(info->height / info->map->mapY);
+	info->map->tam_largura = floor(info->width / info->map->mapX);
 }
 
 t_map	*start_map(t_parameters *info)
@@ -105,16 +105,16 @@ char	**malloc_map(t_parameters *info, char *readed, int line)
 	return (tmp);
 }
 
-int		print_map(t_parameters *info, int i)
-{
-	for (int z = 0; z <= i; z++)
-	{
-		for (int j = 0; j <= 15; j++)
-			printf("%c", info->map->map[z][j]);
-		printf("\n");
-	}
-	
-}
+// int		print_map(t_parameters *info, int i)
+// {
+// 	for (int z = 0; z <= i; z++)
+// 	{
+// 		for (int j = 0; j <= 15; j++)
+// 			printf("%c", info->map->map[z][j]);
+// 		printf("\n");
+// 	}
+// 	return (1);
+// }
 
 void	read_infos(int fd, t_parameters *info)
 {
@@ -133,8 +133,6 @@ void	read_infos(int fd, t_parameters *info)
 			if(is_map_line(readed))
 			{
 				info->map->map = malloc_map(info, readed, i);
-				print_map(info, i);
-				printf("\n");
 				i++;
 			}
 		}

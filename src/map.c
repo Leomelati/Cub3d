@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/18 00:01:42 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/01/22 07:31:26 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int		ft_check_wall(int x, int y, t_parameters *info)
 	int map_index_y;
 
 	if (x < 0 || x > info->width || y < 0 || y > info->height)
-		return (TRUE);
-	map_index_x = x / info->map->tam_largura;
-	map_index_y = y / info->map->tam_altura;
-	if (info->map->map[map_index_y][map_index_x] == WALL)
+		return (FALSE);
+	map_index_x = floor(x / info->map->tam_largura);
+	map_index_y = floor(y / info->map->tam_altura);
+	if (info->map->map[map_index_y][map_index_x] == EMPTY)
 		return (TRUE);
 	return (FALSE);
 }
