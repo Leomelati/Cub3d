@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/22 07:24:45 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/01 04:59:47 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ int		ft_run(t_parameters *info, t_img *img);
 void		define_resolution(t_parameters *info, char *readed);
 t_map		*start_map();
 t_player	*start_player();
-void		update_infos(t_parameters *info);
 int			is_map_line(char *readed);
 void		read_infos(int fd, t_parameters *info);
 void		start_infos(t_parameters *info);

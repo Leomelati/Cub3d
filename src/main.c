@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/22 06:59:46 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/01 04:59:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int		main(int argc, char **argv)
 	start_infos(&info);
 	info.mlx = mlx_init();
 	read_infos(open(argv[1], O_RDONLY), &info);
-	update_infos(&info);
 	// print_map(&info);
 	if (info.valid == TRUE)
 	{

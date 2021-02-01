@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/22 07:22:26 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/01 05:07:09 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,13 @@ t_player	*start_player()
 	return (player);
 }
 
-void	update_infos(t_parameters *info) // WILL BE REMOVED
-{
-	info->map->mapX = 15;
-	info->map->mapY = 11;
-	info->map->tam_altura = floor(info->height / info->map->mapY);
-	info->map->tam_largura = floor(info->width / info->map->mapX);
-}
-
 t_map	*start_map(t_parameters *info)
 {
 	t_map *map;
 	if (!(map = malloc(sizeof(t_map))))
 		return (NULL);
+	map->mapX = 0;
+	map->mapY = 0;
 	return (map);
 }
 
@@ -89,14 +83,16 @@ char	**malloc_map(t_parameters *info, char *readed, int line)
 	int len;
 
 	len = ft_strlen(readed);
+	if (len > info->map->mapX)
+		info->map->mapX = len;
 	if (!(tmp = malloc(sizeof(char **) * line)))
 		return (NULL);	
 	i = 0;
 	while (i <= line)
 	{
-		tmp[i] = malloc(sizeof(char *) * len + 1);
+		tmp[i] = malloc(sizeof(char *) * info->map->mapX + 1);
 		if (i == line)
-			ft_memcpy(tmp[i], readed, len + 1);
+			ft_memcpy(tmp[i], readed, info->map->mapX + 1);
 		else
 			ft_memcpy(tmp[i], info->map->map[i], ft_strlen(info->map->map[i]));
 		i++;
@@ -137,6 +133,9 @@ void	read_infos(int fd, t_parameters *info)
 			}
 		}
 	}
+	info->map->mapY = i;
+	info->map->tam_altura = floor(info->height / info->map->mapY);
+	info->map->tam_largura = floor(info->width / info->map->mapX);
 	free(readed);
 }
 
