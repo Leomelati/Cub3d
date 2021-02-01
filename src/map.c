@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/22 07:31:26 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/01 06:25:15 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,38 @@
 
 int		ft_check_wall(int x, int y, t_parameters *info)
 {
-	int map_index_x;
-	int map_index_y;
+	int 	map_index_x;
+	int		map_index_y;
+	char	letter;
 
 	if (x < 0 || x > info->width || y < 0 || y > info->height)
 		return (FALSE);
 	map_index_x = floor(x / info->map->tam_largura);
 	map_index_y = floor(y / info->map->tam_altura);
-	if (info->map->map[map_index_y][map_index_x] == EMPTY)
+	letter = info->map->map[map_index_y][map_index_x];
+	if (letter == PATH || ft_strchr(PLAYER_START, letter))
 		return (TRUE);
 	return (FALSE);
 }
 
 void	draw2dMap(t_img	*img, t_parameters *info)
 {
-	int x, color;
-	int y = 0;
+	int		x, color;
+	int		y = 0;
+	char	letter;
+
 	while (y < info->map->mapY)
 	{
 		x = 0;
-		// printf("Preenchendo linha: %d\n", y);
 		while (x < info->map->mapX)
 		{
-			// printf("Preenchendo coluna: %d\n", x);
-			if(info->map->map[y][x] == WALL)
+			letter = info->map->map[y][x];
+			if(letter == WALL)
 				color = 0x00000000;
-			else
+			else if(letter == PATH || (ft_strchr(PLAYER_START, letter)))
 				color = 0x00FFFFFF;
+			else if(letter == EMPTY)
+				color = 0x00808080;
 			int i = 0;
 			while (i < info->map->tam_altura)
 			{

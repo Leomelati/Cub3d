@@ -6,11 +6,35 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/01/22 07:30:45 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/01 06:22:33 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	player_start_position(t_parameters *info, t_player *player)
+{
+	int		index_x;
+	int		index_y;
+	char	letter;
+	
+	index_y = 0;
+	while (index_y < info->map->mapY)
+	{
+		index_x = 0;
+		while (index_x < info->map->mapX)
+		{
+			letter = info->map->map[index_y][index_x];
+			if (ft_strchr(PLAYER_START, letter))
+			{
+				player->pos_x = floor(index_x * info->map->tam_largura);
+				player->pos_y = floor(index_y * info->map->tam_altura);
+			}
+			index_x++;
+		}
+		index_y++;
+	}
+}
 
 void	draw_player(t_img	*img, t_parameters *info)
 {

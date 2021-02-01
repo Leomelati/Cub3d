@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/01 04:59:47 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/01 06:06:09 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,20 @@ typedef struct 	s_parameters
 #define KEY_RELEASE 3
 #define KEYPRESS_MASK 1
 #define KEYRELEASE_MASK 10
+
+/*
+** Map Defines
+*/
+
 #define VALID_MAP_CHARS "012NSEW"
 #define WALL '1'
-#define EMPTY '0'
+#define PATH '0'
+#define EMPTY ' '
+#define PLAYER_START "NSEW"
+#define NORTH 'N'
+#define SOUTH 'S'
+#define WEST 'W'
+#define EAST 'E'
 
 /*
 ** Cub3D Prototypes
@@ -126,7 +137,7 @@ int		ft_run(t_parameters *info, t_img *img);
 
 void		define_resolution(t_parameters *info, char *readed);
 t_map		*start_map();
-t_player	*start_player();
+t_player	*start_player(t_parameters *info);
 int			is_map_line(char *readed);
 void		read_infos(int fd, t_parameters *info);
 void		start_infos(t_parameters *info);
@@ -149,6 +160,7 @@ int		key_release(int keycode, t_parameters *info, t_img *img);
 ** player.c
 */
 
+void	player_start_position(t_parameters *info, t_player *player);
 void	draw_player(t_img	*img, t_parameters *info);
 void	ft_update_player(t_parameters *info);
 

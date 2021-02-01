@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/01 05:07:09 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/01 05:52:08 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,12 @@ void	define_resolution(t_parameters *info, char *readed)
 	free(string);
 }
 
-t_player	*start_player()
+t_player	*start_player(t_parameters *info)
 {
 	t_player *player;
 	if (!(player = malloc(sizeof(t_player))))
 		return (NULL);
-	player->pos_x = 200;
-	player->pos_y = 300;
+	player_start_position(info, player);
 	player->size = 5;
 	player->turn_direction = FALSE;
 	player->walk_direction = FALSE;
@@ -136,6 +135,7 @@ void	read_infos(int fd, t_parameters *info)
 	info->map->mapY = i;
 	info->map->tam_altura = floor(info->height / info->map->mapY);
 	info->map->tam_largura = floor(info->width / info->map->mapX);
+	info->player = start_player(info);
 	free(readed);
 }
 
@@ -154,6 +154,5 @@ void	start_infos(t_parameters *info)
 	info->sprite_texture = NULL;
 	info->img = NULL;
 	info->valid = TRUE;
-	info->player = start_player();
 	info->map = start_map(info);
 }
