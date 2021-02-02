@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/01 05:52:08 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/02 07:52:38 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,26 @@ void	define_resolution(t_parameters *info, char *readed)
 	free(string);
 }
 
+t_rays		*start_rays(t_parameters *info)
+{
+	t_rays *rays;
+	
+	if (!(rays = malloc(sizeof(t_rays))))
+		return (NULL);
+	rays->num_rays = info->width / WALL_WIDTH;
+	if (!(rays->rays = malloc(sizeof(double *) * rays->num_rays)))
+		return (NULL);
+	return(rays);
+}
+
 t_player	*start_player(t_parameters *info)
 {
 	t_player *player;
+
 	if (!(player = malloc(sizeof(t_player))))
 		return (NULL);
 	player_start_position(info, player);
+	player->fov = FOV_ANGLE * (PI / 180);
 	player->size = 5;
 	player->turn_direction = FALSE;
 	player->walk_direction = FALSE;
@@ -136,6 +150,7 @@ void	read_infos(int fd, t_parameters *info)
 	info->map->tam_altura = floor(info->height / info->map->mapY);
 	info->map->tam_largura = floor(info->width / info->map->mapX);
 	info->player = start_player(info);
+	info->rays = start_rays(info);
 	free(readed);
 }
 

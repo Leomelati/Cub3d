@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/01 06:06:09 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/02 07:51:21 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,34 +26,32 @@
 ** Struct
 */
 
-typedef struct 	s_img
+typedef struct	s_img
 {
-	void *img;
-	char *addr;
-	int bits_per_pixel;
-	int line_length;
-	int endian;
-	int width;
-	int height;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
 }				t_img;
 
-typedef struct 	s_player
+typedef struct	s_player
 {
 	int		pos_x;
 	int		pos_y;
 	int		size;
 	int		turn_direction;
 	int		walk_direction;
+	double	fov;
 	double	rotation_angle;
 	double	move_speed;
 	double	rotation_speed;
-	double	pdx; // Talvez saia
-	double	pdy; // Talvez saia
-	double	angle; // Talvez saia
 
 }				t_player;
 
-typedef struct 	s_map
+typedef struct	s_map
 {
 	char		**map;
 	int			mapX;
@@ -62,7 +60,14 @@ typedef struct 	s_map
 	int			tam_largura;
 
 }				t_map;
-typedef struct 	s_parameters
+
+typedef struct	s_rays
+{
+	double	*rays;
+	int		num_rays;
+
+}				t_rays;
+typedef struct	s_parameters
 {
 	void		*mlx;
 	void		*win;
@@ -78,45 +83,64 @@ typedef struct 	s_parameters
 	t_img		*img;
 	t_player	*player;
 	t_map		*map;
-	int 		valid;
+	t_rays		*rays;
+	int			valid;
 
 }				t_parameters;
 
 /*
-** Defines
+** General Defines
 */
 
-#define MISS -1
-#define TRUE 1
-#define FALSE 0
-#define PI 3.14159265358979323846
-#define LEFT -1
-#define RIGHT 1
-#define BACK -1
-#define FRONT 1
-#define KEY_ESC 65307
-#define KEY_W 119
-#define KEY_A 97
-#define KEY_S 115
-#define KEY_D 100
-#define KEY_PRESS 2
-#define KEY_RELEASE 3
-#define KEYPRESS_MASK 1
-#define KEYRELEASE_MASK 10
+# define MISS -1
+# define TRUE 1
+# define FALSE 0
+# define PI 3.14159265358979323846
+
+/*
+** Player Defines
+*/
+
+# define FOV_ANGLE 60
+# define LEFT -1
+# define RIGHT 1
+# define BACK -1
+# define FRONT 1
+
+/*
+** Rays Defines
+*/
+
+# define WALL_WIDTH 1
+# define TRUE 1
+
+/*
+** Key Defines
+*/
+
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_PRESS 2
+# define KEY_RELEASE 3
+# define KEYPRESS_MASK 1
+# define KEYRELEASE_MASK 10
 
 /*
 ** Map Defines
 */
 
-#define VALID_MAP_CHARS "012NSEW"
-#define WALL '1'
-#define PATH '0'
-#define EMPTY ' '
-#define PLAYER_START "NSEW"
-#define NORTH 'N'
-#define SOUTH 'S'
-#define WEST 'W'
-#define EAST 'E'
+# define VALID_MAP_CHARS "012NSEW"
+# define WALL '1'
+# define PATH '0'
+# define EMPTY ' '
+# define PLAYER_START "NSEW"
+# define NORTH 'N'
+# define SOUTH 'S'
+# define WEST 'W'
+# define EAST 'E'
 
 /*
 ** Cub3D Prototypes
@@ -163,6 +187,12 @@ int		key_release(int keycode, t_parameters *info, t_img *img);
 void	player_start_position(t_parameters *info, t_player *player);
 void	draw_player(t_img	*img, t_parameters *info);
 void	ft_update_player(t_parameters *info);
+
+/*
+** rays.c
+*/
+
+void	cast_rays(t_parameters *info);
 
 /*
 ** free.c
