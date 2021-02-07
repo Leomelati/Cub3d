@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/07 10:22:11 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/07 10:26:33 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	draw_rays(t_img *img, t_parameters *info)
 	{
 		line_start[0] = info->player->pos_x + (info->player->size / 2);
 		line_start[1] = info->player->pos_y + (info->player->size / 2);
-		line_end[0] = line_start[0] + cos(info->rays->rays[i]) * 30;
-		line_end[1] = line_start[1] + sin(info->rays->rays[i]) * 30;
+		line_end[0] = line_start[0] + cos(info->rays->rays[i]) * 60;
+		line_end[1] = line_start[1] + sin(info->rays->rays[i]) * 60;
 		ft_draw_line(img, line_start, line_end, 0x0000FF00);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/07 10:20:12 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/07 10:25:27 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ typedef struct	s_parameters
 ** Rays Defines
 */
 
-# define WALL_WIDTH 1
+# define WALL_WIDTH 30
 # define TRUE 1
 
 /*
