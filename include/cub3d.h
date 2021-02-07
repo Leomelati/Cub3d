@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/07 10:08:12 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/07 10:20:12 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ void	ft_update_player(t_parameters *info);
 ** rays.c
 */
 
+void	draw_rays(t_img *img, t_parameters *info);
 void	cast_rays(t_parameters *info);
 
 /*

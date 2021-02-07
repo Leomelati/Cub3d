@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/02 07:57:16 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/07 10:22:11 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,24 @@ void	cast_rays(t_parameters *info)
 		ray_angle += (info->player->fov / info->rays->num_rays);
 		column_id++;
 		i++;
+	}	
+}
+
+void	draw_rays(t_img *img, t_parameters *info)
+{
+	int		line_start[2];
+	int		line_end[2];
+	int		i;
+
+	cast_rays(info);
+	i = 0;
+	while (i < info->rays->num_rays)
+	{
+		line_start[0] = info->player->pos_x + (info->player->size / 2);
+		line_start[1] = info->player->pos_y + (info->player->size / 2);
+		line_end[0] = line_start[0] + cos(info->rays->rays[i]) * 30;
+		line_end[1] = line_start[1] + sin(info->rays->rays[i]) * 30;
+		ft_draw_line(img, line_start, line_end, 0x0000FF00);
+		i++;
 	}
-	
 }
