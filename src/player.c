@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/01 06:22:33 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/07 10:07:32 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	draw_player(t_img	*img, t_parameters *info)
 {
 	int i;
 	int j;
+	int line_start[2];
+	int line_end[2];
 
 	i = 0;
 	while (i <= info->player->size)
@@ -52,6 +54,11 @@ void	draw_player(t_img	*img, t_parameters *info)
 		}
 		i++;
 	}
+	line_start[0] = info->player->pos_x + (info->player->size / 2);
+	line_start[1] = info->player->pos_y + (info->player->size / 2);
+	line_end[0] = line_start[0] + cos(info->player->rotation_angle) * 20;
+	line_end[1] = line_start[1] + sin(info->player->rotation_angle) * 20;
+	ft_draw_line(img, line_start, line_end, 0x00FF0000);
 }
 
 void	ft_update_player(t_parameters *info)

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/02 07:51:21 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/07 10:08:12 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,16 @@ t_player	*start_player(t_parameters *info);
 int			is_map_line(char *readed);
 void		read_infos(int fd, t_parameters *info);
 void		start_infos(t_parameters *info);
+
+/*
+** line.c
+*/
+
+void	loop_ray_x(t_img *img, int *p1, int *array, int x, int y);
+void	increment_x(t_img *img, int *p0, int *p1, int *array);
+void	loop_ray_y(t_img *img, int *p1, int *array, int x, int y);
+void	increment_y(t_img *img, int *p0, int *p1, int *array);
+void	ft_draw_line(t_img *img, int *p0, int *p1, int color);
 
 /*
 ** map.c
