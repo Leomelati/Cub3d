@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/02 07:52:38 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/11 05:26:00 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,19 @@ void	define_resolution(t_parameters *info, char *readed)
 	free(string);
 }
 
-t_rays		*start_rays(t_parameters *info)
+t_ray		**start_rays(t_parameters *info)
 {
-	t_rays *rays;
+	t_ray	**rays;
+	int		i;
 	
-	if (!(rays = malloc(sizeof(t_rays))))
+	if (!(rays = malloc(info->map->num_rays * sizeof(t_ray *))))
 		return (NULL);
-	rays->num_rays = info->width / WALL_WIDTH;
-	if (!(rays->rays = malloc(sizeof(double *) * rays->num_rays)))
-		return (NULL);
+	i = 0;
+	while (i <= info->map->num_rays)
+	{
+		rays[i] = malloc(sizeof(t_ray));
+		i++;
+	}
 	return(rays);
 }
 
@@ -72,6 +76,7 @@ t_map	*start_map(t_parameters *info)
 		return (NULL);
 	map->mapX = 0;
 	map->mapY = 0;
+	map->num_rays = 0;
 	return (map);
 }
 
@@ -114,17 +119,6 @@ char	**malloc_map(t_parameters *info, char *readed, int line)
 	return (tmp);
 }
 
-// int		print_map(t_parameters *info, int i)
-// {
-// 	for (int z = 0; z <= i; z++)
-// 	{
-// 		for (int j = 0; j <= 15; j++)
-// 			printf("%c", info->map->map[z][j]);
-// 		printf("\n");
-// 	}
-// 	return (1);
-// }
-
 void	read_infos(int fd, t_parameters *info)
 {
 	char *readed;
@@ -149,8 +143,9 @@ void	read_infos(int fd, t_parameters *info)
 	info->map->mapY = i;
 	info->map->tam_altura = floor(info->height / info->map->mapY);
 	info->map->tam_largura = floor(info->width / info->map->mapX);
+	info->map->num_rays = info->width / WALL_WIDTH;
 	info->player = start_player(info);
-	info->rays = start_rays(info);
+	info->ray = start_rays(info);
 	free(readed);
 }
 

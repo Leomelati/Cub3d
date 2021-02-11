@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/07 10:25:27 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/11 05:15:59 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,16 @@ typedef struct	s_map
 	int			mapY;
 	int			tam_altura;
 	int			tam_largura;
-
+	int			num_rays;
 }				t_map;
 
-typedef struct	s_rays
+typedef struct	s_ray
 {
-	double	*rays;
-	int		num_rays;
-
-}				t_rays;
+	double	angle;
+	double	distance;
+	double	collision_x;
+	double	collision_y;
+}				t_ray;
 typedef struct	s_parameters
 {
 	void		*mlx;
@@ -83,7 +84,7 @@ typedef struct	s_parameters
 	t_img		*img;
 	t_player	*player;
 	t_map		*map;
-	t_rays		*rays;
+	t_ray		**ray;
 	int			valid;
 
 }				t_parameters;
