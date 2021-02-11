@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/11 05:26:00 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/11 07:00:49 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_ray		**start_rays(t_parameters *info)
 	i = 0;
 	while (i <= info->map->num_rays)
 	{
-		rays[i] = malloc(sizeof(t_ray));
+		rays[i] = calloc(1, sizeof(t_ray));
 		i++;
 	}
 	return(rays);

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/11 05:15:59 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/11 07:52:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "mlx.h"
 # include <stdio.h> // Will be removed
 # include <math.h>
+# include <float.h>
 
 /*
 ** Struct
@@ -63,10 +64,19 @@ typedef struct	s_map
 
 typedef struct	s_ray
 {
-	double	angle;
-	double	distance;
-	double	collision_x;
-	double	collision_y;
+	double		angle;
+	double		collision_x;
+	double		collision_y;
+	double		distance;
+	double		vertical_distance;
+	double		horizontal_distance;
+	double		vert_collision_x;
+	double		vert_collision_y;
+	double		horz_collision_x;
+	double		horz_collision_y;
+	int			vertical_hit;
+	int			facing_vertical;
+	int			facing_horizontal;
 }				t_ray;
 typedef struct	s_parameters
 {
@@ -203,8 +213,14 @@ void	ft_update_player(t_parameters *info);
 ** rays.c
 */
 
-void	draw_rays(t_img *img, t_parameters *info);
+void	compare_distance(t_ray *ray);
+double	calculate_distance(double x1, double y1, double x2, double y2);
+void	facing_position(t_parameters *info, t_ray *ray);
+void	horizontal_intersection(t_parameters *info, t_ray *ray);
+void	vertical_intersection(t_parameters *info, t_ray *ray);
+double	normalize_angle(int ray_angle);
 void	cast_rays(t_parameters *info);
+void	draw_rays(t_img *img, t_parameters *info);
 
 /*
 ** free.c
