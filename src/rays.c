@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/11 08:04:33 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/11 08:26:05 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 	double	xintercept;
 	double	yintercept;
 	double	next_touch[2];
+	double	temp_next_touch_y;
 
 	yintercept = floor(info->player->pos_y / info->map->tam_altura) * info->map->tam_altura;
 	if (ray->facing_vertical == BACK)
@@ -75,12 +76,11 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 		xstep *= -1;
 	next_touch[0] = yintercept;
 	next_touch[1] = xintercept;
-	if (ray->facing_vertical == FRONT)
-		next_touch[0] = next_touch[0] - 1;
 	while ((next_touch[1] >= 0) && (next_touch[1] <= info->width) &&
 		(next_touch[1] >= 0) && (next_touch[1] <= info->height))
 	{
-		if (ft_check_wall(next_touch[1], next_touch[0], info))
+		temp_next_touch_y = (ray->facing_vertical == FRONT) ? next_touch[0] - 1 : next_touch[0];
+		if (ft_check_wall(next_touch[1], temp_next_touch_y, info))
 		{
 			ray->horz_collision_y = next_touch[0];
 			ray->horz_collision_x = next_touch[1];
@@ -105,6 +105,7 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 	double	xintercept;
 	double	yintercept;
 	double	next_touch[2];
+	double	temp_next_touch_x;
 
 	xintercept = floor(info->player->pos_x / info->map->tam_largura) * info->map->tam_largura;
 	if (ray->facing_horizontal == RIGHT)
@@ -120,11 +121,10 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 		ystep *= -1;
 	next_touch[0] = yintercept;
 	next_touch[1] = xintercept;
-	if (ray->facing_horizontal == LEFT)
-		next_touch[1] = next_touch[1] - 1;
 	while ((next_touch[1] >= 0) && (next_touch[1] <= info->width) &&
 		(next_touch[1] >= 0) && (next_touch[1] <= info->height))
 	{
+		temp_next_touch_x = (ray->facing_horizontal == LEFT) ? next_touch[1] - 1 : next_touch[1];
 		if (ft_check_wall(next_touch[1], next_touch[0], info))
 		{
 			ray->vert_collision_y = next_touch[0];
@@ -160,8 +160,7 @@ void	cast_rays(t_parameters *info)
 	i = 0;
 	while (i < info->map->num_rays)
 	{
-		// info->ray[i]->angle = normalize_angle(ray_angle);
-		info->ray[i]->angle = ray_angle;
+		info->ray[i]->angle = normalize_angle(ray_angle);
 		facing_position(info, info->ray[i]);
 		ray_angle += (info->player->fov / info->map->num_rays);
 		i++;
@@ -178,10 +177,10 @@ void	draw_rays(t_img *img, t_parameters *info)
 	i = 0;
 	while (i < info->map->num_rays)
 	{
-		line_start[0] = info->player->pos_x + (info->player->size / 2);
-		line_start[1] = info->player->pos_y + (info->player->size / 2);
-		line_end[0] = line_start[0] + cos(info->ray[i]->angle) * 30;
-		line_end[1] = line_start[1] + sin(info->ray[i]->angle) * 30;
+		line_start[0] = info->player->pos_x;
+		line_start[1] = info->player->pos_y;
+		line_end[0] = info->ray[i]->collision_x;
+		line_end[1] = info->ray[i]->collision_y;
 		ft_draw_line(img, line_start, line_end, 0x0000FF00);
 		i++;
 	}
