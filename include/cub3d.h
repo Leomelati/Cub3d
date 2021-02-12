@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/11 08:21:46 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/12 08:24:56 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ typedef struct	s_player
 	int		size;
 	int		turn_direction;
 	int		walk_direction;
-	double	fov;
-	double	rotation_angle;
-	double	move_speed;
-	double	rotation_speed;
+	float	fov;
+	float	rotation_angle;
+	float	move_speed;
+	float	rotation_speed;
 
 }				t_player;
 
@@ -64,19 +64,24 @@ typedef struct	s_map
 
 typedef struct	s_ray
 {
-	double		angle;
-	double		collision_x;
-	double		collision_y;
-	double		distance;
-	double		vertical_distance;
-	double		horizontal_distance;
-	double		vert_collision_x;
-	double		vert_collision_y;
-	double		horz_collision_x;
-	double		horz_collision_y;
+	float		angle;
+	float		collision_x;
+	float		collision_y;
+	float		distance;
+	float		vertical_distance;
+	float		horizontal_distance;
+	float		vert_collision_x;
+	float		vert_collision_y;
+	float		horz_collision_x;
+	float		horz_collision_y;
+	int			hit_content;
+	int			vert_hit_content;
+	int			horz_hit_content;
 	int			vertical_hit;
-	int			facing_vertical;
-	int			facing_horizontal;
+	int			facing_down;
+	int			facing_up;
+	int			facing_right;
+	int			facing_left;
 }				t_ray;
 typedef struct	s_parameters
 {
@@ -214,11 +219,11 @@ void	ft_update_player(t_parameters *info);
 */
 
 void	compare_distance(t_ray *ray);
-double	calculate_distance(double x1, double y1, double x2, double y2);
+float	calculate_distance(float x1, float y1, float x2, float y2);
 void	facing_position(t_parameters *info, t_ray *ray);
 void	horizontal_intersection(t_parameters *info, t_ray *ray);
 void	vertical_intersection(t_parameters *info, t_ray *ray);
-double	normalize_angle(int ray_angle);
+float	normalize_angle(float ray_angle);
 void	cast_rays(t_parameters *info);
 void	draw_rays(t_img *img, t_parameters *info);
 

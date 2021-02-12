@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/07 10:22:35 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/12 07:19:43 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	draw_player(t_img	*img, t_parameters *info)
 
 void	ft_update_player(t_parameters *info)
 {
-	double		move_step;
+	float		move_step;
 	int			next_x;
 	int			next_y;
 

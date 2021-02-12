@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 09:30:22 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/07 10:08:00 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/12 07:19:43 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	loop_ray_x(t_img *img, int *p1, int *array, int x, int y)
 
 void	increment_x(t_img *img, int *p0, int *p1, int *array)
 {
-	double x;
-	double y;
+	float x;
+	float y;
 
 	if (p0[0] < p1[0])
 	{
@@ -72,8 +72,8 @@ void	loop_ray_y(t_img *img, int *p1, int *array, int x, int y)
 
 void	increment_y(t_img *img, int *p0, int *p1, int *array)
 {
-	double x;
-	double y;
+	float x;
+	float y;
 
 	if (p0[1] < p1[1])
 	{
