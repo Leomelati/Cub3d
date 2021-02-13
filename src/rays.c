@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/12 08:54:52 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/13 08:59:20 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 	while ((next_touch[1] >= 0) && (next_touch[1] <= info->width) &&
 		(next_touch[0] >= 0) && (next_touch[0] <= info->height))
 	{
-		check_next_touch_y = (ray->facing_up == TRUE) ? next_touch[0] - 1 : next_touch[0];
+		check_next_touch_y = next_touch[0] + (ray->facing_up == TRUE ? -1 : 0);
 		if (!ft_check_wall(next_touch[1], check_next_touch_y, info))
 		{
 			ray->horz_collision_y = next_touch[0];
@@ -115,7 +115,7 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 	while ((next_touch[1] >= 0) && (next_touch[1] <= info->width) &&
 		(next_touch[0] >= 0) && (next_touch[0] <= info->height))
 	{
-		check_next_touch_x = (ray->facing_left == TRUE) ? next_touch[1] - 1 : next_touch[1];
+		check_next_touch_x = next_touch[1] + ((ray->facing_left == TRUE) ? -1 : 0);
 		printf("Vou testar o next_x: = %f\n Vou testar o y = %f\n", check_next_touch_x, next_touch[0]);
 		if (!ft_check_wall(check_next_touch_x, next_touch[0], info))
 		{

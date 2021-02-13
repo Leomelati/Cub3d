@@ -6,13 +6,13 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/01 06:25:15 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/13 09:00:23 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		ft_check_wall(int x, int y, t_parameters *info)
+int		ft_check_wall(float x, float y, t_parameters *info)
 {
 	int 	map_index_x;
 	int		map_index_y;

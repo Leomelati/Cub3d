@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/12 08:24:56 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/13 09:00:08 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void	ft_draw_line(t_img *img, int *p0, int *p1, int color);
 ** map.c
 */
 
-int		ft_check_wall(int x, int y, t_parameters *info);
+int		ft_check_wall(float x, float y, t_parameters *info);
 void	draw2dMap(t_img	*img, t_parameters *info);
 
 /*
