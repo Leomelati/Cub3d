@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/13 08:59:20 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/14 00:40:07 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	compare_distance(t_ray *ray)
 		ray->collision_x = ray->horz_collision_x;
 		ray->collision_y = ray->horz_collision_y;
 		ray->distance = ray->horizontal_distance;
-		ray->hit_content = ray->horz_hit_content;
+		// ray->hit_content = ray->horz_hit_content;
 		ray->vertical_hit = FALSE;
 	}
 	else
@@ -27,7 +27,7 @@ void	compare_distance(t_ray *ray)
 		ray->collision_x = ray->vert_collision_x;
 		ray->collision_y = ray->vert_collision_y;
 		ray->distance = ray->vertical_distance;
-		ray->hit_content = ray->vert_hit_content;
+		// ray->hit_content = ray->vert_hit_content;
 		ray->vertical_hit = TRUE;
 	}
 }
@@ -74,11 +74,11 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 		(next_touch[0] >= 0) && (next_touch[0] <= info->height))
 	{
 		check_next_touch_y = next_touch[0] + (ray->facing_up == TRUE ? -1 : 0);
-		if (!ft_check_wall(next_touch[1], check_next_touch_y, info))
+		if (ft_check_wall(next_touch[1], check_next_touch_y, info))
 		{
 			ray->horz_collision_y = next_touch[0];
 			ray->horz_collision_x = next_touch[1];
-			ray->horz_hit_content = info->map->map[(int)floor(check_next_touch_y / info->map->tam_altura)][(int)floor(next_touch[1] / info->map->tam_largura)];
+			// ray->horz_hit_content = info->map->map[(int)floor(check_next_touch_y / info->map->tam_altura)][(int)floor(next_touch[1] / info->map->tam_largura)];
 			break;
 		}
 		else
@@ -116,23 +116,19 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 		(next_touch[0] >= 0) && (next_touch[0] <= info->height))
 	{
 		check_next_touch_x = next_touch[1] + ((ray->facing_left == TRUE) ? -1 : 0);
-		printf("Vou testar o next_x: = %f\n Vou testar o y = %f\n", check_next_touch_x, next_touch[0]);
-		if (!ft_check_wall(check_next_touch_x, next_touch[0], info))
+		if (ft_check_wall(check_next_touch_x, next_touch[0], info))
 		{
-			printf("Entrei no if vertical!\n");
 			ray->horz_collision_y = next_touch[0];
 			ray->horz_collision_x = next_touch[1];
-			ray->vert_hit_content = info->map->map[(int)floor(next_touch[0] / info->map->tam_altura)][(int)floor(check_next_touch_x / info->map->tam_largura)];
+			// ray->vert_hit_content = info->map->map[(int)floor(next_touch[0] / info->map->tam_altura)][(int)floor(check_next_touch_x / info->map->tam_largura)];
 			break;
 		}
 		else
 		{
-			printf("Entrei no else vertical!\n");
 			next_touch[0] += ystep;
 			next_touch[1] += xstep;
 		}
 	}
-	printf("SAi do while!\n");
 	if (ray->vert_collision_y == next_touch[0] && ray->vert_collision_x == next_touch[1])
 		ray->vertical_distance = calculate_distance(info->player->pos_x, info->player->pos_y, ray->vert_collision_x, ray->vert_collision_y);
 	else
@@ -156,7 +152,6 @@ void	cast_rays(t_parameters *info)
 	i = 0;
 	while (i < info->map->num_rays)
 	{
-		printf("Entrando raio = %d de %d\n", i, info->map->num_rays);
 		info->ray[i]->angle = normalize_angle(ray_angle);
 		facing_position(info, info->ray[i]);
 		ray_angle += (info->player->fov / info->map->num_rays);

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/13 09:00:23 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/14 00:39:06 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ int		ft_check_wall(float x, float y, t_parameters *info)
 	char	letter;
 
 	if (x < 0 || x > info->width || y < 0 || y > info->height)
-		return (FALSE);
+		return (TRUE);
 	map_index_x = floor(x / info->map->tam_largura);
 	map_index_y = floor(y / info->map->tam_altura);
+	if (info->map->mapX <= map_index_x || info->map->mapY <= map_index_y)
+		return (TRUE);
 	letter = info->map->map[map_index_y][map_index_x];
 	if (letter == PATH || ft_strchr(PLAYER_START, letter))
-		return (TRUE);
-	return (FALSE);
+		return (FALSE);
+	return (TRUE);
 }
 
 void	draw2dMap(t_img	*img, t_parameters *info)

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/13 09:01:29 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/14 00:26:58 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	**malloc_map(t_parameters *info, char *readed, int line)
 	int i;
 	int len;
 
-	len = ft_strlen(readed);
+	len = ft_strlen(readed) - 1;
 	if (len > info->map->mapX)
 		info->map->mapX = len;
 	if (!(tmp = malloc(sizeof(char **) * line)))
@@ -140,9 +140,9 @@ void	read_infos(int fd, t_parameters *info)
 			}
 		}
 	}
-	info->map->mapY = i;
-	info->map->tam_altura = floor(info->height / info->map->mapY);
-	info->map->tam_largura = floor(info->width / info->map->mapX);
+	info->map->mapY = i - 1;
+	info->map->tam_altura = floor(info->height / (info->map->mapY + 1));
+	info->map->tam_largura = floor(info->width / (info->map->mapX + 1));
 	info->map->num_rays = info->width / WALL_WIDTH;
 	info->player = start_player(info);
 	info->ray = start_rays(info);

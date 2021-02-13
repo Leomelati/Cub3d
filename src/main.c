@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/12 07:17:07 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/13 21:46:54 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,6 @@ int		ft_run(t_parameters *info, t_img *img)
 	mlx_put_image_to_window(info->mlx, info->win, info->img->img, 0, 0);
 	return (1);
 }
-
-// int		print_map(t_parameters *info, int i)
-// {
-// 	for (int z = 0; z <= i; z++)
-// 	{
-// 		for (int j = 0; j <= info->map->tam_largura; j++)
-// 			printf("%c", info->map->map[z][j]);
-// 		printf("\n");
-// 	}
-	
-// }
 
 int		main(int argc, char **argv)
 {
