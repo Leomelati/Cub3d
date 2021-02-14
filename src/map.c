@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/14 00:39:06 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/14 01:39:55 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int		ft_check_wall(float x, float y, t_parameters *info)
 		return (TRUE);
 	map_index_x = floor(x / info->map->tam_largura);
 	map_index_y = floor(y / info->map->tam_altura);
-	if (info->map->mapX <= map_index_x || info->map->mapY <= map_index_y)
-		return (TRUE);
 	letter = info->map->map[map_index_y][map_index_x];
 	if (letter == PATH || ft_strchr(PLAYER_START, letter))
 		return (FALSE);

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/13 21:46:54 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/14 01:41:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int		main(int argc, char **argv)
 	start_infos(&info);
 	info.mlx = mlx_init();
 	read_infos(open(argv[1], O_RDONLY), &info);
-	// print_map(&info);
 	if (info.valid == TRUE)
 	{
 		info.win = mlx_new_window(info.mlx, info.width, info.height, "cub3D");
