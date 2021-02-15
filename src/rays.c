@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/15 14:50:56 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/15 21:22:39 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ float	calculate_distance(float x1, float y1, float x2, float y2)
 	return (value);
 }
 
-void	facing_position(t_parameters *info, t_ray *ray)
+void	facing_position(t_parameters *info, t_ray *ray, t_img *img)
 {
 	ray->facing_down = (ray->angle > 0 && ray->angle < PI) ? TRUE : FALSE;
 	ray->facing_up = !(ray->angle > 0 && ray->angle < PI) ? TRUE : FALSE;
 	ray->facing_right = ((ray->angle < (0.5 * PI)) || (ray->angle > 1.5 * PI)) ? TRUE : FALSE;
 	ray->facing_left = !((ray->angle < (0.5 * PI)) || (ray->angle > 1.5 * PI)) ? TRUE : FALSE;
-	horizontal_intersection(info, ray);
-	vertical_intersection(info, ray);
+	horizontal_intersection(info, ray, img);
+	vertical_intersection(info, ray, img);
 	compare_distance(ray);
 }
 
-void	horizontal_intersection(t_parameters *info, t_ray *ray)
+void	horizontal_intersection(t_parameters *info, t_ray *ray, t_img *img)
 {
 	float	xstep;
 	float	ystep;
@@ -97,7 +97,7 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 		ray->horizontal_distance = INT_MAX;
 }
 
-void	vertical_intersection(t_parameters *info, t_ray *ray)
+void	vertical_intersection(t_parameters *info, t_ray *ray, t_img *img)
 {
 	float	xstep;
 	float	ystep;
@@ -107,6 +107,8 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 	float	check_y;
 	float	check_next_touch_x;
 	float	check_next_touch_y;
+	int		line_start[2];
+	int		line_end[2];
 
 	xintercept = floor(info->player->pos_x / TILE_SIZE) * TILE_SIZE;
 	xintercept += (ray->facing_right == TRUE) ? TILE_SIZE : 0;
@@ -125,8 +127,8 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 		check_next_touch_x = check_x + (ray->facing_left == TRUE ? -1 : 0);
 		if (ft_check_wall(check_next_touch_x, check_next_touch_y, info))
 		{
-			ray->horz_collision_y = check_y;
-			ray->horz_collision_x = check_x;
+			ray->vert_collision_y = check_y;
+			ray->vert_collision_x = check_x;
 			// ray->vert_hit_content = info->map->map[(int)floor(next_touch[0] / info->map->tam_altura)][(int)floor(check_next_touch_x / info->map->tam_largura)];
 			break;
 		}
@@ -150,7 +152,7 @@ float	normalize_angle(float ray_angle)
 	return (ray_angle);
 }
 
-void	cast_rays(t_parameters *info)
+void	cast_rays(t_parameters *info, t_img *img)
 {
 	float	ray_angle;
 	int		i;
@@ -160,7 +162,7 @@ void	cast_rays(t_parameters *info)
 	while (i < info->map->num_rays)
 	{
 		info->ray[i]->angle = normalize_angle(ray_angle);
-		facing_position(info, info->ray[i]);
+		facing_position(info, info->ray[i], img);
 		ray_angle += (info->player->fov / info->map->num_rays);
 		i++;
 	}	
@@ -172,7 +174,7 @@ void	draw_rays(t_img *img, t_parameters *info)
 	int		line_end[2];
 	int		i;
 
-	cast_rays(info);
+	cast_rays(info, img);
 	i = 0;
 	while (i < info->map->num_rays)
 	{

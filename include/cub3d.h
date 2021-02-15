@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/15 14:49:24 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/15 21:14:13 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,11 +219,11 @@ void	ft_update_player(t_parameters *info);
 
 void	compare_distance(t_ray *ray);
 float	calculate_distance(float x1, float y1, float x2, float y2);
-void	facing_position(t_parameters *info, t_ray *ray);
-void	horizontal_intersection(t_parameters *info, t_ray *ray);
-void	vertical_intersection(t_parameters *info, t_ray *ray);
+void	facing_position(t_parameters *info, t_ray *ray, t_img *img);
+void	horizontal_intersection(t_parameters *info, t_ray *ray, t_img *img);
+void	vertical_intersection(t_parameters *info, t_ray *ray, t_img *img);
 float	normalize_angle(float ray_angle);
-void	cast_rays(t_parameters *info);
+void	cast_rays(t_parameters *info, t_img *img);
 void	draw_rays(t_img *img, t_parameters *info);
 
 /*
