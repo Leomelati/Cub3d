@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 09:30:22 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/12 07:19:43 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/14 05:05:35 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	loop_ray_x(t_img *img, int *p1, int *array, int x, int y)
 	int	distance;
 
 	distance = array[1] - array[0];
-	while (x <= p1[0])
+	while (x < p1[0])
 	{
 		if (distance < 0)
 			distance += array[2];
@@ -56,7 +56,7 @@ void	loop_ray_y(t_img *img, int *p1, int *array, int x, int y)
 	int	distance;
 
 	distance = array[0] - array[1];
-	while (y <= p1[1])
+	while (y < p1[1])
 	{
 		if (distance < 0)
 			distance += array[2];

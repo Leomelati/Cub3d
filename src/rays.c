@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/14 03:37:24 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/15 14:50:56 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	compare_distance(t_ray *ray)
 {
-	if (ray->horizontal_distance < ray->vertical_distance)
+	if (ray->horizontal_distance <= ray->vertical_distance)
 	{
 		ray->collision_x = ray->horz_collision_x;
 		ray->collision_y = ray->horz_collision_y;
@@ -57,40 +57,44 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 	float	ystep;
 	float	xintercept;
 	float	yintercept;
-	float	next_touch[2];
+	float	check_x;
+	float	check_y;
+	float	check_next_touch_x;
 	float	check_next_touch_y;
 
-	yintercept = floor(info->player->pos_y / info->map->tam_altura) * info->map->tam_altura;
-	yintercept += (ray->facing_down == TRUE) ? info->map->tam_altura : 0;
+	yintercept = floor(info->player->pos_y / TILE_SIZE) * TILE_SIZE;
+	yintercept += (ray->facing_down == TRUE) ? TILE_SIZE : 0;
 	xintercept = info->player->pos_x + ((yintercept - info->player->pos_y) / tan(ray->angle));
-	ystep = info->map->tam_altura;
+	ystep = TILE_SIZE;
 	ystep *= (ray->facing_up == TRUE) ? -1 : 1;
-	xstep = info->map->tam_altura / tan(ray->angle);
+	xstep = TILE_SIZE / tan(ray->angle);
 	xstep *= ((ray->facing_left == TRUE) && (xstep > 0)) ? -1 : 1;
 	xstep *= ((ray->facing_right == TRUE) && (xstep < 0)) ? -1 : 1;
-	next_touch[0] = yintercept;
-	next_touch[1] = xintercept;
-	while ((next_touch[1] >= 0) && (next_touch[1] <= info->width) &&
-		(next_touch[0] >= 0) && (next_touch[0] <= info->height))
+	check_y = yintercept;
+	check_x = xintercept;
+	while ((check_x >= 0) && (check_x <= info->width) &&
+		(check_y >= 0) && (check_y <= info->height))
 	{
-		check_next_touch_y = next_touch[0] + (ray->facing_up == TRUE ? -1 : 0);
-		if (ft_check_wall(next_touch[1], check_next_touch_y, info))
+
+		check_next_touch_x = check_x;
+		check_next_touch_y = check_y + (ray->facing_up == TRUE ? -1 : 0);
+		if (ft_check_wall(check_next_touch_x, check_next_touch_y, info))
 		{
-			ray->horz_collision_y = next_touch[0];
-			ray->horz_collision_x = next_touch[1];
+			ray->horz_collision_y = check_next_touch_y;
+			ray->horz_collision_x = check_next_touch_x;
 			// ray->horz_hit_content = info->map->map[(int)floor(check_next_touch_y / info->map->tam_altura)][(int)floor(next_touch[1] / info->map->tam_largura)];
 			break;
 		}
 		else
 		{
-			next_touch[0] += ystep;
-			next_touch[1] += xstep;
+			check_y += ystep;
+			check_x += xstep;
 		}
 	}
-	if (ray->horz_collision_y == next_touch[0] && ray->horz_collision_x == next_touch[1])
+	if (ray->horz_collision_y == check_next_touch_y && ray->horz_collision_x == check_next_touch_x)
 		ray->horizontal_distance = calculate_distance(info->player->pos_x, info->player->pos_y, ray->horz_collision_x, ray->horz_collision_y);
 	else
-		ray->horizontal_distance = FLT_MAX;
+		ray->horizontal_distance = INT_MAX;
 }
 
 void	vertical_intersection(t_parameters *info, t_ray *ray)
@@ -99,40 +103,43 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 	float	ystep;
 	float	xintercept;
 	float	yintercept;
-	float	next_touch[2];
+	float	check_x;
+	float	check_y;
 	float	check_next_touch_x;
+	float	check_next_touch_y;
 
-	xintercept = floor(info->player->pos_x / info->map->tam_largura) * info->map->tam_largura;
-	xintercept += (ray->facing_right == TRUE) ? info->map->tam_largura : 0;
+	xintercept = floor(info->player->pos_x / TILE_SIZE) * TILE_SIZE;
+	xintercept += (ray->facing_right == TRUE) ? TILE_SIZE : 0;
 	yintercept = info->player->pos_y + ((xintercept - info->player->pos_x) * tan(ray->angle));
-	xstep = info->map->tam_largura;
+	xstep = TILE_SIZE;
 	xstep *= (ray->facing_left == TRUE) ? -1 : 1;
-	ystep = info->map->tam_largura * tan(ray->angle);
+	ystep = TILE_SIZE * tan(ray->angle);
 	ystep *= ((ray->facing_up == TRUE) && (ystep > 0)) ? -1 : 1;
 	ystep *= ((ray->facing_down == TRUE) && (ystep < 0)) ? -1 : 1;
-	next_touch[0] = yintercept;
-	next_touch[1] = xintercept;
-	while ((next_touch[1] >= 0) && (next_touch[1] <= info->width) &&
-		(next_touch[0] >= 0) && (next_touch[0] <= info->height))
+	check_y = yintercept;
+	check_x = xintercept;
+	while ((check_x >= 0) && (check_x <= info->width) &&
+		(check_y >= 0) && (check_y <= info->height))
 	{
-		check_next_touch_x = next_touch[1] + ((ray->facing_left == TRUE) ? -1 : 0);
-		if (ft_check_wall(check_next_touch_x, next_touch[0], info))
+		check_next_touch_y = check_y;
+		check_next_touch_x = check_x + (ray->facing_left == TRUE ? -1 : 0);
+		if (ft_check_wall(check_next_touch_x, check_next_touch_y, info))
 		{
-			ray->horz_collision_y = next_touch[0];
-			ray->horz_collision_x = next_touch[1];
+			ray->horz_collision_y = check_y;
+			ray->horz_collision_x = check_x;
 			// ray->vert_hit_content = info->map->map[(int)floor(next_touch[0] / info->map->tam_altura)][(int)floor(check_next_touch_x / info->map->tam_largura)];
 			break;
 		}
 		else
 		{
-			next_touch[0] += ystep;
-			next_touch[1] += xstep;
+			check_y += ystep;
+			check_x += xstep;
 		}
 	}
-	if (ray->vert_collision_y == next_touch[0] && ray->vert_collision_x == next_touch[1])
+	if (ray->vert_collision_y == check_y && ray->vert_collision_x == check_x)
 		ray->vertical_distance = calculate_distance(info->player->pos_x, info->player->pos_y, ray->vert_collision_x, ray->vert_collision_y);
 	else
-		ray->vertical_distance = FLT_MAX;
+		ray->vertical_distance = INT_MAX;
 }
 
 float	normalize_angle(float ray_angle)

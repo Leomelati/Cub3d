@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/14 00:26:58 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/14 04:39:18 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_player	*start_player(t_parameters *info)
 	player->size = 5;
 	player->turn_direction = FALSE;
 	player->walk_direction = FALSE;
-	player->rotation_angle = PI / 2;
+	player->rotation_angle = 0;
 	player->move_speed = 2;
 	player->rotation_speed = 2 * (PI / 180);
 	return (player);
@@ -141,8 +141,6 @@ void	read_infos(int fd, t_parameters *info)
 		}
 	}
 	info->map->mapY = i - 1;
-	info->map->tam_altura = floor(info->height / (info->map->mapY + 1));
-	info->map->tam_largura = floor(info->width / (info->map->mapX + 1));
 	info->map->num_rays = info->width / WALL_WIDTH;
 	info->player = start_player(info);
 	info->ray = start_rays(info);

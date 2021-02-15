@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/13 21:46:23 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/14 04:33:06 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	player_start_position(t_parameters *info, t_player *player)
 			letter = info->map->map[index_y][index_x];
 			if (ft_strchr(PLAYER_START, letter))
 			{
-				player->pos_x = floor(index_x * info->map->tam_largura);
-				player->pos_y = floor(index_y * info->map->tam_altura);
+				player->pos_x = floor(index_x * TILE_SIZE);
+				player->pos_y = floor(index_y * TILE_SIZE);
 			}
 			index_x++;
 		}

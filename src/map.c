@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/14 01:39:55 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/15 14:46:53 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ int		ft_check_wall(float x, float y, t_parameters *info)
 
 	if (x < 0 || x > info->width || y < 0 || y > info->height)
 		return (TRUE);
-	map_index_x = floor(x / info->map->tam_largura);
-	map_index_y = floor(y / info->map->tam_altura);
+	map_index_x = floor(x / TILE_SIZE);
+	map_index_y = floor(y / TILE_SIZE);
+	if (map_index_x >= info->map->mapX || map_index_y >= info->map->mapY)
+		return (TRUE);
 	letter = info->map->map[map_index_y][map_index_x];
-	if (letter == PATH || ft_strchr(PLAYER_START, letter))
-		return (FALSE);
-	return (TRUE);
+	if (letter == WALL)
+		return (TRUE);
+	return (FALSE);
 }
 
 void	draw2dMap(t_img	*img, t_parameters *info)
@@ -47,12 +49,12 @@ void	draw2dMap(t_img	*img, t_parameters *info)
 			else if(letter == EMPTY)
 				color = 0x00808080;
 			int i = 0;
-			while (i < info->map->tam_altura)
+			while (i < TILE_SIZE)
 			{
 				int j = 0;
-				while (j < info->map->tam_largura)
+				while (j < TILE_SIZE)
 				{
-					ft_pixel_put(img, (x * info->map->tam_largura) + j, (y * info->map->tam_altura) + i, color);
+					ft_pixel_put(img, (x * TILE_SIZE) + j, (y * TILE_SIZE) + i, color);
 					j++;
 				}
 				i++;

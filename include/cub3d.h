@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/13 09:00:08 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/15 14:49:24 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "mlx.h"
 # include <stdio.h> // Will be removed
 # include <math.h>
-# include <float.h>
+# include <limits.h>
 
 /*
 ** Struct
@@ -57,8 +57,6 @@ typedef struct	s_map
 	char		**map;
 	int			mapX;
 	int			mapY;
-	int			tam_altura;
-	int			tam_largura;
 	int			num_rays;
 }				t_map;
 
@@ -157,6 +155,7 @@ typedef struct	s_parameters
 # define SOUTH 'S'
 # define WEST 'W'
 # define EAST 'E'
+# define TILE_SIZE 64
 
 /*
 ** Cub3D Prototypes
