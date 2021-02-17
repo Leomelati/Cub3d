@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/15 21:14:13 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/17 08:37:42 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,6 @@ typedef struct	s_ray
 	float		vert_collision_y;
 	float		horz_collision_x;
 	float		horz_collision_y;
-	int			hit_content;
-	int			vert_hit_content;
-	int			horz_hit_content;
 	int			vertical_hit;
 	int			facing_down;
 	int			facing_up;
@@ -125,6 +122,7 @@ typedef struct	s_parameters
 ** Rays Defines
 */
 
+# define WALL_HEIGHT 50
 # define WALL_WIDTH 1
 # define TRUE 1
 
@@ -219,11 +217,11 @@ void	ft_update_player(t_parameters *info);
 
 void	compare_distance(t_ray *ray);
 float	calculate_distance(float x1, float y1, float x2, float y2);
-void	facing_position(t_parameters *info, t_ray *ray, t_img *img);
-void	horizontal_intersection(t_parameters *info, t_ray *ray, t_img *img);
-void	vertical_intersection(t_parameters *info, t_ray *ray, t_img *img);
+void	facing_position(t_parameters *info, t_ray *ray);
+void	horizontal_intersection(t_parameters *info, t_ray *ray);
+void	vertical_intersection(t_parameters *info, t_ray *ray);
 float	normalize_angle(float ray_angle);
-void	cast_rays(t_parameters *info, t_img *img);
+void	cast_rays(t_parameters *info);
 void	draw_rays(t_img *img, t_parameters *info);
 
 /*

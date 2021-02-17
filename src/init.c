@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/14 04:39:18 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/17 08:40:23 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ t_player	*start_player(t_parameters *info)
 	player->turn_direction = FALSE;
 	player->walk_direction = FALSE;
 	player->rotation_angle = 0;
-	player->move_speed = 2;
-	player->rotation_speed = 2 * (PI / 180);
+	player->move_speed = 5;
+	player->rotation_speed = 5 * (PI / 180);
 	return (player);
 }
 

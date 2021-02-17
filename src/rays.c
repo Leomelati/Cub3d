@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/15 21:22:39 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/17 08:38:43 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	compare_distance(t_ray *ray)
 		ray->collision_x = ray->horz_collision_x;
 		ray->collision_y = ray->horz_collision_y;
 		ray->distance = ray->horizontal_distance;
-		// ray->hit_content = ray->horz_hit_content;
 		ray->vertical_hit = FALSE;
 	}
 	else
@@ -27,7 +26,6 @@ void	compare_distance(t_ray *ray)
 		ray->collision_x = ray->vert_collision_x;
 		ray->collision_y = ray->vert_collision_y;
 		ray->distance = ray->vertical_distance;
-		// ray->hit_content = ray->vert_hit_content;
 		ray->vertical_hit = TRUE;
 	}
 }
@@ -40,18 +38,18 @@ float	calculate_distance(float x1, float y1, float x2, float y2)
 	return (value);
 }
 
-void	facing_position(t_parameters *info, t_ray *ray, t_img *img)
+void	facing_position(t_parameters *info, t_ray *ray)
 {
 	ray->facing_down = (ray->angle > 0 && ray->angle < PI) ? TRUE : FALSE;
 	ray->facing_up = !(ray->angle > 0 && ray->angle < PI) ? TRUE : FALSE;
 	ray->facing_right = ((ray->angle < (0.5 * PI)) || (ray->angle > 1.5 * PI)) ? TRUE : FALSE;
 	ray->facing_left = !((ray->angle < (0.5 * PI)) || (ray->angle > 1.5 * PI)) ? TRUE : FALSE;
-	horizontal_intersection(info, ray, img);
-	vertical_intersection(info, ray, img);
+	horizontal_intersection(info, ray);
+	vertical_intersection(info, ray);
 	compare_distance(ray);
 }
 
-void	horizontal_intersection(t_parameters *info, t_ray *ray, t_img *img)
+void	horizontal_intersection(t_parameters *info, t_ray *ray)
 {
 	float	xstep;
 	float	ystep;
@@ -82,7 +80,6 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray, t_img *img)
 		{
 			ray->horz_collision_y = check_next_touch_y;
 			ray->horz_collision_x = check_next_touch_x;
-			// ray->horz_hit_content = info->map->map[(int)floor(check_next_touch_y / info->map->tam_altura)][(int)floor(next_touch[1] / info->map->tam_largura)];
 			break;
 		}
 		else
@@ -97,7 +94,7 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray, t_img *img)
 		ray->horizontal_distance = INT_MAX;
 }
 
-void	vertical_intersection(t_parameters *info, t_ray *ray, t_img *img)
+void	vertical_intersection(t_parameters *info, t_ray *ray)
 {
 	float	xstep;
 	float	ystep;
@@ -129,7 +126,6 @@ void	vertical_intersection(t_parameters *info, t_ray *ray, t_img *img)
 		{
 			ray->vert_collision_y = check_y;
 			ray->vert_collision_x = check_x;
-			// ray->vert_hit_content = info->map->map[(int)floor(next_touch[0] / info->map->tam_altura)][(int)floor(check_next_touch_x / info->map->tam_largura)];
 			break;
 		}
 		else
@@ -152,7 +148,7 @@ float	normalize_angle(float ray_angle)
 	return (ray_angle);
 }
 
-void	cast_rays(t_parameters *info, t_img *img)
+void	cast_rays(t_parameters *info)
 {
 	float	ray_angle;
 	int		i;
@@ -162,7 +158,7 @@ void	cast_rays(t_parameters *info, t_img *img)
 	while (i < info->map->num_rays)
 	{
 		info->ray[i]->angle = normalize_angle(ray_angle);
-		facing_position(info, info->ray[i], img);
+		facing_position(info, info->ray[i]);
 		ray_angle += (info->player->fov / info->map->num_rays);
 		i++;
 	}	
@@ -170,18 +166,22 @@ void	cast_rays(t_parameters *info, t_img *img)
 
 void	draw_rays(t_img *img, t_parameters *info)
 {
+	float	dist_proj_plan;
+	float	wall_proj_height;
 	int		line_start[2];
 	int		line_end[2];
 	int		i;
 
-	cast_rays(info, img);
+	cast_rays(info);
+	dist_proj_plan = (info->width / 2) / tan(info->player->fov / 2);
 	i = 0;
 	while (i < info->map->num_rays)
 	{
-		line_start[0] = info->player->pos_x;
-		line_start[1] = info->player->pos_y;
-		line_end[0] = info->ray[i]->collision_x;
-		line_end[1] = info->ray[i]->collision_y;
+		wall_proj_height = (WALL_HEIGHT / info->ray[i]->distance) * dist_proj_plan;
+		line_start[0] = i + 1;
+		line_start[1] = (info->width / 2) - (wall_proj_height / 2);
+		line_end[0] = i + 1;
+		line_end[1] = line_start[1] + wall_proj_height;
 		ft_draw_line(img, line_start, line_end, 0x00FF0000);
 		i++;
 	}
