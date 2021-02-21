@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/14 04:33:06 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/21 09:21:15 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	draw_player(t_img	*img, t_parameters *info)
 {
 	int i;
 	int j;
-	int line_start[2];
-	int line_end[2];
 
 	i = 0;
 	while (i <= info->player->size)

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/17 08:38:43 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/21 09:37:57 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,30 @@ void	cast_rays(t_parameters *info)
 	}	
 }
 
+void	wall_limits(t_img *img, t_parameters *info, float wall_height, int column_id)
+{
+	int		top_pixel;
+	int		bottom_pixel;
+	int		i;
+
+	top_pixel = (info->height / 2) - (wall_height / 2);
+	top_pixel = (top_pixel < 0) ? 0 : top_pixel;
+	i = 0;
+	while (i < top_pixel)
+	{
+		ft_pixel_put(img, column_id, i, 0x000000FF);
+		i++;
+	}
+	bottom_pixel = (info->height / 2) + (wall_height / 2);
+	bottom_pixel = (bottom_pixel > info->height) ? info->height : bottom_pixel;
+	i = bottom_pixel;
+	while (i < info->height)
+	{
+		ft_pixel_put(img, column_id, i, 0x0054FFA3);
+		i++;
+	}
+}
+
 void	draw_rays(t_img *img, t_parameters *info)
 {
 	float	dist_proj_plan;
@@ -177,11 +201,16 @@ void	draw_rays(t_img *img, t_parameters *info)
 	i = 0;
 	while (i < info->map->num_rays)
 	{
-		wall_proj_height = (WALL_HEIGHT / info->ray[i]->distance) * dist_proj_plan;
+		wall_proj_height = (TILE_SIZE / info->ray[i]->distance) * dist_proj_plan;
+		wall_limits(img, info, wall_proj_height, i);
 		line_start[0] = i + 1;
 		line_start[1] = (info->width / 2) - (wall_proj_height / 2);
+		line_start[1] = (line_start[1] > info->height) ? info->height : line_start[1];
+		line_start[1] = (line_start[1] < 0) ? 0 : line_start[1];
 		line_end[0] = i + 1;
 		line_end[1] = line_start[1] + wall_proj_height;
+		line_end[1] = (line_end[1] > info->height) ? info->height : line_end[1];
+		line_end[1] = (line_end[1] < 0) ? 0 : line_end[1];
 		ft_draw_line(img, line_start, line_end, 0x00FF0000);
 		i++;
 	}
