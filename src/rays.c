@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/21 09:37:57 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/21 09:42:05 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ void	draw_rays(t_img *img, t_parameters *info)
 {
 	float	dist_proj_plan;
 	float	wall_proj_height;
+	float	fixed_dist;
 	int		line_start[2];
 	int		line_end[2];
 	int		i;
@@ -201,7 +202,8 @@ void	draw_rays(t_img *img, t_parameters *info)
 	i = 0;
 	while (i < info->map->num_rays)
 	{
-		wall_proj_height = (TILE_SIZE / info->ray[i]->distance) * dist_proj_plan;
+		fixed_dist = info->ray[i]->distance * cos(info->ray[i]->angle - info->player->rotation_angle);
+		wall_proj_height = (TILE_SIZE / fixed_dist) * dist_proj_plan;
 		wall_limits(img, info, wall_proj_height, i);
 		line_start[0] = i + 1;
 		line_start[1] = (info->width / 2) - (wall_proj_height / 2);
