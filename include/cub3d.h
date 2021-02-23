@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/21 09:12:10 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/23 07:04:16 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ typedef struct	s_parameters
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
+# define KEY_ARROW_RIGHT 65363
+# define KEY_ARROW_LEFT 65361
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
 # define KEYPRESS_MASK 1
@@ -192,6 +194,7 @@ void	ft_draw_line(t_img *img, int *p0, int *p1, int color);
 ** map.c
 */
 
+int		ft_window_limit(float x, float y, t_parameters *info);
 int		ft_check_wall(float x, float y, t_parameters *info);
 void	draw2dMap(t_img	*img, t_parameters *info);
 

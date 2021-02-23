@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/21 09:42:05 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/23 06:51:05 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	compare_distance(t_ray *ray)
 {
-	if (ray->horizontal_distance <= ray->vertical_distance)
+	if (ray->horizontal_distance < ray->vertical_distance)
 	{
 		ray->collision_x = ray->horz_collision_x;
 		ray->collision_y = ray->horz_collision_y;
@@ -70,8 +70,7 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 	xstep *= ((ray->facing_right == TRUE) && (xstep < 0)) ? -1 : 1;
 	check_y = yintercept;
 	check_x = xintercept;
-	while ((check_x >= 0) && (check_x <= info->width) &&
-		(check_y >= 0) && (check_y <= info->height))
+	while (!ft_window_limit(check_x, check_y, info))
 	{
 
 		check_next_touch_x = check_x;
@@ -88,7 +87,8 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 			check_x += xstep;
 		}
 	}
-	if (ray->horz_collision_y == check_next_touch_y && ray->horz_collision_x == check_next_touch_x)
+	if ((check_x >= 0) && (check_x <= info->width) &&
+		(check_y >= 0) && (check_y <= info->height))
 		ray->horizontal_distance = calculate_distance(info->player->pos_x, info->player->pos_y, ray->horz_collision_x, ray->horz_collision_y);
 	else
 		ray->horizontal_distance = INT_MAX;
@@ -117,8 +117,7 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 	ystep *= ((ray->facing_down == TRUE) && (ystep < 0)) ? -1 : 1;
 	check_y = yintercept;
 	check_x = xintercept;
-	while ((check_x >= 0) && (check_x <= info->width) &&
-		(check_y >= 0) && (check_y <= info->height))
+	while (!ft_window_limit(check_x, check_y, info))
 	{
 		check_next_touch_y = check_y;
 		check_next_touch_x = check_x + (ray->facing_left == TRUE ? -1 : 0);
@@ -134,7 +133,8 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 			check_x += xstep;
 		}
 	}
-	if (ray->vert_collision_y == check_y && ray->vert_collision_x == check_x)
+	if ((check_x >= 0) && (check_x <= info->width) &&
+		(check_y >= 0) && (check_y <= info->height))
 		ray->vertical_distance = calculate_distance(info->player->pos_x, info->player->pos_y, ray->vert_collision_x, ray->vert_collision_y);
 	else
 		ray->vertical_distance = INT_MAX;
@@ -213,7 +213,10 @@ void	draw_rays(t_img *img, t_parameters *info)
 		line_end[1] = line_start[1] + wall_proj_height;
 		line_end[1] = (line_end[1] > info->height) ? info->height : line_end[1];
 		line_end[1] = (line_end[1] < 0) ? 0 : line_end[1];
-		ft_draw_line(img, line_start, line_end, 0x00FF0000);
+		if (info->ray[i]->vertical_hit)
+			ft_draw_line(img, line_start, line_end, 0x00FF0000);
+		else
+			ft_draw_line(img, line_start, line_end, 0x0000FF00);
 		i++;
 	}
 }
