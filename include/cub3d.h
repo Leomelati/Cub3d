@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/27 08:59:46 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/27 09:13:12 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ int		key_release(int keycode, t_parameters *info, t_img *img);
 ** player.c
 */
 
+void	player_start_angle(char letter, t_player *player);
 void	player_start_position(t_parameters *info, t_player *player);
 void	draw_player(t_img	*img, t_parameters *info);
 void	ft_update_player(int keycode, t_parameters *info);

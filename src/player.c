@@ -6,11 +6,23 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/27 08:57:37 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/27 09:11:01 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	player_start_angle(char letter, t_player *player)
+{
+	if (letter == SOUTH)
+		player->rotation_angle = PI / 2;
+	else if (letter == NORTH)
+		player->rotation_angle = (3 * PI) / 2;
+	else if (letter == WEST)
+		player->rotation_angle = PI;
+	else if (letter == EAST)
+		player->rotation_angle = 0;
+}
 
 void	player_start_position(t_parameters *info, t_player *player)
 {
@@ -29,6 +41,7 @@ void	player_start_position(t_parameters *info, t_player *player)
 			{
 				player->pos_x = floor(index_x * TILE_SIZE);
 				player->pos_y = floor(index_y * TILE_SIZE);
+				player_start_angle(letter, player);
 			}
 			index_x++;
 		}
