@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:20:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/23 07:11:30 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/02/27 08:58:54 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,19 @@ int		key_press(int keycode, t_parameters *info, t_img *img)
 {
 	if (keycode == KEY_ESC)
 		destroy_window(info);
-	else if (keycode == KEY_ARROW_LEFT)
-		info->player->turn_direction = LEFT;
-	else if (keycode == KEY_ARROW_RIGHT)
-		info->player->turn_direction = RIGHT;
+	else if (keycode == KEY_A)
+		info->player->walk_direction = LEFT;
+	else if (keycode == KEY_D)
+		info->player->walk_direction = RIGHT;
 	else if (keycode == KEY_W)
 		info->player->walk_direction = FRONT;
 	else if (keycode == KEY_S)
 		info->player->walk_direction = BACK;
-	ft_update_player(info);
+	else if (keycode == KEY_ARROW_LEFT)
+		info->player->turn_direction = LEFT;
+	else if (keycode == KEY_ARROW_RIGHT)
+		info->player->turn_direction = RIGHT;
+	ft_update_player(keycode, info);
 	ft_run(info, img);
 	return (1);
 }
@@ -33,15 +37,19 @@ int		key_release(int keycode, t_parameters *info, t_img *img)
 {
 	if (keycode == KEY_ESC)
 		destroy_window(info);
-	else if (keycode == KEY_ARROW_LEFT)
-		info->player->turn_direction = FALSE;
-	else if (keycode == KEY_ARROW_RIGHT)
-		info->player->turn_direction = FALSE;
+	else if (keycode == KEY_A)
+		info->player->walk_direction = FALSE;
+	else if (keycode == KEY_D)
+		info->player->walk_direction = FALSE;
 	else if (keycode == KEY_W)
 		info->player->walk_direction = FALSE;
 	else if (keycode == KEY_S)
 		info->player->walk_direction = FALSE;
-	ft_update_player(info);
+	else if (keycode == KEY_ARROW_LEFT)
+		info->player->turn_direction = FALSE;
+	else if (keycode == KEY_ARROW_RIGHT)
+		info->player->turn_direction = FALSE;
+	ft_update_player(keycode, info);
 	ft_run(info, img);
 	return (1);
 }
