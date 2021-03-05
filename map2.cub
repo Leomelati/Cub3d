@@ -1,4 +1,10 @@
 R 975 975
+NO ./texture/bluestone.xpm
+SO ./texture/greystone.xpm
+WE ./texture/redbrick.xpm
+EA ./texture/wood.xpm
+C 25,138,255
+F 94,138,28
 
 111111111111111
 100000000000101

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/27 09:07:42 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/05 05:42:05 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,20 @@ void	read_infos(int fd, t_parameters *info)
 	i = 0;
 	while (get_next_line(fd, &readed))
 	{
-		if (readed[0] == 'R')
+		if (readed[0] == 'R' && readed[1] == ' ')
 			define_resolution(info, readed);
+		else if (readed[0] == 'F' && readed[1] == ' ')
+			info->floor_color = convert_color(readed, info);
+		else if (readed[0] == 'C' && readed[1] == ' ')
+			info->ceilling_color = convert_color(readed, info);
 		else if (readed[0] == 'N' && readed[1] == 'O' && readed[2] == ' ')
-			info->north_texture = read_image_path(readed, info);  // NOT WORKING YET
+			info->north_texture = read_image_path(readed, info);
+		else if (readed[0] == 'S' && readed[1] == 'O' && readed[2] == ' ')
+			info->south_texture = read_image_path(readed, info);
+		else if (readed[0] == 'W' && readed[1] == 'E' && readed[2] == ' ')
+			info->west_texture = read_image_path(readed, info);
+		else if (readed[0] == 'E' && readed[1] == 'A' && readed[2] == ' ')
+			info->east_texture = read_image_path(readed, info);
 		else
 		{
 			if(is_map_line(readed))

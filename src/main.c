@@ -6,26 +6,22 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/17 08:38:52 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/05 03:41:48 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*read_image_path(char *readed, t_parameters *info) // Fix this later
+char	*read_image_path(char *readed, t_parameters *info)
 {
 	int		img_width;
 	int		img_height;
 	void	*image;
 
-	// if (image != NULL)
-		// info->valid = FALSE;
 	readed = &readed[3];
-	// printf("Readed:%s\n", readed);
 	image = mlx_xpm_file_to_image(info->mlx, readed, &img_width, &img_height);
-	// if (image == NULL)
-		// info->valid = FALSE;
-	// printf("Path: %p\n", image);
+	if (image == NULL)
+		info->valid = FALSE;
 	return(image);
 }
 

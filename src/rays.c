@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/05 03:15:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/05 05:42:59 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 	check_x = xintercept;
 	while (!ft_window_limit(check_x, check_y, info))
 	{
-
 		check_next_touch_x = check_x;
 		check_next_touch_y = check_y + (ray->facing_up == TRUE ? -1 : 0);
 		if (ft_check_wall(check_next_touch_x, check_next_touch_y, info))
@@ -188,7 +187,7 @@ void	wall_limits(t_img *img, t_parameters *info, float wall_height, int column_i
 	i = 0;
 	while (i < top_pixel)
 	{
-		ft_pixel_put(img, column_id, i, 0x000000FF);
+		ft_pixel_put(img, column_id, i, info->ceilling_color);
 		i++;
 	}
 	bottom_pixel = (info->height / 2) + (wall_height / 2);
@@ -196,7 +195,7 @@ void	wall_limits(t_img *img, t_parameters *info, float wall_height, int column_i
 	i = bottom_pixel;
 	while (i < info->height)
 	{
-		ft_pixel_put(img, column_id, i, 0x0054FFA3);
+		ft_pixel_put(img, column_id, i, info->floor_color);
 		i++;
 	}
 }

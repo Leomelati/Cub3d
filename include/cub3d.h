@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/05 03:10:45 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/05 05:41:16 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,12 @@ char	*read_image_path(char *readed, t_parameters *info);
 void	ft_pixel_put(t_img *data, int x, int y, int color);
 t_img	*ft_new_image(t_parameters *info, int width, int height);
 int		ft_run(t_parameters *info, t_img *img);
+
+/*
+** auxiliar.c
+*/
+
+int		convert_color(char *readed, t_parameters *info);
 
 /*
 ** init.c
