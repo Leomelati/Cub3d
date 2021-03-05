@@ -12,3 +12,6 @@ cub3D
 .git-old/
 minilibx-linux/test/mlx-test
 core
+cub3D_map_tester
+cub3D_leaks_maps_tester
+cub3d_destroyer
