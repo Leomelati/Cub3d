@@ -6,33 +6,48 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/23 06:51:05 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/05 03:15:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	compare_distance(t_ray *ray)
+void	compare_distance(t_parameters *info, int ray_id)
 {
-	if (ray->horizontal_distance < ray->vertical_distance)
+	if (floor(info->ray[ray_id]->horizontal_distance) < floor(info->ray[ray_id]->vertical_distance))
 	{
-		ray->collision_x = ray->horz_collision_x;
-		ray->collision_y = ray->horz_collision_y;
-		ray->distance = ray->horizontal_distance;
-		ray->vertical_hit = FALSE;
+		info->ray[ray_id]->collision_x = info->ray[ray_id]->horz_collision_x;
+		info->ray[ray_id]->collision_y = info->ray[ray_id]->horz_collision_y;
+		info->ray[ray_id]->distance = info->ray[ray_id]->horizontal_distance;
+		info->ray[ray_id]->vertical_hit = FALSE;
 	}
-	else
+	else if (floor(info->ray[ray_id]->horizontal_distance) > floor(info->ray[ray_id]->vertical_distance))
 	{
-		ray->collision_x = ray->vert_collision_x;
-		ray->collision_y = ray->vert_collision_y;
-		ray->distance = ray->vertical_distance;
-		ray->vertical_hit = TRUE;
+		info->ray[ray_id]->collision_x = info->ray[ray_id]->vert_collision_x;
+		info->ray[ray_id]->collision_y = info->ray[ray_id]->vert_collision_y;
+		info->ray[ray_id]->distance = info->ray[ray_id]->vertical_distance;
+		info->ray[ray_id]->vertical_hit = TRUE;
+	}
+	else if (floor(info->ray[ray_id]->horizontal_distance) == floor(info->ray[ray_id]->vertical_distance) && (ray_id > 0))
+	{
+		info->ray[ray_id]->distance = info->ray[ray_id - 1]->distance;
+		info->ray[ray_id]->vertical_hit = info->ray[ray_id - 1]->vertical_hit;
+		if (info->ray[ray_id]->vertical_hit == FALSE)
+		{
+			info->ray[ray_id]->collision_x = info->ray[ray_id - 1]->horz_collision_x;
+			info->ray[ray_id]->collision_y = info->ray[ray_id - 1]->horz_collision_y;
+		}
+		else
+		{	
+			info->ray[ray_id]->collision_x = info->ray[ray_id - 1]->vert_collision_x;
+			info->ray[ray_id]->collision_y = info->ray[ray_id - 1]->vert_collision_y;
+		}
 	}
 }
 
 float	calculate_distance(float x1, float y1, float x2, float y2)
 {
-	float value;
+	float	value;
 
 	value = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 	return (value);
@@ -46,7 +61,6 @@ void	facing_position(t_parameters *info, t_ray *ray)
 	ray->facing_left = !((ray->angle < (0.5 * PI)) || (ray->angle > 1.5 * PI)) ? TRUE : FALSE;
 	horizontal_intersection(info, ray);
 	vertical_intersection(info, ray);
-	compare_distance(ray);
 }
 
 void	horizontal_intersection(t_parameters *info, t_ray *ray)
@@ -104,8 +118,6 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 	float	check_y;
 	float	check_next_touch_x;
 	float	check_next_touch_y;
-	int		line_start[2];
-	int		line_end[2];
 
 	xintercept = floor(info->player->pos_x / TILE_SIZE) * TILE_SIZE;
 	xintercept += (ray->facing_right == TRUE) ? TILE_SIZE : 0;
@@ -159,6 +171,7 @@ void	cast_rays(t_parameters *info)
 	{
 		info->ray[i]->angle = normalize_angle(ray_angle);
 		facing_position(info, info->ray[i]);
+		compare_distance(info, i);
 		ray_angle += (info->player->fov / info->map->num_rays);
 		i++;
 	}	

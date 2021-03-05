@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/27 09:13:12 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/05 03:10:45 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ typedef struct	s_img
 
 typedef struct	s_player
 {
-	int		pos_x;
-	int		pos_y;
+	float	pos_x;
+	float	pos_y;
 	int		size;
 	int		turn_direction;
 	int		walk_direction;
@@ -65,9 +65,9 @@ typedef struct	s_ray
 	float		angle;
 	float		collision_x;
 	float		collision_y;
-	float		distance;
-	float		vertical_distance;
-	float		horizontal_distance;
+	float			distance;
+	float			vertical_distance;
+	float			horizontal_distance;
 	float		vert_collision_x;
 	float		vert_collision_y;
 	float		horz_collision_x;
@@ -218,7 +218,7 @@ void	ft_update_player(int keycode, t_parameters *info);
 ** rays.c
 */
 
-void	compare_distance(t_ray *ray);
+void	compare_distance(t_parameters *info, int ray_id);
 float	calculate_distance(float x1, float y1, float x2, float y2);
 void	facing_position(t_parameters *info, t_ray *ray);
 void	horizontal_intersection(t_parameters *info, t_ray *ray);
