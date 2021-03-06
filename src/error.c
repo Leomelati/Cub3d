@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/01 22:45:11 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/06 02:52:34 by lmartins         ###   ########.fr       */
+/*   Created: 2021/03/06 02:36:48 by lmartins          #+#    #+#             */
+/*   Updated: 2021/03/06 02:52:55 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_free_img(t_parameters *info, t_img *img)
+void	define_error_message(t_errors error_code, t_parameters *info)
 {
-	if (img)
-	{
-		mlx_destroy_image(info->mlx, img->img);
-		free(img);
-		img = NULL;
-	}
-}
-
-int		destroy_window(t_parameters *info)
-{
-	ft_free_img(info, info->img);
-	mlx_destroy_window(info->mlx, info->win);
-	free(info->player);
-	free(info->map);
-	free(info->ray);
-	exit(0);
-	return (0);
+	if (error_code == 0)
+		ft_putendl_fd("Error: Invalid color code.", 1);
+	destroy_window(info);
 }

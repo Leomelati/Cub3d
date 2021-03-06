@@ -3,7 +3,7 @@ NO ./texture/bluestone.xpm
 SO ./texture/greystone.xpm
 WE ./texture/redbrick.xpm
 EA ./texture/wood.xpm
-C 25,138,255
+C 500,500,500
 F 94,138,28
 
 111111111111111

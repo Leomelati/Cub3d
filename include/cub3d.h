@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/05 05:41:16 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/06 02:55:24 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@
 # include <stdio.h> // Will be removed
 # include <math.h>
 # include <limits.h>
+
+
+/*
+** Enum
+*/
+
+typedef enum	e_errors
+{
+	color_error,
+}				t_errors;
 
 /*
 ** Struct
@@ -174,6 +184,12 @@ int		ft_run(t_parameters *info, t_img *img);
 */
 
 int		convert_color(char *readed, t_parameters *info);
+
+/*
+** error.c
+*/
+
+void	define_error_message(t_errors error_code, t_parameters *info);
 
 /*
 ** init.c
