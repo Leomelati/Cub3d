@@ -6,11 +6,27 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/27 09:11:01 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/06 08:36:10 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+t_player	*start_player(t_parameters *info)
+{
+	t_player *player;
+
+	if (!(player = malloc(sizeof(t_player))))
+		return (NULL);
+	player_start_position(info, player);
+	player->fov = FOV_ANGLE * (PI / 180);
+	player->size = 5;
+	player->turn_direction = FALSE;
+	player->walk_direction = FALSE;
+	player->move_speed = 5;
+	player->rotation_speed = 5 * (PI / 180);
+	return (player);
+}
 
 void	player_start_angle(char letter, t_player *player)
 {
@@ -49,23 +65,23 @@ void	player_start_position(t_parameters *info, t_player *player)
 	}
 }
 
-void	draw_player(t_img	*img, t_parameters *info)
-{
-	int i;
-	int j;
+// void	draw_player(t_img	*img, t_parameters *info)
+// {
+// 	int i;
+// 	int j;
 
-	i = 0;
-	while (i <= info->player->size)
-	{
-		j = 0;
-		while (j <= info->player->size)
-		{
-			ft_pixel_put(img, info->player->pos_x + i, info->player->pos_y + j, 0x00FF0000);
-			j++;
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i <= info->player->size)
+// 	{
+// 		j = 0;
+// 		while (j <= info->player->size)
+// 		{
+// 			ft_pixel_put(img, info->player->pos_x + i, info->player->pos_y + j, 0x00FF0000);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	ft_update_player(int keycode, t_parameters *info)
 {

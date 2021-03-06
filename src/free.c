@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:45:11 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/06 02:52:34 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/06 08:36:33 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,14 @@ void	ft_free_img(t_parameters *info, t_img *img)
 int		destroy_window(t_parameters *info)
 {
 	ft_free_img(info, info->img);
-	mlx_destroy_window(info->mlx, info->win);
-	free(info->player);
-	free(info->map);
-	free(info->ray);
+	if (info->win)
+		mlx_destroy_window(info->mlx, info->win);
+	// if (info->player)
+		// free(info->player);
+	if (info->map)
+		free(info->map);
+	if (info->ray)
+		free(info->ray);
 	exit(0);
 	return (0);
 }

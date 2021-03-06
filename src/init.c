@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/05 05:42:05 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/06 08:53:25 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,6 @@ t_ray		**start_rays(t_parameters *info)
 		i++;
 	}
 	return(rays);
-}
-
-t_player	*start_player(t_parameters *info)
-{
-	t_player *player;
-
-	if (!(player = malloc(sizeof(t_player))))
-		return (NULL);
-	player_start_position(info, player);
-	player->fov = FOV_ANGLE * (PI / 180);
-	player->size = 5;
-	player->turn_direction = FALSE;
-	player->walk_direction = FALSE;
-	player->move_speed = 5;
-	player->rotation_speed = 5 * (PI / 180);
-	return (player);
 }
 
 t_map	*start_map(t_parameters *info)
@@ -148,12 +132,12 @@ void	read_infos(int fd, t_parameters *info)
 				i++;
 			}
 		}
+		free(readed);
 	}
 	info->map->mapY = i - 1;
 	info->map->num_rays = info->width / WALL_WIDTH;
 	info->player = start_player(info);
 	info->ray = start_rays(info);
-	free(readed);
 }
 
 void	start_infos(t_parameters *info)

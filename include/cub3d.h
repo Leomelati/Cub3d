@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/06 02:55:24 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/06 08:36:13 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,6 @@
 # include <stdio.h> // Will be removed
 # include <math.h>
 # include <limits.h>
-
-
-/*
-** Enum
-*/
-
-typedef enum	e_errors
-{
-	color_error,
-}				t_errors;
 
 /*
 ** Struct
@@ -189,7 +179,7 @@ int		convert_color(char *readed, t_parameters *info);
 ** error.c
 */
 
-void	define_error_message(t_errors error_code, t_parameters *info);
+void	define_error_message(int error_code, t_parameters *info);
 
 /*
 ** init.c
@@ -197,7 +187,6 @@ void	define_error_message(t_errors error_code, t_parameters *info);
 
 void		define_resolution(t_parameters *info, char *readed);
 t_map		*start_map();
-t_player	*start_player(t_parameters *info);
 int			is_map_line(char *readed);
 void		read_infos(int fd, t_parameters *info);
 void		start_infos(t_parameters *info);
@@ -231,6 +220,7 @@ int		key_release(int keycode, t_parameters *info, t_img *img);
 ** player.c
 */
 
+t_player	*start_player(t_parameters *info);
 void	player_start_angle(char letter, t_player *player);
 void	player_start_position(t_parameters *info, t_player *player);
 void	draw_player(t_img	*img, t_parameters *info);
