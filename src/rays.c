@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/05 05:42:59 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 04:40:20 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,149 +14,34 @@
 
 void	compare_distance(t_parameters *info, int ray_id)
 {
-	if (floor(info->ray[ray_id]->horizontal_distance) < floor(info->ray[ray_id]->vertical_distance))
+	if (floor(info->ray[ray_id]->horizontal_distance) <=
+		floor(info->ray[ray_id]->vertical_distance))
 	{
 		info->ray[ray_id]->collision_x = info->ray[ray_id]->horz_collision_x;
 		info->ray[ray_id]->collision_y = info->ray[ray_id]->horz_collision_y;
 		info->ray[ray_id]->distance = info->ray[ray_id]->horizontal_distance;
 		info->ray[ray_id]->vertical_hit = FALSE;
 	}
-	else if (floor(info->ray[ray_id]->horizontal_distance) > floor(info->ray[ray_id]->vertical_distance))
+	else if (floor(info->ray[ray_id]->horizontal_distance) >
+		floor(info->ray[ray_id]->vertical_distance))
 	{
 		info->ray[ray_id]->collision_x = info->ray[ray_id]->vert_collision_x;
 		info->ray[ray_id]->collision_y = info->ray[ray_id]->vert_collision_y;
 		info->ray[ray_id]->distance = info->ray[ray_id]->vertical_distance;
 		info->ray[ray_id]->vertical_hit = TRUE;
 	}
-	else if (floor(info->ray[ray_id]->horizontal_distance) == floor(info->ray[ray_id]->vertical_distance) && (ray_id > 0))
-	{
-		info->ray[ray_id]->distance = info->ray[ray_id - 1]->distance;
-		info->ray[ray_id]->vertical_hit = info->ray[ray_id - 1]->vertical_hit;
-		if (info->ray[ray_id]->vertical_hit == FALSE)
-		{
-			info->ray[ray_id]->collision_x = info->ray[ray_id - 1]->horz_collision_x;
-			info->ray[ray_id]->collision_y = info->ray[ray_id - 1]->horz_collision_y;
-		}
-		else
-		{	
-			info->ray[ray_id]->collision_x = info->ray[ray_id - 1]->vert_collision_x;
-			info->ray[ray_id]->collision_y = info->ray[ray_id - 1]->vert_collision_y;
-		}
-	}
-}
-
-float	calculate_distance(float x1, float y1, float x2, float y2)
-{
-	float	value;
-
-	value = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-	return (value);
 }
 
 void	facing_position(t_parameters *info, t_ray *ray)
 {
 	ray->facing_down = (ray->angle > 0 && ray->angle < PI) ? TRUE : FALSE;
 	ray->facing_up = !(ray->angle > 0 && ray->angle < PI) ? TRUE : FALSE;
-	ray->facing_right = ((ray->angle < (0.5 * PI)) || (ray->angle > 1.5 * PI)) ? TRUE : FALSE;
-	ray->facing_left = !((ray->angle < (0.5 * PI)) || (ray->angle > 1.5 * PI)) ? TRUE : FALSE;
+	ray->facing_right = ((ray->angle < (0.5 * PI)) ||
+		(ray->angle > 1.5 * PI)) ? TRUE : FALSE;
+	ray->facing_left = !((ray->angle < (0.5 * PI)) ||
+		(ray->angle > 1.5 * PI)) ? TRUE : FALSE;
 	horizontal_intersection(info, ray);
 	vertical_intersection(info, ray);
-}
-
-void	horizontal_intersection(t_parameters *info, t_ray *ray)
-{
-	float	xstep;
-	float	ystep;
-	float	xintercept;
-	float	yintercept;
-	float	check_x;
-	float	check_y;
-	float	check_next_touch_x;
-	float	check_next_touch_y;
-
-	yintercept = floor(info->player->pos_y / TILE_SIZE) * TILE_SIZE;
-	yintercept += (ray->facing_down == TRUE) ? TILE_SIZE : 0;
-	xintercept = info->player->pos_x + ((yintercept - info->player->pos_y) / tan(ray->angle));
-	ystep = TILE_SIZE;
-	ystep *= (ray->facing_up == TRUE) ? -1 : 1;
-	xstep = TILE_SIZE / tan(ray->angle);
-	xstep *= ((ray->facing_left == TRUE) && (xstep > 0)) ? -1 : 1;
-	xstep *= ((ray->facing_right == TRUE) && (xstep < 0)) ? -1 : 1;
-	check_y = yintercept;
-	check_x = xintercept;
-	while (!ft_window_limit(check_x, check_y, info))
-	{
-		check_next_touch_x = check_x;
-		check_next_touch_y = check_y + (ray->facing_up == TRUE ? -1 : 0);
-		if (ft_check_wall(check_next_touch_x, check_next_touch_y, info))
-		{
-			ray->horz_collision_y = check_next_touch_y;
-			ray->horz_collision_x = check_next_touch_x;
-			break;
-		}
-		else
-		{
-			check_y += ystep;
-			check_x += xstep;
-		}
-	}
-	if ((check_x >= 0) && (check_x <= info->width) &&
-		(check_y >= 0) && (check_y <= info->height))
-		ray->horizontal_distance = calculate_distance(info->player->pos_x, info->player->pos_y, ray->horz_collision_x, ray->horz_collision_y);
-	else
-		ray->horizontal_distance = INT_MAX;
-}
-
-void	vertical_intersection(t_parameters *info, t_ray *ray)
-{
-	float	xstep;
-	float	ystep;
-	float	xintercept;
-	float	yintercept;
-	float	check_x;
-	float	check_y;
-	float	check_next_touch_x;
-	float	check_next_touch_y;
-
-	xintercept = floor(info->player->pos_x / TILE_SIZE) * TILE_SIZE;
-	xintercept += (ray->facing_right == TRUE) ? TILE_SIZE : 0;
-	yintercept = info->player->pos_y + ((xintercept - info->player->pos_x) * tan(ray->angle));
-	xstep = TILE_SIZE;
-	xstep *= (ray->facing_left == TRUE) ? -1 : 1;
-	ystep = TILE_SIZE * tan(ray->angle);
-	ystep *= ((ray->facing_up == TRUE) && (ystep > 0)) ? -1 : 1;
-	ystep *= ((ray->facing_down == TRUE) && (ystep < 0)) ? -1 : 1;
-	check_y = yintercept;
-	check_x = xintercept;
-	while (!ft_window_limit(check_x, check_y, info))
-	{
-		check_next_touch_y = check_y;
-		check_next_touch_x = check_x + (ray->facing_left == TRUE ? -1 : 0);
-		if (ft_check_wall(check_next_touch_x, check_next_touch_y, info))
-		{
-			ray->vert_collision_y = check_y;
-			ray->vert_collision_x = check_x;
-			break;
-		}
-		else
-		{
-			check_y += ystep;
-			check_x += xstep;
-		}
-	}
-	if ((check_x >= 0) && (check_x <= info->width) &&
-		(check_y >= 0) && (check_y <= info->height))
-		ray->vertical_distance = calculate_distance(info->player->pos_x, info->player->pos_y, ray->vert_collision_x, ray->vert_collision_y);
-	else
-		ray->vertical_distance = INT_MAX;
-}
-
-float	normalize_angle(float ray_angle)
-{
-	ray_angle = remainder(ray_angle, (2 * PI));
-	if (ray_angle < 0)
-		ray_angle = ray_angle + (2 * PI);
-	return (ray_angle);
 }
 
 void	cast_rays(t_parameters *info)
@@ -173,40 +58,14 @@ void	cast_rays(t_parameters *info)
 		compare_distance(info, i);
 		ray_angle += (info->player->fov / info->map->num_rays);
 		i++;
-	}	
-}
-
-void	wall_limits(t_img *img, t_parameters *info, float wall_height, int column_id)
-{
-	int		top_pixel;
-	int		bottom_pixel;
-	int		i;
-
-	top_pixel = (info->height / 2) - (wall_height / 2);
-	top_pixel = (top_pixel < 0) ? 0 : top_pixel;
-	i = 0;
-	while (i < top_pixel)
-	{
-		ft_pixel_put(img, column_id, i, info->ceilling_color);
-		i++;
-	}
-	bottom_pixel = (info->height / 2) + (wall_height / 2);
-	bottom_pixel = (bottom_pixel > info->height) ? info->height : bottom_pixel;
-	i = bottom_pixel;
-	while (i < info->height)
-	{
-		ft_pixel_put(img, column_id, i, info->floor_color);
-		i++;
 	}
 }
 
-void	draw_rays(t_img *img, t_parameters *info)
+void	cast_all_rays(t_img *img, t_parameters *info)
 {
 	float	dist_proj_plan;
 	float	wall_proj_height;
 	float	fixed_dist;
-	int		line_start[2];
-	int		line_end[2];
 	int		i;
 
 	cast_rays(info);
@@ -214,21 +73,11 @@ void	draw_rays(t_img *img, t_parameters *info)
 	i = 0;
 	while (i < info->map->num_rays)
 	{
-		fixed_dist = info->ray[i]->distance * cos(info->ray[i]->angle - info->player->rotation_angle);
+		fixed_dist = info->ray[i]->distance * cos(info->ray[i]->angle
+			- info->player->rotation_angle);
 		wall_proj_height = (TILE_SIZE / fixed_dist) * dist_proj_plan;
 		wall_limits(img, info, wall_proj_height, i);
-		line_start[0] = i + 1;
-		line_start[1] = (info->width / 2) - (wall_proj_height / 2);
-		line_start[1] = (line_start[1] > info->height) ? info->height : line_start[1];
-		line_start[1] = (line_start[1] < 0) ? 0 : line_start[1];
-		line_end[0] = i + 1;
-		line_end[1] = line_start[1] + wall_proj_height;
-		line_end[1] = (line_end[1] > info->height) ? info->height : line_end[1];
-		line_end[1] = (line_end[1] < 0) ? 0 : line_end[1];
-		if (info->ray[i]->vertical_hit)
-			ft_draw_line(img, line_start, line_end, 0x00FF0000);
-		else
-			ft_draw_line(img, line_start, line_end, 0x0000FF00);
+		draw_3dwall(wall_proj_height, i, img, info);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 01:16:13 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 04:39:26 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ char	*read_image_path(char *readed, t_parameters *info)
 	image = mlx_xpm_file_to_image(info->mlx, readed, &img_width, &img_height);
 	if (image == NULL)
 		define_error_message(ERROR_PATH, info);
-	return(image);
+	return (image);
 }
 
 void	ft_pixel_put(t_img *data, int x, int y, int color)
 {
-	char *dst;
-	
+	char	*dst;
+
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
@@ -36,7 +36,7 @@ void	ft_pixel_put(t_img *data, int x, int y, int color)
 t_img	*ft_new_image(t_parameters *info, int width, int height)
 {
 	t_img	*img;
-	
+
 	if (!(img = malloc(sizeof(t_img))))
 		return (NULL);
 	if (!(img->img = mlx_new_image(info->mlx, width, height)))
@@ -46,10 +46,10 @@ t_img	*ft_new_image(t_parameters *info, int width, int height)
 		return (NULL);
 	img->width = width;
 	img->height = height;
-	// draw2dMap(img, info);
+	// draw2dmap(img, info);
 	// draw_player(img, info);
-	draw_rays(img, info);
-	return (img); 
+	cast_all_rays(img, info);
+	return (img);
 }
 
 int		ft_run(t_parameters *info, t_img *img)

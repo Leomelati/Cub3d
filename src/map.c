@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/23 06:53:24 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 01:59:53 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_window_limit(float x, float y, t_parameters *info)
 
 int		ft_check_wall(float x, float y, t_parameters *info)
 {
-	int 	map_index_x;
+	int		map_index_x;
 	int		map_index_y;
 	char	letter;
 
@@ -29,7 +29,7 @@ int		ft_check_wall(float x, float y, t_parameters *info)
 		return (TRUE);
 	map_index_x = floor(x / TILE_SIZE);
 	map_index_y = floor(y / TILE_SIZE);
-	if (map_index_x >= info->map->mapX || map_index_y >= info->map->mapY)
+	if (map_index_x >= info->map->map_x || map_index_y >= info->map->map_y)
 		return (TRUE);
 	letter = info->map->map[map_index_y][map_index_x];
 	if (letter == WALL)
@@ -37,23 +37,23 @@ int		ft_check_wall(float x, float y, t_parameters *info)
 	return (FALSE);
 }
 
-void	draw2dMap(t_img	*img, t_parameters *info)
+void	draw2dmap(t_img *img, t_parameters *info)
 {
 	int		x, color;
 	int		y = 0;
 	char	letter;
 
-	while (y < info->map->mapY)
+	while (y < info->map->map_y)
 	{
 		x = 0;
-		while (x < info->map->mapX)
+		while (x < info->map->map_x)
 		{
 			letter = info->map->map[y][x];
-			if(letter == WALL)
+			if (letter == WALL)
 				color = 0x00000000;
-			else if(letter == PATH || (ft_strchr(PLAYER_START, letter)))
+			else if (letter == PATH || (ft_strchr(PLAYER_START, letter)))
 				color = 0x00FFFFFF;
-			else if(letter == EMPTY)
+			else if (letter == EMPTY)
 				color = 0x00808080;
 			int i = 0;
 			while (i < TILE_SIZE)

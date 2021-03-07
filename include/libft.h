@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 11:51:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/02/07 09:44:26 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 01:40:56 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void				ft_swap(int *a, int *b);
 # define BUFFER_SIZE 1000
 # define OPEN_MAX 10
 
-char	*ft_join(char const *s1, char const *s2);
-void	ft_strdel(char **str);
-int		get_line(char **str, char **line, int ret);
-int		get_next_line(int fd, char **line);
+char				*ft_join(char const *s1, char const *s2);
+void				ft_strdel(char **str);
+int					get_line(char **str, char **line, int ret);
+int					get_next_line(int fd, char **line);
 
 #endif

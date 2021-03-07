@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/06 08:36:10 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 04:50:43 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_player	*start_player(t_parameters *info)
 {
-	t_player *player;
+	t_player	*player;
 
 	if (!(player = malloc(sizeof(t_player))))
 		return (NULL);
@@ -28,7 +28,7 @@ t_player	*start_player(t_parameters *info)
 	return (player);
 }
 
-void	player_start_angle(char letter, t_player *player)
+void		player_start_angle(char letter, t_player *player)
 {
 	if (letter == SOUTH)
 		player->rotation_angle = PI / 2;
@@ -40,17 +40,17 @@ void	player_start_angle(char letter, t_player *player)
 		player->rotation_angle = 0;
 }
 
-void	player_start_position(t_parameters *info, t_player *player)
+void		player_start_position(t_parameters *info, t_player *player)
 {
 	int		index_x;
 	int		index_y;
 	char	letter;
-	
+
 	index_y = 0;
-	while (index_y < info->map->mapY)
+	while (index_y < info->map->map_y)
 	{
 		index_x = 0;
-		while (index_x < info->map->mapX)
+		while (index_x < info->map->map_x)
 		{
 			letter = info->map->map[index_y][index_x];
 			if (ft_strchr(PLAYER_START, letter))
@@ -83,7 +83,7 @@ void	player_start_position(t_parameters *info, t_player *player)
 // 	}
 // }
 
-void	ft_update_player(int keycode, t_parameters *info)
+void		ft_update_player(int keycode, t_parameters *info)
 {
 	float		move_step;
 	int			next_x;
@@ -91,7 +91,8 @@ void	ft_update_player(int keycode, t_parameters *info)
 
 	if (keycode == KEY_ARROW_LEFT || keycode == KEY_ARROW_RIGHT)
 	{
-		info->player->rotation_angle += info->player->turn_direction * info->player->rotation_speed;
+		info->player->rotation_angle +=
+			info->player->turn_direction * info->player->rotation_speed;
 		info->player->rotation_angle = normalize_angle(info->player->rotation_angle);
 	}
 	else
@@ -106,8 +107,8 @@ void	ft_update_player(int keycode, t_parameters *info)
 		}
 		else
 		{
-			next_x += cos(info->player->rotation_angle + (PI/2)) * move_step;
-			next_y += sin(info->player->rotation_angle + (PI/2)) * move_step;
+			next_x += cos(info->player->rotation_angle + (PI / 2)) * move_step;
+			next_y += sin(info->player->rotation_angle + (PI / 2)) * move_step;
 		}
 		if (!ft_check_wall(next_x, next_y, info))
 		{
@@ -115,5 +116,4 @@ void	ft_update_player(int keycode, t_parameters *info)
 			info->player->pos_y = next_y;
 		}
 	}
-	
 }
