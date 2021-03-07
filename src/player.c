@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 04:50:43 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 06:02:22 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,37 +83,43 @@ void		player_start_position(t_parameters *info, t_player *player)
 // 	}
 // }
 
+void		calculate_next_move(int keycode, float move_step,
+	t_coordinates *next, t_parameters *info)
+{
+	next->x = info->player->pos_x;
+	next->y = info->player->pos_y;
+	if (keycode == KEY_W || keycode == KEY_S)
+	{
+		next->x += cos(info->player->rotation_angle) * move_step;
+		next->y += sin(info->player->rotation_angle) * move_step;
+	}
+	else
+	{
+		next->x += cos(info->player->rotation_angle + (PI / 2)) * move_step;
+		next->y += sin(info->player->rotation_angle + (PI / 2)) * move_step;
+	}
+}
+
 void		ft_update_player(int keycode, t_parameters *info)
 {
-	float		move_step;
-	int			next_x;
-	int			next_y;
+	float			move_step;
+	t_coordinates	next;
 
 	if (keycode == KEY_ARROW_LEFT || keycode == KEY_ARROW_RIGHT)
 	{
 		info->player->rotation_angle +=
 			info->player->turn_direction * info->player->rotation_speed;
-		info->player->rotation_angle = normalize_angle(info->player->rotation_angle);
+		info->player->rotation_angle =
+			normalize_angle(info->player->rotation_angle);
 	}
 	else
 	{
 		move_step = info->player->walk_direction * info->player->move_speed;
-		next_x = info->player->pos_x;
-		next_y = info->player->pos_y;
-		if (keycode == KEY_W || keycode == KEY_S)
+		calculate_next_move(keycode, move_step, &next, info);
+		if (!ft_check_wall(next.x, next.y, info))
 		{
-			next_x += cos(info->player->rotation_angle) * move_step;
-			next_y += sin(info->player->rotation_angle) * move_step;
-		}
-		else
-		{
-			next_x += cos(info->player->rotation_angle + (PI / 2)) * move_step;
-			next_y += sin(info->player->rotation_angle + (PI / 2)) * move_step;
-		}
-		if (!ft_check_wall(next_x, next_y, info))
-		{
-			info->player->pos_x = next_x;
-			info->player->pos_y = next_y;
+			info->player->pos_x = next.x;
+			info->player->pos_y = next.y;
 		}
 	}
 }
