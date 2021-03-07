@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/06 08:53:25 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 01:28:07 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	define_resolution(t_parameters *info, char *readed)
 	int		y;
 	int		elements;
 
-	if ((info->width != MISS) || (info->height != MISS))
-		info->valid = FALSE;
 	mlx_get_screen_size(info->mlx, &x, &y);
 	string = ft_split(readed, ' ');
 	elements = 0;
@@ -31,9 +29,20 @@ void	define_resolution(t_parameters *info, char *readed)
 		info->width = (ft_atoi(string[1]) > x) ? x : ft_atoi(string[1]);
 		info->height = (ft_atoi(string[2]) > y) ? y : ft_atoi(string[2]);
 	}
-	else
-		info->valid = FALSE;
+	if (info->width <= 0 || info->height <= 0)
+		define_error_message(ERROR_SCREEN, info);
 	free(string);
+}
+
+void		check_parsed_info(t_parameters *info)
+{
+	if (info->width == MISS || info->height == MISS)
+		define_error_message(ERROR_SCREEN, info);
+	if (info->north_texture == NULL || info->south_texture == NULL ||
+		info->east_texture == NULL || info->west_texture == NULL)
+		define_error_message(ERROR_PATH, info);
+	if (info->floor_color == MISS || info->ceilling_color == MISS)
+		define_error_message(ERROR_COLOR, info);
 }
 
 t_ray		**start_rays(t_parameters *info)
@@ -138,6 +147,7 @@ void	read_infos(int fd, t_parameters *info)
 	info->map->num_rays = info->width / WALL_WIDTH;
 	info->player = start_player(info);
 	info->ray = start_rays(info);
+	check_parsed_info(info);
 }
 
 void	start_infos(t_parameters *info)
@@ -154,6 +164,5 @@ void	start_infos(t_parameters *info)
 	info->east_texture = NULL;
 	info->sprite_texture = NULL;
 	info->img = NULL;
-	info->valid = TRUE;
 	info->map = start_map(info);
 }

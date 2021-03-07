@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/06 08:36:13 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 01:26:43 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ typedef struct	s_ray
 	float		angle;
 	float		collision_x;
 	float		collision_y;
-	float			distance;
-	float			vertical_distance;
-	float			horizontal_distance;
+	float		distance;
+	float		vertical_distance;
+	float		horizontal_distance;
 	float		vert_collision_x;
 	float		vert_collision_y;
 	float		horz_collision_x;
@@ -95,8 +95,6 @@ typedef struct	s_parameters
 	t_player	*player;
 	t_map		*map;
 	t_ray		**ray;
-	int			valid;
-
 }				t_parameters;
 
 /*
@@ -107,6 +105,15 @@ typedef struct	s_parameters
 # define TRUE 1
 # define FALSE 0
 # define PI 3.14159265358979323846
+
+/*
+** Error Defines
+*/
+
+# define ERROR_COLOR 0
+# define ERROR_PATH 1
+# define ERROR_ARGC 2
+# define ERROR_SCREEN 3
 
 /*
 ** Player Defines
@@ -186,6 +193,8 @@ void	define_error_message(int error_code, t_parameters *info);
 */
 
 void		define_resolution(t_parameters *info, char *readed);
+void		check_parsed_info(t_parameters *info);
+t_ray		**start_rays(t_parameters *info);
 t_map		*start_map();
 int			is_map_line(char *readed);
 void		read_infos(int fd, t_parameters *info);

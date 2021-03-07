@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 04:56:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/06 08:21:17 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 01:12:56 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int		convert_color(char *readed, t_parameters *info)
 	numbers[1] = ft_atoi(string[1]);
 	numbers[2] = ft_atoi(string[2]);
 	if (numbers[0] > 255 || numbers[0] < 0)
-		define_error_message(0, info);
+		define_error_message(ERROR_COLOR, info);
 	if (numbers[1] > 255 || numbers[1] < 0)
-		define_error_message(0, info);
+		define_error_message(ERROR_COLOR, info);
 	if (numbers[2] > 255 || numbers[2] < 0)
-		define_error_message(0, info);
+		define_error_message(ERROR_COLOR, info);
 	free(string);
 	return (numbers[0] << 16 | numbers[1] << 8 | numbers[2]);
 }

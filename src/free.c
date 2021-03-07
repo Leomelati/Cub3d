@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:45:11 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/06 08:36:33 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/06 22:47:03 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_free_img(t_parameters *info, t_img *img)
 
 int		destroy_window(t_parameters *info)
 {
+	int i;
 	ft_free_img(info, info->img);
 	if (info->win)
 		mlx_destroy_window(info->mlx, info->win);
@@ -32,7 +33,15 @@ int		destroy_window(t_parameters *info)
 	if (info->map)
 		free(info->map);
 	if (info->ray)
+	{
+		i = 0;
+		while (i <= info->map->num_rays)
+		{
+			free(info->ray[i]);
+			i++;
+		}
 		free(info->ray);
+	}
 	exit(0);
 	return (0);
 }

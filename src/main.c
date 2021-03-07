@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/05 03:41:48 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 01:16:13 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*read_image_path(char *readed, t_parameters *info)
 	readed = &readed[3];
 	image = mlx_xpm_file_to_image(info->mlx, readed, &img_width, &img_height);
 	if (image == NULL)
-		info->valid = FALSE;
+		define_error_message(ERROR_PATH, info);
 	return(image);
 }
 
@@ -67,15 +67,14 @@ int		main(int argc, char **argv)
 
 	start_infos(&info);
 	info.mlx = mlx_init();
+	if (argc != 2)
+		define_error_message(ERROR_ARGC, &info);
 	read_infos(open(argv[1], O_RDONLY), &info);
-	if (info.valid == TRUE)
-	{
-		info.win = mlx_new_window(info.mlx, info.width, info.height, "cub3D");
-		ft_run(&info, &img);
-		mlx_hook(info.win, 33, 0, destroy_window, &info);
-		mlx_hook(info.win, KEY_PRESS, KEYPRESS_MASK, key_press, &info);
-		mlx_hook(info.win, KEY_RELEASE, KEYRELEASE_MASK, key_release, &info);
-		mlx_loop(info.mlx);
-	}
+	info.win = mlx_new_window(info.mlx, info.width, info.height, "cub3D");
+	ft_run(&info, &img);
+	mlx_hook(info.win, 33, 0, destroy_window, &info);
+	mlx_hook(info.win, KEY_PRESS, KEYPRESS_MASK, key_press, &info);
+	mlx_hook(info.win, KEY_RELEASE, KEYRELEASE_MASK, key_release, &info);
+	mlx_loop(info.mlx);
 	return (0);
 }
