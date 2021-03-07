@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 04:48:10 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 06:03:25 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,8 @@ t_player		*start_player(t_parameters *info);
 void			player_start_angle(char letter, t_player *player);
 void			player_start_position(t_parameters *info, t_player *player);
 void			draw_player(t_img	*img, t_parameters *info);
+void		calculate_next_move(int keycode, float move_step,
+	t_coordinates *next, t_parameters *info);
 void			ft_update_player(int keycode, t_parameters *info);
 
 /*
