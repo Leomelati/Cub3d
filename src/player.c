@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 06:02:22 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 22:01:50 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,17 @@ t_player	*start_player(t_parameters *info)
 
 	if (!(player = malloc(sizeof(t_player))))
 		return (NULL);
-	player_start_position(info, player);
 	player->fov = FOV_ANGLE * (PI / 180);
 	player->size = 5;
 	player->turn_direction = FALSE;
 	player->walk_direction = FALSE;
 	player->move_speed = 5;
 	player->rotation_speed = 5 * (PI / 180);
+	player->pos_x = MISS;
+	player->pos_x = MISS;
+	player_start_position(info, player);
+	if (player->pos_x == MISS || player->pos_y == MISS)
+		define_error_message(ERROR_PLAYER, info);
 	return (player);
 }
 
@@ -53,12 +57,16 @@ void		player_start_position(t_parameters *info, t_player *player)
 		while (index_x < info->map->map_x)
 		{
 			letter = info->map->map[index_y][index_x];
-			if (ft_strchr(PLAYER_START, letter))
+			if (ft_strchr(PLAYER_START, letter) || player->pos_x == MISS ||
+				player->pos_y == MISS)
 			{
 				player->pos_x = floor(index_x * TILE_SIZE);
 				player->pos_y = floor(index_y * TILE_SIZE);
 				player_start_angle(letter, player);
 			}
+			else if(ft_strchr(PLAYER_START, letter) || player->pos_x != MISS ||
+				player->pos_y != MISS)
+				define_error_message(ERROR_PLAYER, info);
 			index_x++;
 		}
 		index_y++;
