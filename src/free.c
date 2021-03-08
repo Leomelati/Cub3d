@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:45:11 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 01:52:13 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/08 04:37:39 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,7 @@ int		destroy_window(t_parameters *info)
 	if (info->map)
 		free(info->map);
 	if (info->ray)
-	{
-		i = 0;
-		while (i <= info->map->num_rays)
-		{
-			free(info->ray[i]);
-			i++;
-		}
-	}
+		free(info->ray);
 	exit(0);
 	return (0);
 }

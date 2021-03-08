@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 01:54:04 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/08 04:38:58 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct	s_parameters
 # define ERROR_SCREEN 3
 # define ERROR_PLAYER 4
 # define ERROR_CHAR 5
+# define ERROR_EXTENSION 6
 
 /*
 ** Player Defines
@@ -196,6 +197,7 @@ float			normalize_angle(float ray_angle);
 ** error.c
 */
 
+void			check_extension(char *file, t_parameters *info);
 void			define_error_message(int error_code, t_parameters *info);
 
 /*
