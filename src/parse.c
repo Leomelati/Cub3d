@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 23:11:48 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/08 05:16:52 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,6 @@ void	check_parsed_info(t_parameters *info)
 		define_error_message(ERROR_PATH, info);
 	if (info->floor_color == MISS || info->ceilling_color == MISS)
 		define_error_message(ERROR_COLOR, info);
-}
-
-int		is_map_line(char *readed)
-{
-	int i;
-
-	i = 0;
-	while (readed[i] != '\0')
-	{
-		if (ft_strchr(VALID_MAP_CHARS, readed[i]))
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
 }
 
 void	define_resolution(t_parameters *info, char *readed)
@@ -81,49 +67,57 @@ void	check_parsed_map(t_parameters *info)
 				player++;
 			else if (ft_strchr(PLAYER_START, letter) && player == 1)
 				define_error_message(ERROR_PLAYER, info);
-			
 			index.x++;
 		}
 		index.y++;
 	}
 }
 
+int		assign_non_map_info(char *readed, t_parameters *info)
+{
+	int valid;
+
+	valid = TRUE;
+	if (readed[0] == 'R' && readed[1] == ' ')
+		define_resolution(info, readed);
+	else if (readed[0] == 'F' && readed[1] == ' ')
+		info->floor_color = convert_color(readed, info);
+	else if (readed[0] == 'C' && readed[1] == ' ')
+		info->ceilling_color = convert_color(readed, info);
+	else if (readed[0] == 'N' && readed[1] == 'O' && readed[2] == ' ')
+		info->north_texture = read_image_path(readed, info);
+	else if (readed[0] == 'S' && readed[1] == 'O' && readed[2] == ' ')
+		info->south_texture = read_image_path(readed, info);
+	else if (readed[0] == 'W' && readed[1] == 'E' && readed[2] == ' ')
+		info->west_texture = read_image_path(readed, info);
+	else if (readed[0] == 'E' && readed[1] == 'A' && readed[2] == ' ')
+		info->east_texture = read_image_path(readed, info);
+	else
+		valid = FALSE;
+	return (valid);
+}
+
 void	read_infos(int fd, t_parameters *info)
 {
 	char	*readed;
+	int		is_map;
 	int		i;
 
 	i = 0;
 	while (get_next_line(fd, &readed))
 	{
-		if (readed[0] == 'R' && readed[1] == ' ')
-			define_resolution(info, readed);
-		else if (readed[0] == 'F' && readed[1] == ' ')
-			info->floor_color = convert_color(readed, info);
-		else if (readed[0] == 'C' && readed[1] == ' ')
-			info->ceilling_color = convert_color(readed, info);
-		else if (readed[0] == 'N' && readed[1] == 'O' && readed[2] == ' ')
-			info->north_texture = read_image_path(readed, info);
-		else if (readed[0] == 'S' && readed[1] == 'O' && readed[2] == ' ')
-			info->south_texture = read_image_path(readed, info);
-		else if (readed[0] == 'W' && readed[1] == 'E' && readed[2] == ' ')
-			info->west_texture = read_image_path(readed, info);
-		else if (readed[0] == 'E' && readed[1] == 'A' && readed[2] == ' ')
-			info->east_texture = read_image_path(readed, info);
-		else
+		is_map = assign_non_map_info(readed, info);
+		if (is_map_line(readed) && is_map == FALSE)
 		{
-			if (is_map_line(readed))
-			{
-				info->map->map = malloc_map(info, readed, i);
-				i++;
-			}
+			info->map->map = malloc_map(info, readed, i);
+			i++;
 		}
 		free(readed);
 	}
 	info->map->map_y = i - 1;
 	info->map->num_rays = info->width / WALL_WIDTH;
-	check_parsed_map(info);
 	info->player = start_player(info);
 	info->ray = start_rays(info);
+	check_parsed_map(info);
 	check_parsed_info(info);
 }

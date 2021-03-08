@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 04:38:58 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/08 05:13:18 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,8 @@ int				ft_run(t_parameters *info, t_img *img);
 
 int				convert_color(char *readed, t_parameters *info);
 float			calculate_distance(float x1, float y1, float x2, float y2);
+int				is_map_line(char *readed);
+int				print_map(t_parameters *info, int i);
 float			normalize_angle(float ray_angle);
 
 /*
@@ -205,8 +207,8 @@ void			define_error_message(int error_code, t_parameters *info);
 */
 
 void			check_parsed_info(t_parameters *info);
-int				is_map_line(char *readed);
 void			define_resolution(t_parameters *info, char *readed);
+void			check_parsed_map(t_parameters *info);
 void			read_infos(int fd, t_parameters *info);
 
 /*

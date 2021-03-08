@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 04:56:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 04:43:19 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/08 05:16:23 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,40 @@ float	calculate_distance(float x1, float y1, float x2, float y2)
 
 	value = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 	return (value);
+}
+
+int		is_map_line(char *readed)
+{
+	int i;
+
+	i = 0;
+	while (readed[i] != '\0')
+	{
+		if (ft_strchr(VALID_MAP_CHARS, readed[i]))
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
+}
+
+int		print_map(t_parameters *info, int i)
+{
+	int z;
+	int j;
+
+	z = 0;
+	while (z < i)
+	{
+		j = 0;
+		while (j < info->map->map_x)
+		{
+			printf("%c", info->map->map[z][j]);
+			j++;
+		}
+		printf("\n");
+		z++;
+	}
+	return (0);
 }
 
 float	normalize_angle(float ray_angle)
