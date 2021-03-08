@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 05:16:52 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/08 06:38:39 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,24 @@ void	check_parsed_map(t_parameters *info)
 
 	player = 0;
 	index.y = 0;
+	print_map(info, info->map->map_y);
+	printf("\n");
 	while (index.y < info->map->map_y)
 	{
 		index.x = 0;
 		while (index.x < info->map->map_x)
 		{
 			letter = info->map->map[(int)index.y][(int)index.x];
-			if (letter == ' ')
-				info->map->map[(int)index.y][(int)index.x] = '1';
 			if (!ft_strchr(VALID_MAP_CHARS, letter))
 				define_error_message(ERROR_CHAR, info);
-			if (ft_strchr(PLAYER_START, letter) && player == 0)
+			if (ft_strchr(PLAYER_START, letter) != 0)
 				player++;
-			else if (ft_strchr(PLAYER_START, letter) && player == 1)
-				define_error_message(ERROR_PLAYER, info);
 			index.x++;
 		}
 		index.y++;
 	}
+	(player > 1) ? define_error_message(ERROR_PLAYER, info) : 0;
+	print_map(info, info->map->map_y);
 }
 
 int		assign_non_map_info(char *readed, t_parameters *info)
@@ -110,6 +110,8 @@ void	read_infos(int fd, t_parameters *info)
 		if (is_map_line(readed) && is_map == FALSE)
 		{
 			info->map->map = malloc_map(info, readed, i);
+			// print_map(info, i);
+			// printf("\n");
 			i++;
 		}
 		free(readed);

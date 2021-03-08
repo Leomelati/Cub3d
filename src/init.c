@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 01:13:01 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/08 06:38:30 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char		**malloc_map(t_parameters *info, char *readed, int line)
 	int		i;
 	int		len;
 
-	len = ft_strlen(readed) - 1;
+	len = ft_strlen(readed);
 	if (len > info->map->map_x)
 		info->map->map_x = len;
 	if (!(tmp = malloc(sizeof(char **) * line)))
@@ -56,7 +56,15 @@ char		**malloc_map(t_parameters *info, char *readed, int line)
 	{
 		tmp[i] = malloc(sizeof(char *) * info->map->map_x + 1);
 		if (i == line)
+		{
+			ft_replace(readed, ' ', '1');
 			ft_memcpy(tmp[i], readed, info->map->map_x + 1);
+			while (len <= info->map->map_x)
+			{
+				tmp[i][len] = '1';
+				len++;
+			}
+		}
 		else
 			ft_memcpy(tmp[i], info->map->map[i], ft_strlen(info->map->map[i]));
 		i++;
