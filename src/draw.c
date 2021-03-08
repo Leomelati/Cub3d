@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:39:43 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 04:43:40 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/08 02:12:47 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,21 @@
 void	draw_3dwall(float wall_proj_height, int id, t_img *img,
 	t_parameters *info)
 {
-	int		line_start[2];
-	int		line_end[2];
+	t_coordinates	start;
+	t_coordinates	end;
 
-	line_start[0] = id + 1;
-	line_start[1] = (info->width / 2) - (wall_proj_height / 2);
-	line_start[1] = (line_start[1] > info->height) ?
-		info->height : line_start[1];
-	line_start[1] = (line_start[1] < 0) ? 0 : line_start[1];
-	line_end[0] = id + 1;
-	line_end[1] = line_start[1] + wall_proj_height;
-	line_end[1] = (line_end[1] > info->height) ? info->height : line_end[1];
-	line_end[1] = (line_end[1] < 0) ? 0 : line_end[1];
+	start.x = id + 1;
+	start.y = (info->width / 2) - (wall_proj_height / 2);
+	start.y = (start.y > info->height) ? info->height : start.y;
+	start.y = (start.y < 0) ? 0 : start.y;
+	end.x = id + 1;
+	end.y = start.y + wall_proj_height;
+	end.y = (end.y > info->height) ? info->height : end.y;
+	end.y = (end.y < 0) ? 0 : end.y;
 	if (info->ray[id]->vertical_hit)
-		ft_draw_line(img, line_start, line_end, 0x00CA5F64);
+		ft_draw_line(img, start, end, 0x00CA5F64);
 	else
-		ft_draw_line(img, line_start, line_end, 0x00ACF546);
+		ft_draw_line(img, start, end, 0x00ACF546);
 }
 
 void	wall_limits(t_img *img, t_parameters *info,

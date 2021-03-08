@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 11:51:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 01:40:56 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/08 01:55:49 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ size_t				ft_intlen(int num);
 size_t				ft_hexlen(size_t nbr);
 char				*ft_itoa_uns(unsigned int num);
 char				*ft_itoa_base(size_t nb, int base);
-void				ft_swap(int *a, int *b);
+void				ft_swap(float *a, float *b);
 
 /*
 ** Get_Next_Line Project

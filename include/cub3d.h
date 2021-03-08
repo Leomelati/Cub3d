@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 21:59:09 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/08 01:54:04 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct	s_parameters
 # define ERROR_ARGC 2
 # define ERROR_SCREEN 3
 # define ERROR_PLAYER 4
+# define ERROR_CHAR 5
 
 /*
 ** Player Defines
@@ -219,13 +220,13 @@ void			start_infos(t_parameters *info);
 ** line.c
 */
 
-void			loop_ray_x(t_img *img, int *p1, int *array,
+void			loop_ray_x(t_img *img, t_coordinates p1, int *array,
 	t_coordinates loop);
-void			increment_x(t_img *img, int *p0, int *p1, int *array);
-void			loop_ray_y(t_img *img, int *p1, int *array,
+void			increment_x(t_img *img, t_coordinates p0, t_coordinates p1, int *array);
+void			loop_ray_y(t_img *img, t_coordinates p1, int *array,
 	t_coordinates loop);
-void			increment_y(t_img *img, int *p0, int *p1, int *array);
-void			ft_draw_line(t_img *img, int *p0, int *p1, int color);
+void			increment_y(t_img *img, t_coordinates p0, t_coordinates p1, int *array);
+void			ft_draw_line(t_img *img, t_coordinates p0, t_coordinates p1, int color);
 
 /*
 ** map.c

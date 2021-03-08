@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 04:39:26 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/08 01:22:28 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ char	*read_image_path(char *readed, t_parameters *info)
 {
 	int		img_width;
 	int		img_height;
+	char	*path;
 	void	*image;
 
-	readed = &readed[3];
-	image = mlx_xpm_file_to_image(info->mlx, readed, &img_width, &img_height);
+	path = &readed[3];
+	image = mlx_xpm_file_to_image(info->mlx, path, &img_width, &img_height);
 	if (image == NULL)
 		define_error_message(ERROR_PATH, info);
 	return (image);

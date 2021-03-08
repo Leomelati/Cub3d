@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 02:02:05 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 23:11:48 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,35 @@ void	define_resolution(t_parameters *info, char *readed)
 	free(string);
 }
 
+void	check_parsed_map(t_parameters *info)
+{
+	int				player;
+	char			letter;
+	t_coordinates	index;
+
+	player = 0;
+	index.y = 0;
+	while (index.y < info->map->map_y)
+	{
+		index.x = 0;
+		while (index.x < info->map->map_x)
+		{
+			letter = info->map->map[(int)index.y][(int)index.x];
+			if (letter == ' ')
+				info->map->map[(int)index.y][(int)index.x] = '1';
+			if (!ft_strchr(VALID_MAP_CHARS, letter))
+				define_error_message(ERROR_CHAR, info);
+			if (ft_strchr(PLAYER_START, letter) && player == 0)
+				player++;
+			else if (ft_strchr(PLAYER_START, letter) && player == 1)
+				define_error_message(ERROR_PLAYER, info);
+			
+			index.x++;
+		}
+		index.y++;
+	}
+}
+
 void	read_infos(int fd, t_parameters *info)
 {
 	char	*readed;
@@ -93,6 +122,7 @@ void	read_infos(int fd, t_parameters *info)
 	}
 	info->map->map_y = i - 1;
 	info->map->num_rays = info->width / WALL_WIDTH;
+	check_parsed_map(info);
 	info->player = start_player(info);
 	info->ray = start_rays(info);
 	check_parsed_info(info);

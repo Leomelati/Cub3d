@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 02:36:48 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 21:59:48 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/07 23:11:13 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ void	define_error_message(int error_code, t_parameters *info)
 		ft_putendl_fd("Error: Invalid resolution.", 1);
 	else if (error_code == ERROR_PLAYER)
 		ft_putendl_fd("Error: Invalid player position.", 1);
+	else if (error_code == ERROR_CHAR)
+		ft_putendl_fd("Error: Invalid map char.", 1);
 	destroy_window(info);
 }
