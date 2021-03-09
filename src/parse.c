@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 06:38:39 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/10 00:25:52 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,24 @@ int		assign_non_map_info(char *readed, t_parameters *info)
 		valid = FALSE;
 	return (valid);
 }
+void	fill_rolls(t_map *map)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < map->map_y && map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+			j++;
+		if (j < map->map_x)
+			map->map[i] = ft_strjoin_free(map->map[i],
+				ft_calloc_char(map->map_x - j, '1'));
+		i++;
+	}
+}
+
 
 void	read_infos(int fd, t_parameters *info)
 {
@@ -109,14 +127,15 @@ void	read_infos(int fd, t_parameters *info)
 		is_map = assign_non_map_info(readed, info);
 		if (is_map_line(readed) && is_map == FALSE)
 		{
-			info->map->map = malloc_map(info, readed, i);
+			malloc_map(info->map, readed, i);
 			// print_map(info, i);
 			// printf("\n");
 			i++;
 		}
-		free(readed);
 	}
-	info->map->map_y = i - 1;
+	free(readed);
+	close(fd);
+	fill_rolls(info->map);
 	info->map->num_rays = info->width / WALL_WIDTH;
 	info->player = start_player(info);
 	info->ray = start_rays(info);

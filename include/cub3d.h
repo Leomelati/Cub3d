@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 05:13:18 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/09 23:58:56 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ typedef struct	s_parameters
 # define ERROR_PLAYER 4
 # define ERROR_CHAR 5
 # define ERROR_EXTENSION 6
+# define ERROR_MLX 7
 
 /*
 ** Player Defines
@@ -199,6 +200,7 @@ float			normalize_angle(float ray_angle);
 ** error.c
 */
 
+void			check_starting_errors(int argc, char **argv, t_parameters *info);
 void			check_extension(char *file, t_parameters *info);
 void			define_error_message(int error_code, t_parameters *info);
 
@@ -216,8 +218,8 @@ void			read_infos(int fd, t_parameters *info);
 */
 
 t_ray			**start_rays(t_parameters *info);
-t_map			*start_map();
-char			**malloc_map(t_parameters *info, char *readed, int line);
+void			**allocate_new(void **buffer, int size, int line);
+void			malloc_map(t_map *map, char *readed, int line);
 void			start_infos(t_parameters *info);
 
 /*

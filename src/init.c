@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 06:38:30 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/10 00:11:27 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,54 +28,51 @@ t_ray		**start_rays(t_parameters *info)
 	return (rays);
 }
 
-t_map		*start_map(t_parameters *info)
+void		**allocate_new(void **buffer, int size, int line)
 {
-	t_map *map;
+	void	**new;
+	int		i;
 
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
-	map->map_x = 0;
-	map->map_y = 0;
-	map->num_rays = 0;
-	return (map);
+	new = ft_calloc(line + 2, size);
+	i = 0;
+	while (i < line)
+	{
+		new[i] = buffer[i];
+		i++;
+	}
+	(line > 0) ? free(buffer) : 0;
+	return (new);
 }
 
-char		**malloc_map(t_parameters *info, char *readed, int line)
+void		malloc_map(t_map *map, char *readed, int line)
 {
 	char	**tmp;
 	int		i;
 	int		len;
 
 	len = ft_strlen(readed);
-	if (len > info->map->map_x)
-		info->map->map_x = len;
-	if (!(tmp = malloc(sizeof(char **) * line)))
-		return (NULL);
+	ft_replace(readed, ' ', '1');
+	map->map = (char **)allocate_new((void **)map->map, sizeof(char *), line);
+	map->map[line] = readed;
 	i = 0;
-	while (i <= line)
+	while (readed[i])
 	{
-		tmp[i] = malloc(sizeof(char *) * info->map->map_x + 1);
-		if (i == line)
-		{
-			ft_replace(readed, ' ', '1');
-			ft_memcpy(tmp[i], readed, info->map->map_x + 1);
-			while (len <= info->map->map_x)
-			{
-				tmp[i][len] = '1';
-				len++;
-			}
-		}
-		else
-			ft_memcpy(tmp[i], info->map->map[i], ft_strlen(info->map->map[i]));
+		map->map[line][i] = readed[i];
 		i++;
 	}
-	free(info->map->map);
-	return (tmp);
+	if (len > map->map_x)
+		map->map_x = len;
+	map->map_y++;
 }
 
 void		start_infos(t_parameters *info)
 {
-	info->mlx = NULL;
+	info->mlx = mlx_init();
+	info->map = ft_calloc(1, sizeof(t_map));
+	info->map->map = NULL;
+	info->map->map_x = 0;
+	info->map->map_y = 0;
+	info->map->num_rays = 0;
 	info->win = NULL;
 	info->width = MISS;
 	info->height = MISS;
@@ -87,5 +84,4 @@ void		start_infos(t_parameters *info)
 	info->east_texture = NULL;
 	info->sprite_texture = NULL;
 	info->img = NULL;
-	info->map = start_map(info);
 }

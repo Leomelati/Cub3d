@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 04:29:40 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/09 23:59:15 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ int		main(int argc, char **argv)
 	t_img			img;
 
 	start_infos(&info);
-	info.mlx = mlx_init();
-	if (argc != 2)
-		define_error_message(ERROR_ARGC, &info);
-	check_extension(argv[1], &info);
+	check_starting_errors(argc, argv, &info);
 	read_infos(open(argv[1], O_RDONLY), &info);
 	info.win = mlx_new_window(info.mlx, info.width, info.height, "cub3D");
 	ft_run(&info, &img);

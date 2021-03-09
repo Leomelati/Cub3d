@@ -6,11 +6,19 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 02:36:48 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 04:41:41 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/09 23:59:05 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	check_starting_errors(int argc, char **argv, t_parameters *info)
+{
+	info->mlx == NULL ? define_error_message(ERROR_MLX, info) : 0;
+	if (argc < 2 || argc > 3)
+		define_error_message(ERROR_ARGC, info);
+	check_extension(argv[1], info);
+}
 
 void	check_extension(char *file, t_parameters *info)
 {
@@ -44,5 +52,7 @@ void	define_error_message(int error_code, t_parameters *info)
 		ft_putendl_fd("Error: Invalid map char.", 1);
 	else if (error_code == ERROR_EXTENSION)
 		ft_putendl_fd("Error: Invalid file format.", 1);
+	else if (error_code == ERROR_MLX)
+		ft_putendl_fd("Error: Mlx.", 1);
 	destroy_window(info);
 }

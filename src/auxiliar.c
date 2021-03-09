@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 04:56:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 05:46:46 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/10 00:27:16 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ int		print_map(t_parameters *info, int i)
 	int j;
 
 	z = 0;
-	while (z <= i)
+	while (z < i)
 	{
 		j = 0;
-		while (j <= info->map->map_x)
+		while (j < info->map->map_x)
 		{
 			printf("%c", info->map->map[z][j]);
 			j++;
