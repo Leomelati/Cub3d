@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/10 00:25:52 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/10 02:42:25 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	check_parsed_map(t_parameters *info)
 
 	player = 0;
 	index.y = 0;
-	print_map(info, info->map->map_y);
-	printf("\n");
+	// print_map(info, info->map->map_y);
+	// printf("\n");
 	while (index.y < info->map->map_y)
 	{
 		index.x = 0;
@@ -70,7 +70,7 @@ void	check_parsed_map(t_parameters *info)
 		index.y++;
 	}
 	(player > 1) ? define_error_message(ERROR_PLAYER, info) : 0;
-	print_map(info, info->map->map_y);
+	// print_map(info, info->map->map_y);
 }
 
 int		assign_non_map_info(char *readed, t_parameters *info)

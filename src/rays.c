@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 04:40:20 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/10 03:10:13 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 
 void	compare_distance(t_parameters *info, int ray_id)
 {
-	if (floor(info->ray[ray_id]->horizontal_distance) <=
-		floor(info->ray[ray_id]->vertical_distance))
+	if (info->ray[ray_id]->horizontal_distance <=
+		info->ray[ray_id]->vertical_distance)
 	{
 		info->ray[ray_id]->collision_x = info->ray[ray_id]->horz_collision_x;
 		info->ray[ray_id]->collision_y = info->ray[ray_id]->horz_collision_y;
 		info->ray[ray_id]->distance = info->ray[ray_id]->horizontal_distance;
 		info->ray[ray_id]->vertical_hit = FALSE;
 	}
-	else if (floor(info->ray[ray_id]->horizontal_distance) >
-		floor(info->ray[ray_id]->vertical_distance))
+	else
 	{
 		info->ray[ray_id]->collision_x = info->ray[ray_id]->vert_collision_x;
 		info->ray[ray_id]->collision_y = info->ray[ray_id]->vert_collision_y;
