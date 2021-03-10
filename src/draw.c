@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:39:43 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 02:12:47 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/10 05:34:08 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	draw_3dwall(float wall_proj_height, int id, t_img *img,
 
 	start.x = id + 1;
 	start.y = (info->width / 2) - (wall_proj_height / 2);
-	start.y = (start.y > info->height) ? info->height : start.y;
+	start.y = (start.y > info->height * TILE_SIZE) ? info->height : start.y;
 	start.y = (start.y < 0) ? 0 : start.y;
 	end.x = id + 1;
 	end.y = start.y + wall_proj_height;
-	end.y = (end.y > info->height) ? info->height : end.y;
+	end.y = (end.y > info->height * TILE_SIZE) ? info->height : end.y;
 	end.y = (end.y < 0) ? 0 : end.y;
 	if (info->ray[id]->vertical_hit)
 		ft_draw_line(img, start, end, 0x00CA5F64);

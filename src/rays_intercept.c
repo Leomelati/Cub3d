@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:27:47 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 04:51:48 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/10 05:25:38 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 	check.y = intercept.y;
 	check.x = intercept.x;
 	find_hoz_intersection(&check, &step, info, ray);
-	if ((check.x >= 0) && (check.x <= info->width) &&
-		(check.y >= 0) && (check.y <= info->height))
+	if ((check.x >= 0) && (check.x <= info->width * TILE_SIZE) &&
+		(check.y >= 0) && (check.y <= info->height * TILE_SIZE))
 		ray->horizontal_distance = calculate_distance(info->player->pos_x,
 			info->player->pos_y, ray->horz_collision_x, ray->horz_collision_y);
 	else
@@ -102,8 +102,8 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 	check.y = intercept.y;
 	check.x = intercept.x;
 	find_vert_intersection(&check, &step, info, ray);
-	if ((check.x >= 0) && (check.x <= info->width) &&
-		(check.y >= 0) && (check.y <= info->height))
+	if ((check.x >= 0) && (check.x <= info->width * TILE_SIZE) &&
+		(check.y >= 0) && (check.y <= info->height * TILE_SIZE))
 		ray->vertical_distance = calculate_distance(info->player->pos_x,
 			info->player->pos_y, ray->vert_collision_x, ray->vert_collision_y);
 	else

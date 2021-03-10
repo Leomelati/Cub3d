@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 01:59:53 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/10 05:21:15 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int		ft_window_limit(float x, float y, t_parameters *info)
 {
-	if (x < 0 || x >= info->width || y < 0 || y >= info->height)
+	if (x < 0 || x >= info->width * TILE_SIZE ||
+	y < 0 || y >= info->height * TILE_SIZE)
 		return (TRUE);
 	return (FALSE);
 }
