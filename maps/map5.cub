@@ -1,11 +1,11 @@
 
 
 R 950 600
-NO ./text/42/42sp.xpm
-WE ./text/42/star.xpm
-EA ./text/42/dontpanic.xpm
-SO ./text/42/guide.xpm
-S ./text/42/marvin.xpm
+NO ./texture/42sp.xpm
+WE ./texture/star.xpm
+EA ./texture/dontpanic.xpm
+SO ./texture/guide.xpm
+S ./texture/marvin.xpm
 F 100, 100, 110
 C 0,0,50
 

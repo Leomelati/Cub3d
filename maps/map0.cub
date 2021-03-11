@@ -1,14 +1,14 @@
 
 
-S  ./text/wolf/pillar.xpm
+S  ./texture/pillar.xpm
 F 		200  ,	200  , 80
 
-SO 	./text/wolf/eagle.xpm
+SO 	./texture/eagle.xpm
 
 R    1000 600
-NO     ./text/wolf/redbrick.xpm
-WE   ./text/wolf/bluestone.xpm
-EA  ./text/wolf/wood.xpm
+NO     ./texture/redbrick.xpm
+WE   ./texture/bluestone.xpm
+EA  ./texture/wood.xpm
 
 C 0,255,255
 

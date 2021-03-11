@@ -1,11 +1,11 @@
 
 R 1300 600
-NO ./text/robot/3.xpm
+NO ./texture/3.xpm
 
-WE ./text/robot/8.xpm
-EA ./text/robot/2.xpm
-SO ./text/robot/7.xpm
-S ./text/robot/sp1.xpm
+WE ./texture/8.xpm
+EA ./texture/2.xpm
+SO ./texture/7.xpm
+S ./texture/sp1.xpm
 F 95, 80, 50
 C 0,0,50
 
