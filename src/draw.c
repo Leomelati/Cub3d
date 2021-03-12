@@ -6,37 +6,51 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:39:43 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/11 01:28:37 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/12 07:42:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// void	draw_3dwall(float wall_proj_height, int id, t_img *img,
-// 	t_parameters *info)
-// {
-// 	t_coordinates	start;
-// 	t_coordinates	end;
-
-// 	start.x = id + 1;
-// 	start.y = (info->width / 2) - (wall_proj_height / 2);
-// 	start.y = (start.y > info->height * TILE_SIZE) ? info->height : start.y;
-// 	start.y = (start.y < 0) ? 0 : start.y;
-// 	end.x = id + 1;
-// 	end.y = start.y + wall_proj_height;
-// 	end.y = (end.y > info->height * TILE_SIZE) ? info->height : end.y;
-// 	end.y = (end.y < 0) ? 0 : end.y;
-// 	if (info->ray[id]->vertical_hit)
-// 		ft_draw_line(img, start, end, 0x00CA5F64);
-// 	else
-// 		ft_draw_line(img, start, end, 0x00ACF546);
-// }
-
-int		get_color(t_parameters *info, int column_id)
+int		get_color(t_img *img, int x, int y)
 {
-	if (info->ray[column_id]->vertical_hit)
-		return (0x00CA5F64);
-	return (0x00ACF546);
+	int		color;
+
+	color =  (y * img->line_length + x * (img->bits_per_pixel / 8));
+	return (*(unsigned int *)(img->addr + color + 2) << 16 |
+			*(unsigned int *)(img->addr + color + 1) << 8 |
+			*(unsigned int *)(img->addr + color + 0) << 0);
+}
+
+int		get_texture(t_parameters *info, int column_id, int top_pixel, int bottom_pixel, int i)
+{
+	t_coordinates	texture;
+
+	if (info->ray[column_id]->facing_up && !(info->ray[column_id]->vertical_hit))
+	{
+		texture.x = (int)info->ray[column_id]->collision_x % info->north_texture->width;
+		texture.y = ((i - top_pixel) * (info->north_texture->height) / (bottom_pixel - top_pixel));
+		return (get_color(info->north_texture, texture.x, texture.y));
+	}
+	else if (info->ray[column_id]->facing_down && !(info->ray[column_id]->vertical_hit))
+	{
+		texture.x = (int)info->ray[column_id]->collision_x % info->south_texture->width;
+		texture.y = ((i - top_pixel) * (info->south_texture->height) / (bottom_pixel - top_pixel));
+		return (get_color(info->south_texture, texture.x, texture.y));
+	}
+	else if (info->ray[column_id]->facing_right && info->ray[column_id]->vertical_hit)
+	{
+		texture.x = (int)info->ray[column_id]->collision_y % info->east_texture->width;
+		texture.y = ((i - top_pixel) * (info->east_texture->height) / (bottom_pixel - top_pixel));
+		return (get_color(info->east_texture, texture.x, texture.y));
+	}
+	else if (info->ray[column_id]->facing_left && info->ray[column_id]->vertical_hit)
+	{
+		texture.x = (int)info->ray[column_id]->collision_y % info->west_texture->width;
+		texture.y = ((i - top_pixel) * (info->west_texture->height) / (bottom_pixel - top_pixel));
+		return (get_color(info->west_texture, texture.x, texture.y));
+	}
+	return (0);
 }
 
 void	wall_limits(t_img *img, t_parameters *info,
@@ -58,7 +72,7 @@ void	wall_limits(t_img *img, t_parameters *info,
 	}
 	while (i <= bottom_pixel)
 	{
-		ft_pixel_put(img, column_id, i, get_color(info, column_id));
+		ft_pixel_put(img, column_id, i, get_texture(info, column_id, top_pixel, bottom_pixel, i));
 		i++;
 	}
 	while (i <= info->height)

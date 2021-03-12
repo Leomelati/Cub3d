@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/11 01:26:32 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/12 06:22:03 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	cast_all_rays(t_img *img, t_parameters *info)
 			- info->player->rotation_angle);
 		wall_proj_height = (TILE_SIZE / fixed_dist) * dist_proj_plan;
 		wall_limits(img, info, wall_proj_height, i);
-		// draw_3dwall(wall_proj_height, i, img, info);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:45:11 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/11 03:16:56 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/12 06:52:57 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,17 @@ int		destroy_window(t_parameters *info)
 	ft_free_rays(info);
 	ft_free_map(info);
 	ft_free_img(info, info->img);
+	ft_free_img(info, info->north_texture);
+	ft_free_img(info, info->south_texture);
+	ft_free_img(info, info->east_texture);
+	ft_free_img(info, info->west_texture);
 	if (info->win)
+	{
 		mlx_destroy_window(info->mlx, info->win);
+		info->win = NULL;
+	}
 	free(info->mlx);
+	info->mlx = NULL;
 	exit(0);
 	return (0);
 }

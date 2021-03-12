@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/10 02:42:25 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/12 06:34:05 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,6 @@ void	read_infos(int fd, t_parameters *info)
 		if (is_map_line(readed) && is_map == FALSE)
 		{
 			malloc_map(info->map, readed, i);
-			// print_map(info, i);
-			// printf("\n");
 			i++;
 		}
 	}

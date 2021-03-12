@@ -6,24 +6,29 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/09 23:59:15 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/12 06:50:45 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*read_image_path(char *readed, t_parameters *info)
+t_img	*read_image_path(char *readed, t_parameters *info)
 {
-	int		img_width;
-	int		img_height;
-	char	*path;
-	void	*image;
+	t_img	*texture;
+	char	**path;
 
-	path = &readed[3];
-	image = mlx_xpm_file_to_image(info->mlx, path, &img_width, &img_height);
-	if (image == NULL)
+	path = ft_split(readed, ' ');
+	texture = ft_calloc(1, sizeof(t_img));
+	texture->img = mlx_xpm_file_to_image(info->mlx, path[1], &texture->width, &texture->height);
+	if (!texture->img)
+	{
+		free(path);
+		path = NULL;
 		define_error_message(ERROR_PATH, info);
-	return (image);
+	}
+	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
+	&texture->line_length, &texture->endian);
+	return (texture);
 }
 
 void	ft_pixel_put(t_img *data, int x, int y, int color)
@@ -38,7 +43,7 @@ t_img	*ft_new_image(t_parameters *info, int width, int height)
 {
 	t_img	*img;
 
-	if (!(img = malloc(sizeof(t_img))))
+	if (!(img = ft_calloc(1, sizeof(t_img))))
 		return (NULL);
 	if (!(img->img = mlx_new_image(info->mlx, width, height)))
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/09 23:58:56 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/12 06:42:17 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ typedef struct	s_parameters
 	int			height;
 	int			floor_color;
 	int			ceilling_color;
-	char		*north_texture;
-	char		*south_texture;
-	char		*west_texture;
-	char		*east_texture;
-	char		*sprite_texture;
+	t_img		*north_texture;
+	t_img		*south_texture;
+	t_img		*west_texture;
+	t_img		*east_texture;
+	t_img		*sprite_texture;
 	t_img		*img;
 	t_player	*player;
 	t_map		*map;
@@ -181,7 +181,7 @@ typedef struct	s_parameters
 ** main.c
 */
 
-char			*read_image_path(char *readed, t_parameters *info);
+t_img			*read_image_path(char *readed, t_parameters *info);
 void			ft_pixel_put(t_img *data, int x, int y, int color);
 t_img			*ft_new_image(t_parameters *info, int width, int height);
 int				ft_run(t_parameters *info, t_img *img);
