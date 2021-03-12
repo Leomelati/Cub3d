@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/12 06:22:03 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/12 23:11:06 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,19 @@ void	facing_position(t_parameters *info, t_ray *ray)
 	vertical_intersection(info, ray);
 }
 
-void	cast_rays(t_parameters *info)
+void	cast_rays(t_parameters *info, float dist_proj_plan)
 {
 	float	ray_angle;
-	int		i;
+	int		col;
 
-	ray_angle = info->player->rotation_angle - (info->player->fov / 2);
-	i = 0;
-	while (i < info->map->num_rays)
+	col = 0;
+	while (col < info->map->num_rays)
 	{
-		info->ray[i]->angle = normalize_angle(ray_angle);
-		facing_position(info, info->ray[i]);
-		compare_distance(info, i);
-		ray_angle += (info->player->fov / info->map->num_rays);
-		i++;
+		ray_angle = info->player->rotation_angle + atan((col - info->map->num_rays / 2) / dist_proj_plan);
+		info->ray[col]->angle = normalize_angle(ray_angle);
+		facing_position(info, info->ray[col]);
+		compare_distance(info, col);
+		col++;
 	}
 }
 
@@ -67,8 +66,8 @@ void	cast_all_rays(t_img *img, t_parameters *info)
 	float	fixed_dist;
 	int		i;
 
-	cast_rays(info);
 	dist_proj_plan = (info->width / 2) / tan(info->player->fov / 2);
+	cast_rays(info, dist_proj_plan);
 	i = 0;
 	while (i < info->map->num_rays)
 	{

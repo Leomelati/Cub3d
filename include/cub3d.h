@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/12 06:42:17 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/12 23:14:35 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ void			ft_update_player(int keycode, t_parameters *info);
 
 void			compare_distance(t_parameters *info, int ray_id);
 void			facing_position(t_parameters *info, t_ray *ray);
-void			cast_rays(t_parameters *info);
+void			cast_rays(t_parameters *info, float dist_proj_plan);
 void			cast_all_rays(t_img *img, t_parameters *info);
 
 /*
