@@ -6,11 +6,33 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 04:56:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/12 07:02:36 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/14 22:16:42 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int		ft_count_in_array(t_map *map, char find)
+{
+	int		i;
+	int		j;
+	int		count;
+
+	count = 0;
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			if (map->map[i][j] == find)
+				count++;
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
 
 int		convert_color(char *readed, t_parameters *info)
 {

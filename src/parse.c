@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/12 06:34:05 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/14 22:19:27 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ void	read_infos(int fd, t_parameters *info)
 	close(fd);
 	fill_rolls(info->map);
 	info->map->num_rays = info->width / WALL_WIDTH;
+	info->map->num_sprites = ft_count_in_array(info->map, SPRITE);
+	info->sprites = start_sprites(info);
 	info->player = start_player(info);
 	info->ray = start_rays(info);
 	check_parsed_map(info);

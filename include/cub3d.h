@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/12 23:14:35 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/14 22:17:56 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,16 @@ typedef struct	s_map
 	int			map_x;
 	int			map_y;
 	int			num_rays;
+	int			num_sprites;
 }				t_map;
+
+typedef struct	s_sprite
+{
+	t_coordinates	pos;
+	t_coordinates	map_pos;
+	float			distance;
+}				t_sprite;
+
 
 typedef struct	s_ray
 {
@@ -101,6 +110,7 @@ typedef struct	s_parameters
 	t_player	*player;
 	t_map		*map;
 	t_ray		**ray;
+	t_sprite	**sprites;
 }				t_parameters;
 
 /*
@@ -163,8 +173,9 @@ typedef struct	s_parameters
 */
 
 # define VALID_MAP_CHARS "012NSEW"
-# define WALL '1'
 # define PATH '0'
+# define WALL '1'
+# define SPRITE '2'
 # define EMPTY ' '
 # define PLAYER_START "NSEW"
 # define NORTH 'N'
@@ -190,6 +201,7 @@ int				ft_run(t_parameters *info, t_img *img);
 ** auxiliar.c
 */
 
+int				ft_count_in_array(t_map *map, char find);
 int				convert_color(char *readed, t_parameters *info);
 float			calculate_distance(float x1, float y1, float x2, float y2);
 int				is_map_line(char *readed);
@@ -282,13 +294,19 @@ void			find_vert_intersection(t_coordinates *check,
 void			vertical_intersection(t_parameters *info, t_ray *ray);
 
 /*
-** draw.c
+** wall.c
 */
 
 void			draw_3dwall(float wall_proj_height, int id,
 	t_img *img, t_parameters *info);
 void			wall_limits(t_img *img, t_parameters *info, float wall_height,
 	int column_id);
+
+/*
+** sprite.c
+*/
+
+
 
 /*
 ** free.c

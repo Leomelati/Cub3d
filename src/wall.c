@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:39:43 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/12 07:42:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/14 21:47:34 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		get_color(t_img *img, int x, int y)
 			*(unsigned int *)(img->addr + color + 0) << 0);
 }
 
-int		get_texture(t_parameters *info, int column_id, int top_pixel, int bottom_pixel, int i)
+int		get_texture(t_parameters *info, int i, int column_id, int top_pixel, int bottom_pixel)
 {
 	t_coordinates	texture;
 
@@ -72,7 +72,7 @@ void	wall_limits(t_img *img, t_parameters *info,
 	}
 	while (i <= bottom_pixel)
 	{
-		ft_pixel_put(img, column_id, i, get_texture(info, column_id, top_pixel, bottom_pixel, i));
+		ft_pixel_put(img, column_id, i, get_texture(info, i, column_id, top_pixel, bottom_pixel));
 		i++;
 	}
 	while (i <= info->height)
