@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:39:43 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/16 05:36:16 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/16 23:16:17 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ void	wall_limits(t_img *img, t_parameters *info,
 	top_pixel = (info->height / 2) - (wall_height / 2);
 	bottom_pixel = (info->height / 2) + (wall_height / 2);
 	i = 0;
-	while (i <= top_pixel)
+	while (i <= top_pixel && i >= 0 && i <= info->height)
 	{
 		ft_pixel_put(img, column_id, i, info->ceilling_color);
 		i++;
 	}
-	while (i <= bottom_pixel)
+	while (i <= bottom_pixel && i >= 0 && i <= info->height)
 	{
 		ft_pixel_put(img, column_id, i, get_texture(info, i, column_id, top_pixel, bottom_pixel));
 		i++;

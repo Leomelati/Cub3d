@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/16 23:04:38 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/16 23:21:21 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ void	cast_all_rays(t_img *img, t_parameters *info)
 		compare_distance(info, i);
 		fixed_dist = info->ray[i]->distance * cos(info->ray[i]->angle - info->player->rotation_angle);
 		wall_proj_height = TILE_SIZE / fixed_dist * dist_proj_plan;
-		wall_proj_height = (wall_proj_height > info->height) ? info->height : wall_proj_height;
-		wall_proj_height = (wall_proj_height < 0) ? 0 : wall_proj_height;
 		wall_limits(img, info, wall_proj_height, i);
 		i++;
 	}
