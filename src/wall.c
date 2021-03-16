@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   wall.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:39:43 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/14 21:47:34 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/16 05:36:16 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 int		get_color(t_img *img, int x, int y)
 {
-	int		color;
+	char	*color;
 
-	color =  (y * img->line_length + x * (img->bits_per_pixel / 8));
-	return (*(unsigned int *)(img->addr + color + 2) << 16 |
-			*(unsigned int *)(img->addr + color + 1) << 8 |
-			*(unsigned int *)(img->addr + color + 0) << 0);
+	color =  img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	return (*(unsigned int *)(color));
 }
 
 int		get_texture(t_parameters *info, int i, int column_id, int top_pixel, int bottom_pixel)
@@ -61,9 +59,7 @@ void	wall_limits(t_img *img, t_parameters *info,
 	int		i;
 
 	top_pixel = (info->height / 2) - (wall_height / 2);
-	top_pixel = (top_pixel < 0) ? 0 : top_pixel;
 	bottom_pixel = (info->height / 2) + (wall_height / 2);
-	bottom_pixel = (bottom_pixel > info->height) ? info->height : bottom_pixel;
 	i = 0;
 	while (i <= top_pixel)
 	{

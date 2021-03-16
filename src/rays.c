@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/14 21:55:41 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/16 23:04:38 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,6 @@ void	facing_position(t_parameters *info, t_ray *ray)
 	vertical_intersection(info, ray);
 }
 
-void	cast_rays(t_parameters *info, float dist_proj_plan)
-{
-	float	ray_angle;
-	int		col;
-
-	col = 0;
-	while (col < info->map->num_rays)
-	{
-		ray_angle = info->player->rotation_angle + atan((col - info->map->num_rays / 2) / dist_proj_plan);
-		info->ray[col]->angle = normalize_angle(ray_angle);
-		facing_position(info, info->ray[col]);
-		compare_distance(info, col);
-		col++;
-	}
-}
-
 void	cast_all_rays(t_img *img, t_parameters *info)
 {
 	float	dist_proj_plan;
@@ -66,14 +50,18 @@ void	cast_all_rays(t_img *img, t_parameters *info)
 	float	fixed_dist;
 	int		i;
 
-	dist_proj_plan = (info->width / 2) / tan(info->player->fov / 2);
-	cast_rays(info, dist_proj_plan);
+	dist_proj_plan = (info->width / 2) / tan((info->player->fov / 2));
 	i = 0;
 	while (i < info->map->num_rays)
 	{
-		fixed_dist = info->ray[i]->distance * cos(info->ray[i]->angle
-			- info->player->rotation_angle);
-		wall_proj_height = (TILE_SIZE / fixed_dist) * dist_proj_plan;
+		info->ray[i]->angle = info->player->rotation_angle + atan2((i - info->map->num_rays / 2), dist_proj_plan);
+		info->ray[i]->angle = normalize_angle(info->ray[i]->angle);
+		facing_position(info, info->ray[i]);
+		compare_distance(info, i);
+		fixed_dist = info->ray[i]->distance * cos(info->ray[i]->angle - info->player->rotation_angle);
+		wall_proj_height = TILE_SIZE / fixed_dist * dist_proj_plan;
+		wall_proj_height = (wall_proj_height > info->height) ? info->height : wall_proj_height;
+		wall_proj_height = (wall_proj_height < 0) ? 0 : wall_proj_height;
 		wall_limits(img, info, wall_proj_height, i);
 		i++;
 	}

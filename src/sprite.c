@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 22:06:52 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/14 22:22:08 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/16 01:46:57 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@ t_sprite	**start_sprites(t_parameters *info)
 		array[i] = calloc(1, sizeof(t_ray));
 		i++;
 	}
-	return (array);
-	
+	return (array);	
 }

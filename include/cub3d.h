@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/14 22:17:56 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/03/16 05:03:02 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,7 +306,7 @@ void			wall_limits(t_img *img, t_parameters *info, float wall_height,
 ** sprite.c
 */
 
-
+t_sprite		**start_sprites(t_parameters *info);
 
 /*
 ** free.c
