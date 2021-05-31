@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/10 00:11:27 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/05/31 07:50:39 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,20 @@ void		malloc_map(t_map *map, char *readed, int line)
 	map->map_y++;
 }
 
+void	start_map(t_map *map)
+{
+	map->map = NULL;
+	map->map_x = 0;
+	map->map_y = 0;
+	map->num_rays = 0;
+}
+
 void		start_infos(t_parameters *info)
 {
-	info->mlx = mlx_init();
 	info->map = ft_calloc(1, sizeof(t_map));
-	info->map->map = NULL;
-	info->map->map_x = 0;
-	info->map->map_y = 0;
-	info->map->num_rays = 0;
+	start_map(info->map);
+	info->player = ft_calloc(1, sizeof(t_player));
+	start_player(info->player);
 	info->win = NULL;
 	info->width = MISS;
 	info->height = MISS;
@@ -84,4 +90,6 @@ void		start_infos(t_parameters *info)
 	info->east_texture = NULL;
 	info->sprite_texture = NULL;
 	info->img = NULL;
+	if (!(info->mlx = mlx_init()))
+		ft_error(info, ERROR_MLX);
 }

@@ -6,18 +6,14 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 22:53:41 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/05/31 08:31:38 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_player	*start_player(t_parameters *info)
+void	start_player(t_player *player)
 {
-	t_player	*player;
-
-	if (!(player = malloc(sizeof(t_player))))
-		return (NULL);
 	player->fov = FOV_ANGLE * (PI / 180);
 	player->size = 5;
 	player->turn_direction = FALSE;
@@ -25,48 +21,21 @@ t_player	*start_player(t_parameters *info)
 	player->move_speed = 5;
 	player->rotation_speed = 5 * (PI / 180);
 	player->pos_x = MISS;
-	player->pos_x = MISS;
-	player_start_position(info, player);
-	if (player->pos_x == MISS || player->pos_y == MISS)
-		define_error_message(ERROR_PLAYER, info);
-	return (player);
+	player->pos_y = MISS;
 }
 
-void		player_start_angle(char letter, t_player *player)
+int	parse_initial_position(t_parameters *info, char c, int row, int column)
 {
-	if (letter == SOUTH)
-		player->rotation_angle = PI / 2;
-	else if (letter == NORTH)
-		player->rotation_angle = (3 * PI) / 2;
-	else if (letter == WEST)
-		player->rotation_angle = PI;
-	else if (letter == EAST)
-		player->rotation_angle = 0;
-}
-
-void		player_start_position(t_parameters *info, t_player *player)
-{
-	int		index_x;
-	int		index_y;
-	char	letter;
-
-	index_y = 0;
-	while (index_y < info->map->map_y)
-	{
-		index_x = 0;
-		while (index_x < info->map->map_x)
-		{
-			letter = info->map->map[index_y][index_x];
-			if (ft_strchr(PLAYER_START, letter))
-			{
-				player->pos_x = floor(index_x * TILE_SIZE);
-				player->pos_y = floor(index_y * TILE_SIZE);
-				player_start_angle(letter, player);
-			}
-			index_x++;
-		}
-		index_y++;
-	}
+	if (info->player->pos_x != MISS || info->player->pos_y != MISS)
+		return (ERROR_PLAYER);
+	info->player->pos_x = column * TILE_SIZE + 1;
+	info->player->pos_y = row * TILE_SIZE + 1;
+	info->player->rotation_angle = (c == NORTH) ? (3 * PI) / 2 : 0;
+	info->player->rotation_angle = (c == SOUTH) ? PI / 2 : info->player->rotation_angle;
+	info->player->rotation_angle = (c == EAST) ? 0 : info->player->rotation_angle;
+	info->player->rotation_angle = (c == WEST) ? PI : info->player->rotation_angle;
+	info->map->map[row][column] = '0';
+	return (0);
 }
 
 // void	draw_player(t_img	*img, t_parameters *info)

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/16 05:03:02 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/05/31 08:07:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,14 +126,18 @@ typedef struct	s_parameters
 ** Error Defines
 */
 
-# define ERROR_COLOR 0
-# define ERROR_PATH 1
-# define ERROR_ARGC 2
-# define ERROR_SCREEN 3
-# define ERROR_PLAYER 4
-# define ERROR_CHAR 5
-# define ERROR_EXTENSION 6
-# define ERROR_MLX 7
+# define ERROR_PATH -1
+# define ERROR_ARGC -2
+# define ERROR_SCREEN -3
+# define ERROR_PLAYER -4
+# define ERROR_CHAR -5
+# define ERROR_EXTENSION -6
+# define ERROR_MLX -7
+# define ERROR_COLOR -8
+# define ERROR_INVALID_ARGUMENT -9
+# define ERROR_INVALID_LINE -10
+# define ERROR_INVALID_MAP -11
+# define ERROR_TEXTURE -12
 
 /*
 ** Player Defines
@@ -212,18 +216,21 @@ float			normalize_angle(float ray_angle);
 ** error.c
 */
 
-void			check_starting_errors(int argc, char **argv, t_parameters *info);
-void			check_extension(char *file, t_parameters *info);
-void			define_error_message(int error_code, t_parameters *info);
+int				ft_error(t_parameters *info, int i);
+int				ft_arg_error(int i);
+void			check_starting_errors(int argc, char **argv);
+void			check_extension(char *file);
+char 			*define_error_message(int error_code);
 
 /*
-** parse.c
+** free.c
 */
 
-void			check_parsed_info(t_parameters *info);
-void			define_resolution(t_parameters *info, char *readed);
-void			check_parsed_map(t_parameters *info);
-void			read_infos(int fd, t_parameters *info);
+int				close_program(void);
+void			ft_free_map(t_parameters *info);
+void			ft_free_rays(t_parameters *info);
+void			ft_free_img(t_parameters *info, t_img *img);
+int				destroy_window(t_parameters *info);
 
 /*
 ** init.c
@@ -232,7 +239,26 @@ void			read_infos(int fd, t_parameters *info);
 t_ray			**start_rays(t_parameters *info);
 void			**allocate_new(void **buffer, int size, int line);
 void			malloc_map(t_map *map, char *readed, int line);
+void			start_map(t_map *map);
 void			start_infos(t_parameters *info);
+
+/*
+** parse.c
+*/
+
+void			define_resolution(t_parameters *info, char *readed);
+static int		is_empty_line(char *line);
+int				end_of_file(int fd, char **line);
+int				assign_non_map_info(char *readed, t_parameters *info);
+int				is_identifier(char *line);
+static int		check_char(t_map *map, int i, int j);
+int				validate_map(t_map *map);
+int				check_parsed_info(t_parameters *info);
+int				fill_rolls(t_parameters *info);
+void			**allocate_dynamic(void **buffer, int size, int m);
+static int		parse_row_map(t_parameters *info, char *line, int row);
+int				get_map_info(t_parameters *info, char *line, int *row, int *ismap);
+int				read_infos(char *file, t_parameters *info);
 
 /*
 ** line.c
@@ -265,12 +291,9 @@ int				key_release(int keycode, t_parameters *info, t_img *img);
 ** player.c
 */
 
-t_player		*start_player(t_parameters *info);
-void			player_start_angle(char letter, t_player *player);
-void			player_start_position(t_parameters *info, t_player *player);
-void			draw_player(t_img	*img, t_parameters *info);
-void			calculate_next_move(int keycode, float move_step,
-	t_coordinates *next, t_parameters *info);
+void			start_player(t_player *player);
+int		parse_initial_position(t_parameters *info, char c, int row, int column);
+void			calculate_next_move(int keycode, float move_step, t_coordinates *next, t_parameters *info);
 void			ft_update_player(int keycode, t_parameters *info);
 
 /*
@@ -307,12 +330,5 @@ void			wall_limits(t_img *img, t_parameters *info, float wall_height,
 */
 
 t_sprite		**start_sprites(t_parameters *info);
-
-/*
-** free.c
-*/
-
-void			ft_free_img(t_parameters *info, t_img *img);
-int				destroy_window(t_parameters *info);
 
 #endif

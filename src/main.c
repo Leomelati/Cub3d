@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/12 06:50:45 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/05/31 07:50:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_img	*read_image_path(char *readed, t_parameters *info)
 	{
 		free(path);
 		path = NULL;
-		define_error_message(ERROR_PATH, info);
+		ft_error(info, ERROR_PATH);
 	}
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
 	&texture->line_length, &texture->endian);
@@ -71,9 +71,12 @@ int		main(int argc, char **argv)
 	t_parameters	info;
 	t_img			img;
 
+
+	check_starting_errors(argc, argv);
 	start_infos(&info);
-	check_starting_errors(argc, argv, &info);
-	read_infos(open(argv[1], O_RDONLY), &info);
+	if (!read_infos(argv[1], &info))
+		return (0);
+	info.ray = start_rays(&info);
 	info.win = mlx_new_window(info.mlx, info.width, info.height, "cub3D");
 	ft_run(&info, &img);
 	mlx_hook(info.win, 33, 0, destroy_window, &info);
