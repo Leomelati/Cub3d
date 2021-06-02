@@ -3,6 +3,7 @@ NO ./texture/bluestone.xpm
 SO ./texture/greystone.xpm
 WE ./texture/redbrick.xpm
 EA ./texture/wood.xpm
+S ./texture/pillar.xpm
 F 220,100,0
 C 225,130,40
 

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/05/31 07:50:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/02 06:23:00 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		main(int argc, char **argv)
 	info.ray = start_rays(&info);
 	info.win = mlx_new_window(info.mlx, info.width, info.height, "cub3D");
 	ft_run(&info, &img);
-	mlx_hook(info.win, 33, 0, destroy_window, &info);
+	mlx_hook(info.win, 33, 0, clean_and_close, &info);
 	mlx_hook(info.win, KEY_PRESS, KEYPRESS_MASK, key_press, &info);
 	mlx_hook(info.win, KEY_RELEASE, KEYRELEASE_MASK, key_release, &info);
 	mlx_loop(info.mlx);

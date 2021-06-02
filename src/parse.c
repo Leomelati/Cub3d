@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/05/31 09:05:58 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/02 04:48:07 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,14 @@ int		assign_non_map_info(char *readed, t_parameters *info)
 
 int			is_identifier(char *line)
 {
-	if (ft_strchr("RCFS", line[0]) ||
-		ft_strncmp(line, "SO ", 3) ||
-		ft_strncmp(line, "SO\t", 3) ||
-		ft_strncmp(line, "WE ", 3) ||
-		ft_strncmp(line, "WE\t", 3) ||
-		ft_strncmp(line, "EA ", 3) ||
-		ft_strncmp(line, "EA\t", 3) ||
-		ft_strncmp(line, "SO ", 3) ||
-		ft_strncmp(line, "SO\t", 3))
+	if ((line[0] == 'R' && line[1] == ' ') ||
+		(line[0] == 'F' && line[1] == ' ') ||
+		(line[0] == 'C' && line[1] == ' ') ||
+		(line[0] == 'S' && line[1] == ' ') ||
+		(line[0] == 'N' && line[1] == 'O') ||
+		(line[0] == 'W' && line[1] == 'E') ||
+		(line[0] == 'E' && line[1] == 'A') ||
+		(line[0] == 'S' && line[1] == 'O'))
 		return (TRUE);
 	return (FALSE);
 }

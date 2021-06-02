@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/05/31 08:07:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/02 06:22:53 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,7 @@ void			ft_free_map(t_parameters *info);
 void			ft_free_rays(t_parameters *info);
 void			ft_free_img(t_parameters *info, t_img *img);
 int				destroy_window(t_parameters *info);
+int				clean_and_close(t_parameters *info);
 
 /*
 ** init.c

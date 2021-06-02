@@ -3,6 +3,7 @@ NO ./texture/bluestone.xpm
 SO ./texture/greystone.xpm
 WE ./texture/redbrick.xpm
 EA ./texture/wood.xpm
+S ./texture/pillar.xpm
 C 148,86,248
 F 94,138,28
 
@@ -12,7 +13,7 @@ F 94,138,28
 111100000010101
 100000000010101
 100000001111101
-100000000000001
+1000000000000001
 100000000000001
 1111110N0111101
 100000000000001
