@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/05/31 07:50:39 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/04 02:57:05 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,9 @@ void		malloc_map(t_map *map, char *readed, int line)
 	map->map_y++;
 }
 
-void	start_map(t_map *map)
-{
-	map->map = NULL;
-	map->map_x = 0;
-	map->map_y = 0;
-	map->num_rays = 0;
-}
-
 void		start_infos(t_parameters *info)
 {
 	info->map = ft_calloc(1, sizeof(t_map));
-	start_map(info->map);
 	info->player = ft_calloc(1, sizeof(t_player));
 	start_player(info->player);
 	info->win = NULL;
