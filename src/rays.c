@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/16 23:21:21 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/04 07:39:26 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	facing_position(t_parameters *info, t_ray *ray)
 	vertical_intersection(info, ray);
 }
 
-void	cast_all_rays(t_img *img, t_parameters *info)
+void	cast_all_rays(t_parameters *info)
 {
 	float	dist_proj_plan;
 	float	wall_proj_height;
@@ -60,7 +60,7 @@ void	cast_all_rays(t_img *img, t_parameters *info)
 		compare_distance(info, i);
 		fixed_dist = info->ray[i]->distance * cos(info->ray[i]->angle - info->player->rotation_angle);
 		wall_proj_height = TILE_SIZE / fixed_dist * dist_proj_plan;
-		wall_limits(img, info, wall_proj_height, i);
+		wall_limits(info, wall_proj_height, i);
 		i++;
 	}
 }

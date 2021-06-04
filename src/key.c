@@ -6,13 +6,13 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:20:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/07 01:54:17 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/04 07:50:23 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		key_press(int keycode, t_parameters *info, t_img *img)
+int		key_press(int keycode, t_parameters *info)
 {
 	if (keycode == KEY_ESC)
 		destroy_window(info);
@@ -29,11 +29,11 @@ int		key_press(int keycode, t_parameters *info, t_img *img)
 	else if (keycode == KEY_ARROW_RIGHT)
 		info->player->turn_direction = RIGHT;
 	ft_update_player(keycode, info);
-	ft_run(info, img);
+	ft_run(info);
 	return (1);
 }
 
-int		key_release(int keycode, t_parameters *info, t_img *img)
+int		key_release(int keycode, t_parameters *info)
 {
 	if (keycode == KEY_ESC)
 		destroy_window(info);
@@ -50,6 +50,6 @@ int		key_release(int keycode, t_parameters *info, t_img *img)
 	else if (keycode == KEY_ARROW_RIGHT)
 		info->player->turn_direction = FALSE;
 	ft_update_player(keycode, info);
-	ft_run(info, img);
+	ft_run(info);
 	return (1);
 }

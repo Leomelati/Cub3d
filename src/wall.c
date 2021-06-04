@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:39:43 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/16 23:16:17 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/04 07:38:58 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ int		get_texture(t_parameters *info, int i, int column_id, int top_pixel, int bo
 	return (0);
 }
 
-void	wall_limits(t_img *img, t_parameters *info,
-	float wall_height, int column_id)
+void	wall_limits(t_parameters *info, float wall_height, int column_id)
 {
 	int		top_pixel;
 	int		bottom_pixel;
@@ -63,17 +62,17 @@ void	wall_limits(t_img *img, t_parameters *info,
 	i = 0;
 	while (i <= top_pixel && i >= 0 && i <= info->height)
 	{
-		ft_pixel_put(img, column_id, i, info->ceilling_color);
+		ft_pixel_put(info->img, column_id, i, info->ceilling_color);
 		i++;
 	}
 	while (i <= bottom_pixel && i >= 0 && i <= info->height)
 	{
-		ft_pixel_put(img, column_id, i, get_texture(info, i, column_id, top_pixel, bottom_pixel));
+		ft_pixel_put(info->img, column_id, i, get_texture(info, i, column_id, top_pixel, bottom_pixel));
 		i++;
 	}
 	while (i <= info->height)
 	{
-		ft_pixel_put(img, column_id, i, info->floor_color);
+		ft_pixel_put(info->img, column_id, i, info->floor_color);
 		i++;
 	}
 }

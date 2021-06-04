@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/02 04:48:07 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/04 08:00:46 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	define_resolution(t_parameters *info, char *readed)
 	free(string);
 }
 
-static int	is_empty_line(char *line)
+int		is_empty_line(char *line)
 {
 	int	i;
 
@@ -51,7 +51,7 @@ static int	is_empty_line(char *line)
 	return (TRUE);
 }
 
-int			end_of_file(int fd, char **line)
+int		end_of_file(int fd, char **line)
 {
 	while ((get_next_line(fd, line)))
 	{
@@ -103,7 +103,7 @@ int			is_identifier(char *line)
 	return (FALSE);
 }
 
-static int	check_char(t_map *map, int i, int j)
+int	check_char(t_map *map, int i, int j)
 {
 	if (i > 0 && i < (map->map_y - 1) && j > 0 && j < (map->map_x - 1))
 	{
@@ -157,12 +157,14 @@ int		check_parsed_info(t_parameters *info)
 	else if (!info->north_texture || !info->south_texture ||
 		!info->east_texture || !info->west_texture || !info->sprite_texture)
 			return (ft_error(info, ERROR_PATH));
-	else if (!info->player->pos_x == MISS || !info->player->pos_y == MISS)
+	else if (info->player->pos_x == MISS || info->player->pos_y == MISS)
 		return (ft_error(info, ERROR_PLAYER));
 
 	// else if (!map->sprite_posit)
 		// return (ft_error(map, -14));
 
+	info->ray = start_rays(info);
+	start_img(info);
 	return (TRUE);
 }
 
@@ -202,13 +204,11 @@ void	**allocate_dynamic(void **buffer, int size, int m)
 	return (new_buffer);
 }
 
-static int	parse_row_map(t_parameters *info, char *line, int row)
+int	parse_row_map(t_parameters *info, char *line, int row)
 {
 	int	i;
-	int	find_player;
 
 	info->map->map[row] = line;
-	find_player = FALSE;
 	i = -1;
 	while (line[++i])
 	{

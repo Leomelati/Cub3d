@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:45:11 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/04 02:56:22 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/04 07:48:51 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,6 @@ int			close_program()
 	return (0);
 }
 
-void ft_free_rays(t_parameters *info)
-{
-	int i;
-
-	i = 0;
-	while (i < info->map->num_rays)
-	{
-		free(info->ray[i]);
-		info->ray[i] = NULL;
-		i++;
-	}
-	free(info->ray);
-	info->ray = NULL;
-
-}
-
 void	check_before_free(void *ptr)
 {
 	if (ptr)
@@ -41,6 +25,21 @@ void	check_before_free(void *ptr)
 		free(ptr);
 		ptr = NULL;
 	}
+}
+
+void ft_free_rays(t_parameters *info)
+{
+	int i;
+
+	i = 0;
+	while (i < info->map->num_rays)
+	{
+		check_before_free(info->ray[i]);
+		i++;
+	}
+	free(info->ray);
+	info->ray = NULL;
+
 }
 
 void	ft_free_map(t_parameters *info)
@@ -59,6 +58,8 @@ void	ft_free_map(t_parameters *info)
 		free(info->map->map);
 		info->map->map = NULL;
 	}
+	free(info->map);
+	info->map = NULL;
 }
 
 void	ft_free_img(t_parameters *info, t_img *img)
@@ -95,7 +96,6 @@ int		clean_and_close(t_parameters *info)
 	info->win ? mlx_destroy_window(info->mlx, info->win) : 0;
 	info->mlx ? ft_free_mlx(info) : 0;
 	return (close_program());
-
 }
 
 int		destroy_window(t_parameters *info)
@@ -111,4 +111,5 @@ int		destroy_window(t_parameters *info)
 	info->player ? free(info->player) : 0;
 	info->win ? mlx_destroy_window(info->mlx, info->win) : 0;
 	info->mlx ? ft_free_mlx(info) : 0;
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/24 10:59:55 by lmartins          #+#    #+#              #
-#    Updated: 2021/05/31 08:50:21 by lmartins         ###   ########.fr        #
+#    Updated: 2021/06/04 08:03:54 by lmartins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ MLX = $(MLX_DIR)/libmlx_Linux.a
 
 # Compiler Infos
 
+# CC = gcc -Wall -Wextra -Werror
 # CC = gcc -Wall -Wextra -Werror -fsanitize=address
 CC = gcc
 

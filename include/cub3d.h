@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/02 06:22:53 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/04 07:50:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,8 +198,8 @@ typedef struct	s_parameters
 
 t_img			*read_image_path(char *readed, t_parameters *info);
 void			ft_pixel_put(t_img *data, int x, int y, int color);
-t_img			*ft_new_image(t_parameters *info, int width, int height);
-int				ft_run(t_parameters *info, t_img *img);
+void			start_img(t_parameters *info);
+int				ft_run(t_parameters *info);
 
 /*
 ** auxiliar.c
@@ -239,7 +239,6 @@ int				clean_and_close(t_parameters *info);
 
 t_ray			**start_rays(t_parameters *info);
 void			**allocate_new(void **buffer, int size, int line);
-void			malloc_map(t_map *map, char *readed, int line);
 void			start_map(t_map *map);
 void			start_infos(t_parameters *info);
 
@@ -248,16 +247,16 @@ void			start_infos(t_parameters *info);
 */
 
 void			define_resolution(t_parameters *info, char *readed);
-static int		is_empty_line(char *line);
+int		is_empty_line(char *line);
 int				end_of_file(int fd, char **line);
 int				assign_non_map_info(char *readed, t_parameters *info);
 int				is_identifier(char *line);
-static int		check_char(t_map *map, int i, int j);
+int		check_char(t_map *map, int i, int j);
 int				validate_map(t_map *map);
 int				check_parsed_info(t_parameters *info);
 int				fill_rolls(t_parameters *info);
 void			**allocate_dynamic(void **buffer, int size, int m);
-static int		parse_row_map(t_parameters *info, char *line, int row);
+int		parse_row_map(t_parameters *info, char *line, int row);
 int				get_map_info(t_parameters *info, char *line, int *row, int *ismap);
 int				read_infos(char *file, t_parameters *info);
 
@@ -285,8 +284,8 @@ void			draw2dmap(t_img	*img, t_parameters *info);
 ** key.c
 */
 
-int				key_press(int keycode, t_parameters *info, t_img *img);
-int				key_release(int keycode, t_parameters *info, t_img *img);
+int				key_press(int keycode, t_parameters *info);
+int				key_release(int keycode, t_parameters *info);
 
 /*
 ** player.c
@@ -304,7 +303,7 @@ void			ft_update_player(int keycode, t_parameters *info);
 void			compare_distance(t_parameters *info, int ray_id);
 void			facing_position(t_parameters *info, t_ray *ray);
 void			cast_rays(t_parameters *info, float dist_proj_plan);
-void			cast_all_rays(t_img *img, t_parameters *info);
+void			cast_all_rays(t_parameters *info);
 
 /*
 ** rays_intercept.c
@@ -323,8 +322,8 @@ void			vertical_intersection(t_parameters *info, t_ray *ray);
 
 void			draw_3dwall(float wall_proj_height, int id,
 	t_img *img, t_parameters *info);
-void			wall_limits(t_img *img, t_parameters *info, float wall_height,
-	int column_id);
+void			wall_limits(t_parameters *info,
+	float wall_height, int column_id);
 
 /*
 ** sprite.c
