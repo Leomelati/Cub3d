@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 04:56:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/05/31 09:00:09 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/05 07:20:30 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		convert_color(char *readed, t_parameters *info)
 		ft_error(info, ERROR_COLOR);
 	if (numbers[2] > 255 || numbers[2] < 0)
 		ft_error(info, ERROR_COLOR);
-	free(string);
+	ft_split_free(string);
 	return (numbers[0] << 16 | numbers[1] << 8 | numbers[2]);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/04 08:00:46 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/05 07:22:20 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	define_resolution(t_parameters *info, char *readed)
 	if (info->width <= 0 || info->height <= 0)
 		ft_error(info, ERROR_SCREEN);
 	info->map->num_rays = info->width / WALL_WIDTH;
-	free(string);
+	ft_split_free(string);
 }
 
 int		is_empty_line(char *line)
@@ -70,16 +70,16 @@ int		assign_non_map_info(char *readed, t_parameters *info)
 		info->floor_color = convert_color(readed, info);
 	else if (readed[0] == 'C' && readed[1] == ' ' && info->ceilling_color == MISS)
 		info->ceilling_color = convert_color(readed, info);
-	else if (readed[0] == 'S' && readed[1] == ' ' && info->sprite_texture == NULL)
-		info->sprite_texture = read_image_path(readed, info);
-	else if (readed[0] == 'N' && readed[1] == 'O' && info->north_texture == NULL)
-		info->north_texture = read_image_path(readed, info);
-	else if (readed[0] == 'S' && readed[1] == 'O' && info->south_texture == NULL)
-		info->south_texture = read_image_path(readed, info);
-	else if (readed[0] == 'W' && readed[1] == 'E' && info->west_texture == NULL)
-		info->west_texture = read_image_path(readed, info);
-	else if (readed[0] == 'E' && readed[1] == 'A' && info->east_texture == NULL)
-		info->east_texture = read_image_path(readed, info);
+	else if (readed[0] == 'S' && readed[1] == ' ' && info->sprite_texture->img == NULL)
+		read_image_path(readed, info, info->sprite_texture);
+	else if (readed[0] == 'N' && readed[1] == 'O' && info->north_texture->img == NULL)
+		read_image_path(readed, info, info->north_texture);
+	else if (readed[0] == 'S' && readed[1] == 'O' && info->south_texture->img == NULL)
+		read_image_path(readed, info, info->south_texture);
+	else if (readed[0] == 'W' && readed[1] == 'E' && info->west_texture->img == NULL)
+		read_image_path(readed, info, info->west_texture);
+	else if (readed[0] == 'E' && readed[1] == 'A' && info->east_texture->img == NULL)
+		read_image_path(readed, info, info->east_texture);
 	else
 	{
 		free(readed);

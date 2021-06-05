@@ -6,7 +6,7 @@
 #    By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/24 10:59:55 by lmartins          #+#    #+#              #
-#    Updated: 2021/05/31 08:49:55 by lmartins         ###   ########.fr        #
+#    Updated: 2021/06/05 07:20:59 by lmartins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstlast.c ft_lstmap.c \
 ft_lstnew.c ft_lstsize.c ft_putnbr_uns_fd.c ft_putnbr_hex.c \
 ft_putnbr_hex_lower.c ft_intlen.c ft_hexlen.c ft_itoa_uns.c ft_itoa_base.c \
 get_next_line.c ft_swap.c ft_replace.c ft_strjoin_free.c ft_calloc_char.c \
-ft_isspace.c
+ft_isspace.c ft_split_free.c
 
 OBJ_FILES = $(FILES:.c=.o)
 

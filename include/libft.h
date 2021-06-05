@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 11:51:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/05/31 08:46:09 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/05 07:21:18 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void				ft_replace(char *str, char find, char replace);
 char				*ft_strjoin_free(char *s1, char *s2);
 void				*ft_calloc_char(size_t count, char c);
 int					ft_isspace(int c);
+void				ft_split_free(char **ptr);
 
 /*
 ** Get_Next_Line Project

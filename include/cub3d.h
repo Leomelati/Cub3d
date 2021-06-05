@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/04 07:50:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/05 07:20:25 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ typedef struct	s_parameters
 ** main.c
 */
 
-t_img			*read_image_path(char *readed, t_parameters *info);
+void			read_image_path(char *readed, t_parameters *info, t_img *texture);
 void			ft_pixel_put(t_img *data, int x, int y, int color);
 void			start_img(t_parameters *info);
 int				ft_run(t_parameters *info);
