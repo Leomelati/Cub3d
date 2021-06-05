@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:20:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/04 07:50:23 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/05 06:13:36 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		key_press(int keycode, t_parameters *info)
 {
 	if (keycode == KEY_ESC)
-		destroy_window(info);
+		clean_and_close(info);
 	else if (keycode == KEY_A)
 		info->player->walk_direction = LEFT;
 	else if (keycode == KEY_D)
@@ -36,7 +36,7 @@ int		key_press(int keycode, t_parameters *info)
 int		key_release(int keycode, t_parameters *info)
 {
 	if (keycode == KEY_ESC)
-		destroy_window(info);
+		clean_and_close(info);
 	else if (keycode == KEY_A)
 		info->player->walk_direction = FALSE;
 	else if (keycode == KEY_D)
