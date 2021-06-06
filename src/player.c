@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/05/31 08:31:38 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 06:17:05 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,6 @@ int	parse_initial_position(t_parameters *info, char c, int row, int column)
 	info->map->map[row][column] = '0';
 	return (0);
 }
-
-// void	draw_player(t_img	*img, t_parameters *info)
-// {
-// 	int i;
-// 	int j;
-
-// 	i = 0;
-// 	while (i <= info->player->size)
-// 	{
-// 		j = 0;
-// 		while (j <= info->player->size)
-// 		{
-// 			ft_pixel_put(img, info->player->pos_x + i, info->player->pos_y + j, 0x00FF0000);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
 
 void		calculate_next_move(int keycode, float move_step,
 	t_coordinates *next, t_parameters *info)

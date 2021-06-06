@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/05 07:22:20 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 07:18:40 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int		assign_non_map_info(char *readed, t_parameters *info)
 		read_image_path(readed, info, info->west_texture);
 	else if (readed[0] == 'E' && readed[1] == 'A' && info->east_texture->img == NULL)
 		read_image_path(readed, info, info->east_texture);
+	else if (readed[0] == 'S' && readed[1] == ' ' && info->sprite_texture->img == NULL)
+		read_image_path(readed, info, info->sprite_texture);
 	else
 	{
 		free(readed);
@@ -159,10 +161,6 @@ int		check_parsed_info(t_parameters *info)
 			return (ft_error(info, ERROR_PATH));
 	else if (info->player->pos_x == MISS || info->player->pos_y == MISS)
 		return (ft_error(info, ERROR_PLAYER));
-
-	// else if (!map->sprite_posit)
-		// return (ft_error(map, -14));
-
 	info->ray = start_rays(info);
 	start_img(info);
 	return (TRUE);
@@ -204,6 +202,16 @@ void	**allocate_dynamic(void **buffer, int size, int m)
 	return (new_buffer);
 }
 
+t_coordinates	*create_sprite_point(float x, float y)
+{
+	t_coordinates *point;
+
+	point = ft_calloc(1, sizeof(t_coordinates));
+	point->x = x;
+	point->y = y;
+	return (point);
+}
+
 int	parse_row_map(t_parameters *info, char *line, int row)
 {
 	int	i;
@@ -218,14 +226,12 @@ int	parse_row_map(t_parameters *info, char *line, int row)
 		if (ft_strchr("NSEW", line[i]))
 			if (parse_initial_position(info, line[i], row, i) < 0)
 				return (ERROR_PLAYER);
-
-		// if (line[i] == '2')
-		// {
-		// 	map->sprite_posit = (t_point **)allocate_dynamic(
-		// 		(void **)map->sprite_posit, sizeof(t_point *), map->n_sprites);
-		// 	map->sprite_posit[map->n_sprites] = create_point(i, row, 0);
-		// 	map->n_sprites++;
-		// }
+		if (line[i] == '2')
+		{
+			info->map->sprites_map = (t_coordinates **)allocate_dynamic((void **)info->map->sprites_map, sizeof(t_coordinates *), info->map->num_sprites);
+			info->map->sprites_map[info->map->num_sprites] = create_sprite_point(i, row);
+			info->map->num_sprites++;
+		}
 	}
 	return (i);
 }
@@ -266,6 +272,7 @@ int		read_infos(char *file, t_parameters *info)
 	i = 0;
 	while (get_next_line(fd, &readed))
 	{
+		ft_replace(readed, '\t', ' ');
 		if (readed[0] == ' ' || readed[0] == '1')
 		{
 			if ((ret = get_map_info(info, readed, &i, &ismap)) < 0)

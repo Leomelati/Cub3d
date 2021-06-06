@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/05 07:20:25 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 06:50:50 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,24 @@ typedef struct	s_coordinates
 	float		y;
 }				t_coordinates;
 
-typedef struct	s_map
-{
-	char		**map;
-	int			map_x;
-	int			map_y;
-	int			num_rays;
-	int			num_sprites;
-}				t_map;
-
 typedef struct	s_sprite
 {
 	t_coordinates	pos;
 	t_coordinates	map_pos;
 	float			distance;
+	float			angle;
+	int				visible;
 }				t_sprite;
 
+typedef struct		s_map
+{
+	char			**map;
+	int				map_x;
+	int				map_y;
+	int				num_rays;
+	int				num_sprites;
+	t_coordinates	**sprites_map;
+}					t_map;
 
 typedef struct	s_ray
 {
