@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 07:18:40 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 08:47:06 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	define_resolution(t_parameters *info, char *readed)
 	ft_split_free(string);
 }
 
-int		is_empty_line(char *line)
+int	is_empty_line(char *line)
 {
 	int	i;
 
@@ -51,7 +51,7 @@ int		is_empty_line(char *line)
 	return (TRUE);
 }
 
-int		end_of_file(int fd, char **line)
+int	end_of_file(int fd, char **line)
 {
 	while ((get_next_line(fd, line)))
 	{
@@ -62,10 +62,10 @@ int		end_of_file(int fd, char **line)
 	return (TRUE);
 }
 
-int		assign_non_map_info(char *readed, t_parameters *info)
+int	assign_non_map_info(char *readed, t_parameters *info)
 {
-	if (readed[0] == 'R' && readed[1] == ' ' && (info->width == MISS || info->height == MISS))
-			define_resolution(info, readed);
+	if (readed[0] == 'R' && readed[1] == ' ' && info->height == MISS)
+		define_resolution(info, readed);
 	else if (readed[0] == 'F' && readed[1] == ' ' && info->floor_color == MISS)
 		info->floor_color = convert_color(readed, info);
 	else if (readed[0] == 'C' && readed[1] == ' ' && info->ceilling_color == MISS)
@@ -91,7 +91,7 @@ int		assign_non_map_info(char *readed, t_parameters *info)
 	return (TRUE);
 }
 
-int			is_identifier(char *line)
+int	is_identifier(char *line)
 {
 	if ((line[0] == 'R' && line[1] == ' ') ||
 		(line[0] == 'F' && line[1] == ' ') ||
@@ -122,7 +122,7 @@ int	check_char(t_map *map, int i, int j)
 	return (TRUE);
 }
 
-int		validate_map(t_map *map)
+int	validate_map(t_map *map)
 {
 	int	i;
 	int	j;
@@ -145,7 +145,7 @@ int		validate_map(t_map *map)
 	return (TRUE);
 }
 
-int		check_parsed_info(t_parameters *info)
+int	check_parsed_info(t_parameters *info)
 {
 	if (!(validate_map(info->map)))
 		return (ft_error(info, ERROR_INVALID_MAP));
@@ -163,13 +163,14 @@ int		check_parsed_info(t_parameters *info)
 		return (ft_error(info, ERROR_PLAYER));
 	info->ray = start_rays(info);
 	start_img(info);
+	//start_sprites(info);
 	return (TRUE);
 }
 
-int		fill_rolls(t_parameters *info)
+int	fill_rolls(t_parameters *info)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < info->map->map_y && info->map->map[i])
@@ -236,7 +237,7 @@ int	parse_row_map(t_parameters *info, char *line, int row)
 	return (i);
 }
 
-int			get_map_info(t_parameters *info, char *line, int *row, int *ismap)
+int	get_map_info(t_parameters *info, char *line, int *row, int *ismap)
 {
 	int	n_col;
 	int	i;
@@ -258,7 +259,7 @@ int			get_map_info(t_parameters *info, char *line, int *row, int *ismap)
 	return (n_col);
 }
 
-int		read_infos(char *file, t_parameters *info)
+int	read_infos(char *file, t_parameters *info)
 {
 	char	*readed;
 	int 	fd;

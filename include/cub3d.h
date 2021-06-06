@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 06:50:50 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 08:10:19 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,18 +222,9 @@ int				ft_error(t_parameters *info, int i);
 int				ft_arg_error(int i);
 void			check_starting_errors(int argc, char **argv);
 void			check_extension(char *file);
-char 			*define_error_message(int error_code);
 
-/*
-** free.c
-*/
 
-int				close_program(void);
-void			ft_free_map(t_parameters *info);
-void			ft_free_rays(t_parameters *info);
-void			ft_free_img(t_parameters *info, t_img *img);
-int				destroy_window(t_parameters *info);
-int				clean_and_close(t_parameters *info);
+
 
 /*
 ** init.c
@@ -332,5 +323,29 @@ void			wall_limits(t_parameters *info,
 */
 
 t_sprite		**start_sprites(t_parameters *info);
+
+/*
+** error_messages.c
+*/
+
+char 			*define_error_message(int error_code);
+
+/*
+** free.c
+*/
+
+int				close_program(void);
+int				destroy_window(t_parameters *info);
+int				clean_and_close(t_parameters *info);
+
+/*
+** ft_free_functions.c
+*/
+
+void	ft_free_sprites(t_parameters *info);
+void	ft_free_rays(t_parameters *info);
+void	ft_free_map(t_parameters *info);
+void	ft_free_img(t_parameters *info, t_img *img);
+void	ft_free_mlx(t_parameters *info);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/05 07:20:30 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 08:42:15 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ void	read_image_path(char *readed, t_parameters *info, t_img *texture)
 	char	**path;
 
 	path = ft_split(readed, ' ');
-	texture->img = mlx_xpm_file_to_image(info->mlx, path[1], &texture->width, &texture->height);
+	texture->img = mlx_xpm_file_to_image(info->mlx,
+			path[1], &texture->width, &texture->height);
 	if (!texture->img)
 	{
 		ft_split_free(path);
 		ft_error(info, ERROR_PATH);
 	}
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
-	&texture->line_length, &texture->endian);
+			&texture->line_length, &texture->endian);
 	ft_split_free(path);
 }
 
@@ -32,31 +33,31 @@ void	ft_pixel_put(t_img *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	dst = data->addr + (y * data->line_length + x
+			* (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
 void	start_img(t_parameters *info)
 {
 	info->img->img = mlx_new_image(info->mlx, info->width, info->height);
-	info->img->addr = mlx_get_data_addr(info->img->img, &info->img->bits_per_pixel,
-		&info->img->line_length, &info->img->endian);
+	info->img->addr = mlx_get_data_addr(info->img->img,
+			&info->img->bits_per_pixel, &info->img->line_length,
+			&info->img->endian);
 	info->img->width = info->width;
 	info->img->height = info->height;
 }	
 
-
-int		ft_run(t_parameters *info)
+int	ft_run(t_parameters *info)
 {
 	cast_all_rays(info);
 	mlx_put_image_to_window(info->mlx, info->win, info->img->img, 0, 0);
 	return (1);
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_parameters	info;
-
 
 	check_starting_errors(argc, argv);
 	start_infos(&info);

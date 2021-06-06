@@ -6,13 +6,13 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:20:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/05 06:13:36 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 08:33:50 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		key_press(int keycode, t_parameters *info)
+int	key_press(int keycode, t_parameters *info)
 {
 	if (keycode == KEY_ESC)
 		clean_and_close(info);
@@ -33,7 +33,7 @@ int		key_press(int keycode, t_parameters *info)
 	return (1);
 }
 
-int		key_release(int keycode, t_parameters *info)
+int	key_release(int keycode, t_parameters *info)
 {
 	if (keycode == KEY_ESC)
 		clean_and_close(info);

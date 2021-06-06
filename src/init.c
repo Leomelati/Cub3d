@@ -6,19 +6,18 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 07:06:23 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 08:33:15 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_ray		**start_rays(t_parameters *info)
+t_ray	**start_rays(t_parameters *info)
 {
 	t_ray	**rays;
 	int		i;
 
-	if (!(rays = ft_calloc(info->map->num_rays, sizeof(t_ray *))))
-		return (NULL);
+	rays = ft_calloc(info->map->num_rays, sizeof(t_ray *));
 	i = 0;
 	while (i < info->map->num_rays)
 	{
@@ -28,7 +27,7 @@ t_ray		**start_rays(t_parameters *info)
 	return (rays);
 }
 
-void		**allocate_new(void **buffer, int size, int line)
+void	**allocate_new(void **buffer, int size, int line)
 {
 	void	**new;
 	int		i;
@@ -40,11 +39,12 @@ void		**allocate_new(void **buffer, int size, int line)
 		new[i] = buffer[i];
 		i++;
 	}
-	(line > 0) ? free(buffer) : 0;
+	if (line > 0)
+		free(buffer);
 	return (new);
 }
 
-void		start_infos(t_parameters *info)
+void	start_infos(t_parameters *info)
 {
 	info->map = ft_calloc(1, sizeof(t_map));
 	info->player = ft_calloc(1, sizeof(t_player));
@@ -60,6 +60,7 @@ void		start_infos(t_parameters *info)
 	info->west_texture = ft_calloc(1, sizeof(t_img));
 	info->east_texture = ft_calloc(1, sizeof(t_img));
 	info->sprite_texture = ft_calloc(1, sizeof(t_img));
-	if (!(info->mlx = mlx_init()))
+	info->mlx = mlx_init();
+	if (!info->mlx)
 		ft_error(info, ERROR_MLX);
 }

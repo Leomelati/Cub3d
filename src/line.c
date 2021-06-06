@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 09:30:22 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 01:55:19 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 08:38:43 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	loop_ray_x(t_img *img, t_coordinates p1, int *array, t_coordinates loop)
 		else
 		{
 			distance += array[3];
-			loop.y += (loop.y < p1.y) ? 1 : -1;
+			if (loop.y < p1.y)
+				loop.y += 1;
+			else
+				loop.y -= 1;
 		}
 		loop.x++;
 		ft_pixel_put(img, loop.x, loop.y, array[4]);
@@ -62,7 +65,10 @@ void	loop_ray_y(t_img *img, t_coordinates p1, int *array, t_coordinates loop)
 		else
 		{
 			distance += array[3];
-			loop.x += (loop.x < p1.x) ? 1 : -1;
+			if (loop.x < p1.x)
+				loop.x += 1;
+			else
+				loop.x -= 1;
 		}
 		loop.y++;
 		ft_pixel_put(img, loop.x, loop.y, array[4]);
@@ -94,9 +100,15 @@ void	ft_draw_line(t_img *img, t_coordinates p0, t_coordinates p1, int color)
 
 	array[4] = color;
 	array[0] = (p1.x - p0.x);
-	array[0] *= (array[0] > 0) ? 1 : -1;
+	if (array[0] > 0)
+		array[0] *= 1;
+	else
+		array[0] *= -1;
 	array[1] = (p1.y - p0.y);
-	array[1] *= (array[1] > 0) ? 1 : -1;
+	if (array[1] > 0)
+		array[1] *= 1;
+	else
+		array[1] *= -1;
 	if (array[0] >= array[1])
 	{
 		array[2] = array[1];
