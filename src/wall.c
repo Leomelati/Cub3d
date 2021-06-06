@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:39:43 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/04 07:38:58 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 08:51:39 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,27 @@ int		get_texture(t_parameters *info, int i, int column_id, int top_pixel, int bo
 
 	if (info->ray[column_id]->facing_up && !(info->ray[column_id]->vertical_hit))
 	{
-		texture.x = (int)info->ray[column_id]->collision_x % info->north_texture->width;
-		texture.y = ((i - top_pixel) * (info->north_texture->height) / (bottom_pixel - top_pixel));
-		return (get_color(info->north_texture, texture.x, texture.y));
+		texture.x = (int)info->ray[column_id]->collision_x % info->north_tex->width;
+		texture.y = ((i - top_pixel) * (info->north_tex->height) / (bottom_pixel - top_pixel));
+		return (get_color(info->north_tex, texture.x, texture.y));
 	}
 	else if (info->ray[column_id]->facing_down && !(info->ray[column_id]->vertical_hit))
 	{
-		texture.x = (int)info->ray[column_id]->collision_x % info->south_texture->width;
-		texture.y = ((i - top_pixel) * (info->south_texture->height) / (bottom_pixel - top_pixel));
-		return (get_color(info->south_texture, texture.x, texture.y));
+		texture.x = (int)info->ray[column_id]->collision_x % info->south_tex->width;
+		texture.y = ((i - top_pixel) * (info->south_tex->height) / (bottom_pixel - top_pixel));
+		return (get_color(info->south_tex, texture.x, texture.y));
 	}
 	else if (info->ray[column_id]->facing_right && info->ray[column_id]->vertical_hit)
 	{
-		texture.x = (int)info->ray[column_id]->collision_y % info->east_texture->width;
-		texture.y = ((i - top_pixel) * (info->east_texture->height) / (bottom_pixel - top_pixel));
-		return (get_color(info->east_texture, texture.x, texture.y));
+		texture.x = (int)info->ray[column_id]->collision_y % info->east_tex->width;
+		texture.y = ((i - top_pixel) * (info->east_tex->height) / (bottom_pixel - top_pixel));
+		return (get_color(info->east_tex, texture.x, texture.y));
 	}
 	else if (info->ray[column_id]->facing_left && info->ray[column_id]->vertical_hit)
 	{
-		texture.x = (int)info->ray[column_id]->collision_y % info->west_texture->width;
-		texture.y = ((i - top_pixel) * (info->west_texture->height) / (bottom_pixel - top_pixel));
-		return (get_color(info->west_texture, texture.x, texture.y));
+		texture.x = (int)info->ray[column_id]->collision_y % info->west_tex->width;
+		texture.y = ((i - top_pixel) * (info->west_tex->height) / (bottom_pixel - top_pixel));
+		return (get_color(info->west_tex, texture.x, texture.y));
 	}
 	return (0);
 }
@@ -62,7 +62,7 @@ void	wall_limits(t_parameters *info, float wall_height, int column_id)
 	i = 0;
 	while (i <= top_pixel && i >= 0 && i <= info->height)
 	{
-		ft_pixel_put(info->img, column_id, i, info->ceilling_color);
+		ft_pixel_put(info->img, column_id, i, info->ceil_color);
 		i++;
 	}
 	while (i <= bottom_pixel && i >= 0 && i <= info->height)

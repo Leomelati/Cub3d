@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 08:33:15 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 08:51:39 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ void	start_infos(t_parameters *info)
 	info->width = MISS;
 	info->height = MISS;
 	info->floor_color = MISS;
-	info->ceilling_color = MISS;
-	info->north_texture = ft_calloc(1, sizeof(t_img));
-	info->south_texture = ft_calloc(1, sizeof(t_img));
-	info->west_texture = ft_calloc(1, sizeof(t_img));
-	info->east_texture = ft_calloc(1, sizeof(t_img));
-	info->sprite_texture = ft_calloc(1, sizeof(t_img));
+	info->ceil_color = MISS;
+	info->north_tex = ft_calloc(1, sizeof(t_img));
+	info->south_tex = ft_calloc(1, sizeof(t_img));
+	info->west_tex = ft_calloc(1, sizeof(t_img));
+	info->east_tex = ft_calloc(1, sizeof(t_img));
+	info->sprite_tex = ft_calloc(1, sizeof(t_img));
 	info->mlx = mlx_init();
 	if (!info->mlx)
 		ft_error(info, ERROR_MLX);

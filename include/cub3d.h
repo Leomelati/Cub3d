@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 08:10:19 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 09:03:39 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,12 @@ typedef struct	s_parameters
 	int			width;
 	int			height;
 	int			floor_color;
-	int			ceilling_color;
-	t_img		*north_texture;
-	t_img		*south_texture;
-	t_img		*west_texture;
-	t_img		*east_texture;
-	t_img		*sprite_texture;
+	int			ceil_color;
+	t_img		*north_tex;
+	t_img		*south_tex;
+	t_img		*west_tex;
+	t_img		*east_tex;
+	t_img		*sprite_tex;
 	t_img		*img;
 	t_player	*player;
 	t_map		*map;
@@ -207,12 +207,18 @@ int				ft_run(t_parameters *info);
 ** auxiliar.c
 */
 
-int				ft_count_in_array(t_map *map, char find);
+void			**allocate_dynamic(void **buffer, int size, int m);
+int				check_char(t_map *map, int i, int j);
 int				convert_color(char *readed, t_parameters *info);
 float			calculate_distance(float x1, float y1, float x2, float y2);
-int				is_map_line(char *readed);
-int				print_map(t_parameters *info, int i);
 float			normalize_angle(float ray_angle);
+
+/*
+** auxiliar2.c
+*/
+
+int				is_empty_line(char *line);
+int				end_of_file(int fd, char **line);
 
 /*
 ** error.c
@@ -222,9 +228,6 @@ int				ft_error(t_parameters *info, int i);
 int				ft_arg_error(int i);
 void			check_starting_errors(int argc, char **argv);
 void			check_extension(char *file);
-
-
-
 
 /*
 ** init.c
@@ -240,16 +243,12 @@ void			start_infos(t_parameters *info);
 */
 
 void			define_resolution(t_parameters *info, char *readed);
-int		is_empty_line(char *line);
-int				end_of_file(int fd, char **line);
 int				assign_non_map_info(char *readed, t_parameters *info);
 int				is_identifier(char *line);
-int		check_char(t_map *map, int i, int j);
 int				validate_map(t_map *map);
 int				check_parsed_info(t_parameters *info);
 int				fill_rolls(t_parameters *info);
-void			**allocate_dynamic(void **buffer, int size, int m);
-int		parse_row_map(t_parameters *info, char *line, int row);
+int				parse_row_map(t_parameters *info, char *line, int row);
 int				get_map_info(t_parameters *info, char *line, int *row, int *ismap);
 int				read_infos(char *file, t_parameters *info);
 

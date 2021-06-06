@@ -6,11 +6,45 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 04:56:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 07:57:09 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 09:00:15 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	**allocate_dynamic(void **buffer, int size, int m)
+{
+	void	**new_buffer;
+	int		i;
+
+	new_buffer = ft_calloc(m + 2, size);
+	i = 0;
+	while (i < m)
+	{
+		new_buffer[i] = buffer[i];
+		i++;
+	}
+	if (m > 0)
+		free(buffer);
+	return (new_buffer);
+}
+
+int	check_char(t_map *map, int i, int j)
+{
+	if (i > 0 && i < (map->map_y - 1) && j > 0 && j < (map->map_x - 1))
+	{
+		if (!(ft_strchr("012", map->map[i - 1][j - 1])) ||
+			!(ft_strchr("012", map->map[i][j - 1])) ||
+			!(ft_strchr("012", map->map[i + 1][j - 1])) ||
+			!(ft_strchr("012", map->map[i - 1][j])) ||
+			!(ft_strchr("012", map->map[i + 1][j])) ||
+			!(ft_strchr("012", map->map[i - 1][j + 1])) ||
+			!(ft_strchr("012", map->map[i][j + 1])) ||
+			!(ft_strchr("012", map->map[i + 1][j + 1])))
+			return (FALSE);
+	}
+	return (TRUE);
+}
 
 int	convert_color(char *readed, t_parameters *info)
 {

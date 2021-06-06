@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 08:47:06 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/06 09:04:37 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,14 @@ void	define_resolution(t_parameters *info, char *readed)
 		elements++;
 	if (elements == 3)
 	{
-		info->width = (ft_atoi(string[1]) > x) ? x : ft_atoi(string[1]);
-		info->height = (ft_atoi(string[2]) > y) ? y : ft_atoi(string[2]);
+		if (ft_atoi(string[1]) > x)
+			info->width = x;
+		else
+			info->width = ft_atoi(string[1]);
+		if (ft_atoi(string[2]) > y)
+			info->height = y;
+		else
+			info->height = ft_atoi(string[2]);
 	}
 	if (info->width <= 0 || info->height <= 0)
 		ft_error(info, ERROR_SCREEN);
@@ -35,91 +41,47 @@ void	define_resolution(t_parameters *info, char *readed)
 	ft_split_free(string);
 }
 
-int	is_empty_line(char *line)
+int	assign_non_map_info(char *line, t_parameters *info)
 {
-	int	i;
-
-	i = 0;
-	while (*line && line[i] == ' ')
-		i++;
-	if (line[i] != '\0')
+	if (line[0] == 'R' && line[1] == ' ' && info->height == MISS)
+		define_resolution(info, line);
+	else if (line[0] == 'F' && line[1] == ' ' && info->floor_color == MISS)
+		info->floor_color = convert_color(line, info);
+	else if (line[0] == 'C' && line[1] == ' ' && info->ceil_color == MISS)
+		info->ceil_color = convert_color(line, info);
+	else if (line[0] == 'S' && line[1] == ' ' && info->sprite_tex->img == NULL)
+		read_image_path(line, info, info->sprite_tex);
+	else if (line[0] == 'N' && line[1] == 'O' && info->north_tex->img == NULL)
+		read_image_path(line, info, info->north_tex);
+	else if (line[0] == 'S' && line[1] == 'O' && info->south_tex->img == NULL)
+		read_image_path(line, info, info->south_tex);
+	else if (line[0] == 'W' && line[1] == 'E' && info->west_tex->img == NULL)
+		read_image_path(line, info, info->west_tex);
+	else if (line[0] == 'E' && line[1] == 'A' && info->east_tex->img == NULL)
+		read_image_path(line, info, info->east_tex);
+	else if (line[0] == 'S' && line[1] == ' ' && info->sprite_tex->img == NULL)
+		read_image_path(line, info, info->sprite_tex);
+	else
 	{
 		free(line);
-		return (FALSE);
+		return (ft_error(info, ERROR_INVALID_MAP));
 	}
 	free(line);
 	return (TRUE);
 }
 
-int	end_of_file(int fd, char **line)
-{
-	while ((get_next_line(fd, line)))
-	{
-		if (!(is_empty_line(*line)))
-			return (FALSE);
-	}
-	free(*line);
-	return (TRUE);
-}
-
-int	assign_non_map_info(char *readed, t_parameters *info)
-{
-	if (readed[0] == 'R' && readed[1] == ' ' && info->height == MISS)
-		define_resolution(info, readed);
-	else if (readed[0] == 'F' && readed[1] == ' ' && info->floor_color == MISS)
-		info->floor_color = convert_color(readed, info);
-	else if (readed[0] == 'C' && readed[1] == ' ' && info->ceilling_color == MISS)
-		info->ceilling_color = convert_color(readed, info);
-	else if (readed[0] == 'S' && readed[1] == ' ' && info->sprite_texture->img == NULL)
-		read_image_path(readed, info, info->sprite_texture);
-	else if (readed[0] == 'N' && readed[1] == 'O' && info->north_texture->img == NULL)
-		read_image_path(readed, info, info->north_texture);
-	else if (readed[0] == 'S' && readed[1] == 'O' && info->south_texture->img == NULL)
-		read_image_path(readed, info, info->south_texture);
-	else if (readed[0] == 'W' && readed[1] == 'E' && info->west_texture->img == NULL)
-		read_image_path(readed, info, info->west_texture);
-	else if (readed[0] == 'E' && readed[1] == 'A' && info->east_texture->img == NULL)
-		read_image_path(readed, info, info->east_texture);
-	else if (readed[0] == 'S' && readed[1] == ' ' && info->sprite_texture->img == NULL)
-		read_image_path(readed, info, info->sprite_texture);
-	else
-	{
-		free(readed);
-		return (ft_error(info, ERROR_INVALID_MAP));
-	}
-	free(readed);
-	return (TRUE);
-}
-
 int	is_identifier(char *line)
 {
-	if ((line[0] == 'R' && line[1] == ' ') ||
-		(line[0] == 'F' && line[1] == ' ') ||
-		(line[0] == 'C' && line[1] == ' ') ||
-		(line[0] == 'S' && line[1] == ' ') ||
-		(line[0] == 'N' && line[1] == 'O') ||
-		(line[0] == 'W' && line[1] == 'E') ||
-		(line[0] == 'E' && line[1] == 'A') ||
-		(line[0] == 'S' && line[1] == 'O'))
+	if ((line[0] == 'R' && line[1] == ' ')
+		|| (line[0] == 'F' && line[1] == ' ')
+		|| (line[0] == 'C' && line[1] == ' ')
+		|| (line[0] == 'S' && line[1] == ' ')
+		|| (line[0] == 'N' && line[1] == 'O')
+		|| (line[0] == 'W' && line[1] == 'E')
+		|| (line[0] == 'E' && line[1] == 'A')
+		|| (line[0] == 'S' && line[1] == 'O'))
 		return (TRUE);
 	return (FALSE);
-}
-
-int	check_char(t_map *map, int i, int j)
-{
-	if (i > 0 && i < (map->map_y - 1) && j > 0 && j < (map->map_x - 1))
-	{
-		if (!(ft_strchr("012", map->map[i - 1][j - 1])) ||
-			!(ft_strchr("012", map->map[i][j - 1])) ||
-			!(ft_strchr("012", map->map[i + 1][j - 1])) ||
-			!(ft_strchr("012", map->map[i - 1][j])) ||
-			!(ft_strchr("012", map->map[i + 1][j])) ||
-			!(ft_strchr("012", map->map[i - 1][j + 1])) ||
-			!(ft_strchr("012", map->map[i][j + 1])) ||
-			!(ft_strchr("012", map->map[i + 1][j + 1])))
-			return (FALSE);
-	}
-	return (TRUE);
 }
 
 int	validate_map(t_map *map)
@@ -151,14 +113,14 @@ int	check_parsed_info(t_parameters *info)
 		return (ft_error(info, ERROR_INVALID_MAP));
 	else if (!info->map->map_x || !info->map->map_y)
 		return (ft_error(info, ERROR_INVALID_MAP));
-	else if (!info->width || !info->height ||
-		info->width < info->map->map_x || info->height < info->map->map_y)
+	else if (!info->width || !info->height
+		|| info->width < info->map->map_x || info->height < info->map->map_y)
 		return (ft_error(info, ERROR_SCREEN));
-	else if (info->ceilling_color < 0 || info->floor_color < 0)
+	else if (info->ceil_color < 0 || info->floor_color < 0)
 		return (ft_error(info, ERROR_COLOR));
-	else if (!info->north_texture || !info->south_texture ||
-		!info->east_texture || !info->west_texture || !info->sprite_texture)
-			return (ft_error(info, ERROR_PATH));
+	else if (!info->north_tex || !info->south_tex
+		|| !info->east_tex || !info->west_tex || !info->sprite_tex)
+		return (ft_error(info, ERROR_PATH));
 	else if (info->player->pos_x == MISS || info->player->pos_y == MISS)
 		return (ft_error(info, ERROR_PLAYER));
 	info->ray = start_rays(info);
@@ -184,23 +146,6 @@ int	fill_rolls(t_parameters *info)
 		i++;
 	}
 	return (check_parsed_info(info));
-}
-
-void	**allocate_dynamic(void **buffer, int size, int m)
-{
-	void	**new_buffer;
-	int		i;
-
-	new_buffer = ft_calloc(m + 2, size);
-	i = 0;
-	while (i < m)
-	{
-		new_buffer[i] = buffer[i];
-		i++;
-	}
-	if (m > 0)
-		free(buffer);
-	return (new_buffer);
 }
 
 t_coordinates	*create_sprite_point(float x, float y)
