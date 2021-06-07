@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/22 01:51:16 by lmartins          #+#    #+#             */
-/*   Updated: 2020/05/28 14:44:37 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/07 07:07:19 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void	ft_putnbr_hex(size_t nbr)
 {
-	size_t mod;
+	size_t	mod;
 
 	if (nbr > 0)
 	{

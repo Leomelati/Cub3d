@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 09:02:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 09:03:20 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/07 06:00:46 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,48 @@ int	end_of_file(int fd, char **line)
 			return (FALSE);
 	}
 	free(*line);
+	return (TRUE);
+}
+
+t_coordinates	*create_point(float x, float y)
+{
+	t_coordinates	*point;
+
+	point = ft_calloc(1, sizeof(t_coordinates));
+	point->x = x;
+	point->y = y;
+	return (point);
+}
+
+int	is_identifier(char *line)
+{
+	if ((line[0] == 'R' && line[1] == ' ')
+		|| (line[0] == 'F' && line[1] == ' ')
+		|| (line[0] == 'C' && line[1] == ' ')
+		|| (line[0] == 'S' && line[1] == ' ')
+		|| (line[0] == 'N' && line[1] == 'O')
+		|| (line[0] == 'W' && line[1] == 'E')
+		|| (line[0] == 'E' && line[1] == 'A')
+		|| (line[0] == 'S' && line[1] == 'O'))
+		return (TRUE);
+	return (FALSE);
+}
+
+int	read_info_if(char *readed, int *fd, int	*i, t_parameters *info)
+{
+	int		ret;
+	int		ismap;
+
+	ismap = FALSE;
+	if (readed[0] == ' ' || readed[0] == '1')
+	{
+		ret = get_map_info(info, readed, i, &ismap);
+		if (ret < 0)
+			return (ft_error(info, ret));
+	}
+	else if (is_identifier(readed) && !ismap)
+		assign_non_map_info(readed, info);
+	else if (!(is_empty_line(readed)) || (ismap && !end_of_file(*fd, &readed)))
+		return (ft_error(info, ERROR_INVALID_LINE));
 	return (TRUE);
 }

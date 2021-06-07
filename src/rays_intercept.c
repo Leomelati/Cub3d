@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:27:47 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/10 05:25:38 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/07 06:42:20 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	find_hoz_intersection(t_coordinates *check, t_coordinates *step,
 		check_next.y = check->y + (ray->facing_up == TRUE ? -1 : 0);
 		if (ft_check_wall(check_next.x, check_next.y, info))
 		{
-			ray->horz_collision_y = check_next.y;
-			ray->horz_collision_x = check_next.x;
+			ray->horz_coll_y = check_next.y;
+			ray->horz_coll_x = check_next.x;
 			break ;
 		}
 		else
@@ -55,10 +55,10 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 	find_hoz_intersection(&check, &step, info, ray);
 	if ((check.x >= 0) && (check.x <= info->width * TILE_SIZE) &&
 		(check.y >= 0) && (check.y <= info->height * TILE_SIZE))
-		ray->horizontal_distance = calculate_distance(info->player->pos_x,
-			info->player->pos_y, ray->horz_collision_x, ray->horz_collision_y);
+		ray->hor_distance = calculate_distance(info->player->pos_x,
+			info->player->pos_y, ray->horz_coll_x, ray->horz_coll_y);
 	else
-		ray->horizontal_distance = INT_MAX;
+		ray->hor_distance = INT_MAX;
 }
 
 void	find_vert_intersection(t_coordinates *check, t_coordinates *step,
@@ -72,8 +72,8 @@ void	find_vert_intersection(t_coordinates *check, t_coordinates *step,
 		check_next.x = check->x + (ray->facing_left == TRUE ? -1 : 0);
 		if (ft_check_wall(check_next.x, check_next.y, info))
 		{
-			ray->vert_collision_y = check->y;
-			ray->vert_collision_x = check->x;
+			ray->vert_coll_y = check->y;
+			ray->vert_coll_x = check->x;
 			break ;
 		}
 		else
@@ -104,8 +104,8 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 	find_vert_intersection(&check, &step, info, ray);
 	if ((check.x >= 0) && (check.x <= info->width * TILE_SIZE) &&
 		(check.y >= 0) && (check.y <= info->height * TILE_SIZE))
-		ray->vertical_distance = calculate_distance(info->player->pos_x,
-			info->player->pos_y, ray->vert_collision_x, ray->vert_collision_y);
+		ray->vert_distance = calculate_distance(info->player->pos_x,
+			info->player->pos_y, ray->vert_coll_x, ray->vert_coll_y);
 	else
-		ray->vertical_distance = INT_MAX;
+		ray->vert_distance = INT_MAX;
 }

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 09:04:37 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/07 06:46:54 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	define_resolution(t_parameters *info, char *readed)
 	}
 	if (info->width <= 0 || info->height <= 0)
 		ft_error(info, ERROR_SCREEN);
-	info->map->num_rays = info->width / WALL_WIDTH;
+	info->map->num_rays = info->width;
 	ft_split_free(string);
 }
 
@@ -70,43 +70,6 @@ int	assign_non_map_info(char *line, t_parameters *info)
 	return (TRUE);
 }
 
-int	is_identifier(char *line)
-{
-	if ((line[0] == 'R' && line[1] == ' ')
-		|| (line[0] == 'F' && line[1] == ' ')
-		|| (line[0] == 'C' && line[1] == ' ')
-		|| (line[0] == 'S' && line[1] == ' ')
-		|| (line[0] == 'N' && line[1] == 'O')
-		|| (line[0] == 'W' && line[1] == 'E')
-		|| (line[0] == 'E' && line[1] == 'A')
-		|| (line[0] == 'S' && line[1] == 'O'))
-		return (TRUE);
-	return (FALSE);
-}
-
-int	validate_map(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (i < map->map_y)
-	{
-		j = 0;
-		while (j < map->map_x)
-		{
-			if ((map->map[i][j] == '0' || map->map[i][j] == '2') &&
-			((i == 0 || j == 0 || i == map->map_y - 1 || j == map->map_x - 1)
-			|| !check_char(map, i, j)))
-				return (FALSE);
-			j++;
-		}
-		i++;
-	}
-	return (TRUE);
-}
-
 int	check_parsed_info(t_parameters *info)
 {
 	if (!(validate_map(info->map)))
@@ -129,35 +92,6 @@ int	check_parsed_info(t_parameters *info)
 	return (TRUE);
 }
 
-int	fill_rolls(t_parameters *info)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < info->map->map_y && info->map->map[i])
-	{
-		j = 0;
-		while (info->map->map[i][j])
-			j++;
-		if (j < info->map->map_x)
-			info->map->map[i] = ft_strjoin_free(info->map->map[i],
-				ft_calloc_char(info->map->map_x - j, '1'));
-		i++;
-	}
-	return (check_parsed_info(info));
-}
-
-t_coordinates	*create_sprite_point(float x, float y)
-{
-	t_coordinates *point;
-
-	point = ft_calloc(1, sizeof(t_coordinates));
-	point->x = x;
-	point->y = y;
-	return (point);
-}
-
 int	parse_row_map(t_parameters *info, char *line, int row)
 {
 	int	i;
@@ -174,60 +108,30 @@ int	parse_row_map(t_parameters *info, char *line, int row)
 				return (ERROR_PLAYER);
 		if (line[i] == '2')
 		{
-			info->map->sprites_map = (t_coordinates **)allocate_dynamic((void **)info->map->sprites_map, sizeof(t_coordinates *), info->map->num_sprites);
-			info->map->sprites_map[info->map->num_sprites] = create_sprite_point(i, row);
-			info->map->num_sprites++;
+			info->map->sprites_map = (t_coordinates **)allocate_dynamic(
+					(void **)info->map->sprites_map,
+					sizeof(t_coordinates *), info->map->n_sprites);
+			info->map->sprites_map[info->map->n_sprites] = create_point(i, row);
+			info->map->n_sprites++;
 		}
 	}
 	return (i);
 }
 
-int	get_map_info(t_parameters *info, char *line, int *row, int *ismap)
-{
-	int	n_col;
-	int	i;
-
-	*ismap = TRUE;
-	i = *row;
-	n_col = 0;
-	info->map->map = (char **)allocate_dynamic((void **)info->map->map,
-					sizeof(char *), i);
-	if (!(n_col = parse_row_map(info, line, info->map->map_y)) || n_col < 0)
-	{
-		free(line);
-		return (n_col);
-	}
-	info->map->map_x = n_col > info->map->map_x ? n_col : info->map->map_x;
-	info->map->map_y++;
-	i++;
-	*row = i;
-	return (n_col);
-}
-
 int	read_infos(char *file, t_parameters *info)
 {
 	char	*readed;
-	int 	fd;
-	int 	ismap;
-	int 	ret;
+	int		fd;
 	int		i;
 
-	if ((fd = open(file, O_RDONLY)) < 0)
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
 		return (ft_error(info, ERROR_INVALID_ARGUMENT));
-	ismap = FALSE;
 	i = 0;
 	while (get_next_line(fd, &readed))
 	{
 		ft_replace(readed, '\t', ' ');
-		if (readed[0] == ' ' || readed[0] == '1')
-		{
-			if ((ret = get_map_info(info, readed, &i, &ismap)) < 0)
-				return (ft_error(info, ret));
-		}
-		else if (is_identifier(readed) && !ismap)
-			assign_non_map_info(readed, info);
-		else if (!(is_empty_line(readed)) || (ismap && !end_of_file(fd, &readed)))
-			return (ft_error(info, ERROR_INVALID_LINE));
+		read_info_if(readed, &fd, &i, info);
 	}
 	free(readed);
 	close(fd);

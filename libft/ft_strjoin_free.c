@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 00:16:27 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/10 00:20:12 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/07 07:06:37 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	char	*strjoin;
 
 	if (!s1 || !s1)
-		return(NULL);
+		return (NULL);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	if (!(strjoin = malloc(sizeof(char) * (len1 + len2 + 1))))
+	strjoin = malloc(sizeof(char) * (len1 + len2 + 1));
+	if (!(strjoin))
 		return (NULL);
 	ft_memcpy(strjoin, s1, len1);
 	ft_memcpy(&strjoin[len1], s2, len2);

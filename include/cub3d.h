@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 09:03:39 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/07 06:59:48 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 ** Struct
 */
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void		*img;
 	char		*addr;
@@ -38,27 +38,27 @@ typedef struct	s_img
 	int			height;
 }				t_img;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	float		pos_x;
 	float		pos_y;
 	int			size;
-	int			turn_direction;
+	int			turn_dir;
 	int			walk_direction;
 	float		fov;
-	float		rotation_angle;
+	float		rot_angle;
 	float		move_speed;
-	float		rotation_speed;
+	float		rot_speed;
 
 }				t_player;
 
-typedef struct	s_coordinates
+typedef struct s_coordinates
 {
 	float		x;
 	float		y;
 }				t_coordinates;
 
-typedef struct	s_sprite
+typedef struct s_sprite
 {
 	t_coordinates	pos;
 	t_coordinates	map_pos;
@@ -67,35 +67,35 @@ typedef struct	s_sprite
 	int				visible;
 }				t_sprite;
 
-typedef struct		s_map
+typedef struct s_map
 {
 	char			**map;
 	int				map_x;
 	int				map_y;
 	int				num_rays;
-	int				num_sprites;
+	int				n_sprites;
 	t_coordinates	**sprites_map;
 }					t_map;
 
-typedef struct	s_ray
+typedef struct s_ray
 {
 	float		angle;
 	float		collision_x;
 	float		collision_y;
 	float		distance;
-	float		vertical_distance;
-	float		horizontal_distance;
-	float		vert_collision_x;
-	float		vert_collision_y;
-	float		horz_collision_x;
-	float		horz_collision_y;
+	float		vert_distance;
+	float		hor_distance;
+	float		vert_coll_x;
+	float		vert_coll_y;
+	float		horz_coll_x;
+	float		horz_coll_y;
 	int			vertical_hit;
 	int			facing_down;
 	int			facing_up;
 	int			facing_right;
 	int			facing_left;
 }				t_ray;
-typedef struct	s_parameters
+typedef struct s_parameters
 {
 	void		*mlx;
 	void		*win;
@@ -152,13 +152,6 @@ typedef struct	s_parameters
 # define FRONT 1
 
 /*
-** Rays Defines
-*/
-
-# define WALL_WIDTH 1
-# define TRUE 1
-
-/*
 ** Key Defines
 */
 
@@ -188,7 +181,7 @@ typedef struct	s_parameters
 # define SOUTH 'S'
 # define WEST 'W'
 # define EAST 'E'
-# define TILE_SIZE 64
+# define TILE_SIZE 81
 
 /*
 ** Cub3D Prototypes
@@ -198,7 +191,8 @@ typedef struct	s_parameters
 ** main.c
 */
 
-void			read_image_path(char *readed, t_parameters *info, t_img *texture);
+void			read_image_path(char *readed, t_parameters *info,
+					t_img *texture);
 void			ft_pixel_put(t_img *data, int x, int y, int color);
 void			start_img(t_parameters *info);
 int				ft_run(t_parameters *info);
@@ -219,6 +213,9 @@ float			normalize_angle(float ray_angle);
 
 int				is_empty_line(char *line);
 int				end_of_file(int fd, char **line);
+t_coordinates	*create_point(float x, float y);
+int				is_identifier(char *line);
+int				read_info_if(char *readed, int *fd, int	*i, t_parameters *info);
 
 /*
 ** error.c
@@ -244,12 +241,8 @@ void			start_infos(t_parameters *info);
 
 void			define_resolution(t_parameters *info, char *readed);
 int				assign_non_map_info(char *readed, t_parameters *info);
-int				is_identifier(char *line);
-int				validate_map(t_map *map);
 int				check_parsed_info(t_parameters *info);
-int				fill_rolls(t_parameters *info);
 int				parse_row_map(t_parameters *info, char *line, int row);
-int				get_map_info(t_parameters *info, char *line, int *row, int *ismap);
 int				read_infos(char *file, t_parameters *info);
 
 /*
@@ -257,12 +250,15 @@ int				read_infos(char *file, t_parameters *info);
 */
 
 void			loop_ray_x(t_img *img, t_coordinates p1, int *array,
-	t_coordinates loop);
-void			increment_x(t_img *img, t_coordinates p0, t_coordinates p1, int *array);
+					t_coordinates loop);
+void			increment_x(t_img *img, t_coordinates p0, t_coordinates p1,
+					int *array);
 void			loop_ray_y(t_img *img, t_coordinates p1, int *array,
-	t_coordinates loop);
-void			increment_y(t_img *img, t_coordinates p0, t_coordinates p1, int *array);
-void			ft_draw_line(t_img *img, t_coordinates p0, t_coordinates p1, int color);
+					t_coordinates loop);
+void			increment_y(t_img *img, t_coordinates p0, t_coordinates p1,
+					int *array);
+void			ft_draw_line(t_img *img, t_coordinates p0, t_coordinates p1,
+					int color);
 
 /*
 ** map.c
@@ -270,7 +266,10 @@ void			ft_draw_line(t_img *img, t_coordinates p0, t_coordinates p1, int color);
 
 int				ft_window_limit(float x, float y, t_parameters *info);
 int				ft_check_wall(float x, float y, t_parameters *info);
-void			draw2dmap(t_img	*img, t_parameters *info);
+int				fill_rolls(t_parameters *info);
+int				validate_map(t_map *map);
+int				get_map_info(t_parameters *info, char *line, int *row,
+					int *ismap);
 
 /*
 ** key.c
@@ -284,8 +283,10 @@ int				key_release(int keycode, t_parameters *info);
 */
 
 void			start_player(t_player *player);
-int		parse_initial_position(t_parameters *info, char c, int row, int column);
-void			calculate_next_move(int keycode, float move_step, t_coordinates *next, t_parameters *info);
+int				parse_initial_position(t_parameters *info, char c, int row,
+					int column);
+void			calculate_next_move(int keycode, float move_step,
+					t_coordinates *next, t_parameters *info);
 void			ft_update_player(int keycode, t_parameters *info);
 
 /*
@@ -302,10 +303,10 @@ void			cast_all_rays(t_parameters *info);
 */
 
 void			find_hoz_intersection(t_coordinates *check, t_coordinates *step,
-	t_parameters *info, t_ray *ray);
+					t_parameters *info, t_ray *ray);
 void			horizontal_intersection(t_parameters *info, t_ray *ray);
 void			find_vert_intersection(t_coordinates *check,
-	t_coordinates *step, t_parameters *info, t_ray *ray);
+					t_coordinates *step, t_parameters *info, t_ray *ray);
 void			vertical_intersection(t_parameters *info, t_ray *ray);
 
 /*
@@ -313,9 +314,9 @@ void			vertical_intersection(t_parameters *info, t_ray *ray);
 */
 
 void			draw_3dwall(float wall_proj_height, int id,
-	t_img *img, t_parameters *info);
+					t_img *img, t_parameters *info);
 void			wall_limits(t_parameters *info,
-	float wall_height, int column_id);
+					float wall_height, int column_id);
 
 /*
 ** sprite.c
@@ -327,7 +328,7 @@ t_sprite		**start_sprites(t_parameters *info);
 ** error_messages.c
 */
 
-char 			*define_error_message(int error_code);
+char			*define_error_message(int error_code);
 
 /*
 ** free.c
@@ -341,10 +342,10 @@ int				clean_and_close(t_parameters *info);
 ** ft_free_functions.c
 */
 
-void	ft_free_sprites(t_parameters *info);
-void	ft_free_rays(t_parameters *info);
-void	ft_free_map(t_parameters *info);
-void	ft_free_img(t_parameters *info, t_img *img);
-void	ft_free_mlx(t_parameters *info);
+void			ft_free_sprites(t_parameters *info);
+void			ft_free_rays(t_parameters *info);
+void			ft_free_map(t_parameters *info);
+void			ft_free_img(t_parameters *info, t_img *img);
+void			ft_free_mlx(t_parameters *info);
 
 #endif
