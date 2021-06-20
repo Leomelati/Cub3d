@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmartins <lmartins@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 16:32:47 by lmartins          #+#    #+#             */
-/*   Updated: 2020/02/28 11:05:03 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/20 07:19:52 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,19 @@
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
-	char	*cs;
-	char	*substring;
+	char	*new_string;
 
-	cs = (char *)s;
-	if (!(cs))
-		return (0);
-	if (start > (unsigned int)ft_strlen(cs))
-	{
-		if (!(substring = malloc(1)))
-			return (0);
-		substring[0] = '\0';
-		return (substring);
-	}
-	if (!(substring = malloc((len + 1) * sizeof(char))))
-		return (0);
+	if (!s)
+		return (NULL);
+	new_string = (char *)malloc((len + 1) * sizeof(char));
+	if (new_string == NULL)
+		return (NULL);
 	i = 0;
-	while (i < len && cs[start])
+	while ((i < len) && ((start + i) < ft_strlen(s)) && (s[start + i] != '\0'))
 	{
-		substring[i] = cs[start];
+		new_string[i] = s[start + i];
 		i++;
-		start++;
 	}
-	substring[i] = '\0';
-	return (substring);
+	new_string[i] = '\0';
+	return (new_string);
 }

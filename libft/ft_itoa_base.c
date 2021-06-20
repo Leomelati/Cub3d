@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 05:48:04 by lmartins          #+#    #+#             */
-/*   Updated: 2020/07/17 08:27:20 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/20 07:07:12 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,14 @@ char	*ft_itoa_base(size_t nb, int base)
 
 	tmp = nb;
 	i = 1;
-	while ((tmp /= base) >= 1)
+	tmp /= base;
+	while (tmp >= 1)
+	{
 		i++;
-	if (!(str = (char *)malloc((i + 1) * sizeof(*str))))
+		tmp /= base;
+	}
+	str = (char *)malloc((i + 1) * sizeof(*str));
+	if (!(str))
 		return (NULL);
 	str[i] = '\0';
 	while (i--)

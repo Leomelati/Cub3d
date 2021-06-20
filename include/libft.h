@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 11:51:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/07 07:00:11 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/20 07:02:22 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/resource.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <string.h>
@@ -93,8 +94,22 @@ void				ft_split_free(char **ptr);
 ** Get_Next_Line Project
 */
 
-# define BUFFER_SIZE 1000
-# define OPEN_MAX 10
+# define ERROR	-1
+# define READ_LINE	1
+# define NO_NEW_LINE	0
+# define NEW_LINE	1
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE	32
+# endif
+
+typedef struct s_get_next_line
+{
+	char		read[BUFFER_SIZE + 1];
+	char		*temp;
+	char		*break_line_ptr;
+	int			read_return;
+}				t_gnl;
 
 char				*ft_join(char const *s1, char const *s2);
 void				ft_strdel(char **str);

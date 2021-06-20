@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 00:21:03 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/10 00:23:53 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/20 07:11:23 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	*ft_calloc_char(size_t count, char c)
 	size_t			mem;
 
 	mem = count * sizeof(char);
-	if (!(ptr = malloc(mem + 1)))
+	ptr = malloc(mem + 1);
+	if (!(ptr))
 		return (NULL);
 	ft_memset(ptr, c, mem);
 	ptr[mem] = '\0';

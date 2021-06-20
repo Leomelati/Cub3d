@@ -3,51 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmartins <lmartins@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 00:24:45 by lmartins          #+#    #+#             */
-/*   Updated: 2020/02/29 11:16:41 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/20 07:25:30 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_numlen(unsigned int n)
+static int	itoa_isnegative(int number)
 {
-	int len;
-
-	len = 1;
-	while (n >= 10)
-	{
-		len++;
-		n = n / 10;
-	}
-	return (len);
+	if (number < 0)
+		return (1);
+	else
+		return (0);
 }
 
-char		*ft_itoa(int n)
+static int	itoa_countdigit(unsigned int number)
 {
-	unsigned int	num;
-	int				len;
-	char			*array;
+	size_t	digits;
 
-	if (n < 0)
-		num = (unsigned int)(n * -1);
-	else
-		num = (unsigned int)n;
-	len = ft_numlen(num) + 1 + ((n < 0) ? 1 : 0);
-	if (!(array = (char *)malloc(len * sizeof(char))))
-		return (0);
-	if (n < 0)
-		array[0] = '-';
-	array[len - 1] = '\0';
-	len -= 2;
-	while (num >= 10)
+	if (number == 0)
+		return (1);
+	digits = 0;
+	while (number >= 1)
 	{
-		array[len] = (char)(num % 10) + '0';
-		num = num / 10;
-		len--;
+		number /= 10;
+		digits++;
 	}
-	array[len] = (char)num % 10 + '0';
-	return (array);
+	return (digits);
+}
+
+char	*ft_itoa(int n)
+{
+	char			*string;
+	unsigned int	neg;
+	unsigned int	number;
+	unsigned int	digits;
+
+	neg = itoa_isnegative(n);
+	if (neg)
+		number = -n;
+	else
+		number = n;
+	digits = itoa_countdigit(number);
+	string = (char *)malloc(digits + neg + 1);
+	if (!(string))
+		return (NULL);
+	if (neg == 1)
+		string[0] = '-';
+	string[digits + neg] = '\0';
+	while (digits > 0)
+	{
+		string[(digits - 1) + neg] = (number % 10) + '0';
+		number /= 10;
+		digits--;
+	}
+	return (string);
 }

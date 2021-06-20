@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 09:42:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/03/08 01:55:38 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/20 07:10:14 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void	ft_swap(float *a, float *b)
 {
-	int aux;
+	int	aux;
 
 	aux = *a;
 	*a = *b;

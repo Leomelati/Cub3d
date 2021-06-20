@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 00:59:33 by lmartins          #+#    #+#             */
-/*   Updated: 2020/02/28 00:59:33 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/20 07:22:34 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 
 	if (!(f) || !(s))
 		return (0);
-	if (!(str = (char*)malloc(sizeof(char) * (ft_strlen(s) + 1))))
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!(str))
 		return (0);
 	i = 0;
 	while (s[i] != '\0')
