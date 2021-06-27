@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/07 06:46:54 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/27 08:42:00 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	check_parsed_info(t_parameters *info)
 		return (ft_error(info, ERROR_PLAYER));
 	info->ray = start_rays(info);
 	start_img(info);
-	//start_sprites(info);
+	start_sprites(info);
 	return (TRUE);
 }
 

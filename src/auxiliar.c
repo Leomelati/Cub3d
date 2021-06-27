@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 04:56:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 09:00:15 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/27 08:31:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,15 @@ int	convert_color(char *readed, t_parameters *info)
 	return (numbers[0] << 16 | numbers[1] << 8 | numbers[2]);
 }
 
-float	calculate_distance(float x1, float y1, float x2, float y2)
+double	calculate_distance(double x1, double y1, double x2, double y2)
 {
-	float	value;
+	double	value;
 
 	value = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 	return (value);
 }
 
-float	normalize_angle(float ray_angle)
+double	normalize_angle(double ray_angle)
 {
 	ray_angle = remainder(ray_angle, (2 * PI));
 	if (ray_angle < 0)

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 09:02:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/07 06:00:46 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/27 08:31:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	end_of_file(int fd, char **line)
 	return (TRUE);
 }
 
-t_coordinates	*create_point(float x, float y)
+t_coordinates	*create_point(double x, double y)
 {
 	t_coordinates	*point;
 

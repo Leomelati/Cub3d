@@ -6,13 +6,13 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/07 07:03:02 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/27 08:31:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_window_limit(float x, float y, t_parameters *info)
+int	ft_window_limit(double x, double y, t_parameters *info)
 {
 	if (x < 0 || x >= info->width * TILE_SIZE
 		|| y < 0 || y >= info->height * TILE_SIZE)
@@ -20,7 +20,7 @@ int	ft_window_limit(float x, float y, t_parameters *info)
 	return (FALSE);
 }
 
-int	ft_check_wall(float x, float y, t_parameters *info)
+int	ft_check_wall(double x, double y, t_parameters *info)
 {
 	int		map_index_x;
 	int		map_index_y;

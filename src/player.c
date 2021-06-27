@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/07 06:49:12 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/27 08:31:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	parse_initial_position(t_parameters *info, char c, int row, int column)
 	return (0);
 }
 
-void	calculate_next_move(int keycode, float move_step,
+void	calculate_next_move(int keycode, double move_step,
 	t_coordinates *next, t_parameters *info)
 {
 	next->x = info->player->pos_x;
@@ -61,7 +61,7 @@ void	calculate_next_move(int keycode, float move_step,
 
 void	ft_update_player(int keycode, t_parameters *i)
 {
-	float			move_step;
+	double			move_step;
 	t_coordinates	next;
 
 	if (keycode == KEY_ARROW_LEFT || keycode == KEY_ARROW_RIGHT)

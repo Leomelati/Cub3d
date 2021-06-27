@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/07 06:38:48 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/27 08:34:18 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	facing_position(t_parameters *info, t_ray *ray)
 
 void	cast_all_rays(t_parameters *info)
 {
-	float	dist_proj_plan;
-	float	wall_proj_height;
-	float	fixed_dist;
+	double	dist_proj_plan;
+	double	wall_proj_height;
+	double	fixed_dist;
 	int		i;
 
 	dist_proj_plan = (info->width / 2) / tan((info->player->fov / 2));

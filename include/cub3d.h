@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/07 06:59:48 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/27 08:51:12 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,31 +40,31 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	float		pos_x;
-	float		pos_y;
+	double		pos_x;
+	double		pos_y;
 	int			size;
 	int			turn_dir;
 	int			walk_direction;
-	float		fov;
-	float		rot_angle;
-	float		move_speed;
-	float		rot_speed;
+	double		fov;
+	double		rot_angle;
+	double		move_speed;
+	double		rot_speed;
 
 }				t_player;
 
 typedef struct s_coordinates
 {
-	float		x;
-	float		y;
+	double		x;
+	double		y;
 }				t_coordinates;
 
 typedef struct s_sprite
 {
-	t_coordinates	pos;
-	t_coordinates	map_pos;
-	float			distance;
-	float			angle;
-	int				visible;
+	t_coordinates	*pos;
+	int				height;
+	int				width;
+	double			distance;
+	double			angle;
 }				t_sprite;
 
 typedef struct s_map
@@ -79,16 +79,16 @@ typedef struct s_map
 
 typedef struct s_ray
 {
-	float		angle;
-	float		collision_x;
-	float		collision_y;
-	float		distance;
-	float		vert_distance;
-	float		hor_distance;
-	float		vert_coll_x;
-	float		vert_coll_y;
-	float		horz_coll_x;
-	float		horz_coll_y;
+	double		angle;
+	double		collision_x;
+	double		collision_y;
+	double		distance;
+	double		vert_distance;
+	double		hor_distance;
+	double		vert_coll_x;
+	double		vert_coll_y;
+	double		horz_coll_x;
+	double		horz_coll_y;
 	int			vertical_hit;
 	int			facing_down;
 	int			facing_up;
@@ -204,8 +204,8 @@ int				ft_run(t_parameters *info);
 void			**allocate_dynamic(void **buffer, int size, int m);
 int				check_char(t_map *map, int i, int j);
 int				convert_color(char *readed, t_parameters *info);
-float			calculate_distance(float x1, float y1, float x2, float y2);
-float			normalize_angle(float ray_angle);
+double			calculate_distance(double x1, double y1, double x2, double y2);
+double			normalize_angle(double ray_angle);
 
 /*
 ** auxiliar2.c
@@ -213,7 +213,7 @@ float			normalize_angle(float ray_angle);
 
 int				is_empty_line(char *line);
 int				end_of_file(int fd, char **line);
-t_coordinates	*create_point(float x, float y);
+t_coordinates	*create_point(double x, double y);
 int				is_identifier(char *line);
 int				read_info_if(char *readed, int *fd, int	*i, t_parameters *info);
 
@@ -264,8 +264,8 @@ void			ft_draw_line(t_img *img, t_coordinates p0, t_coordinates p1,
 ** map.c
 */
 
-int				ft_window_limit(float x, float y, t_parameters *info);
-int				ft_check_wall(float x, float y, t_parameters *info);
+int				ft_window_limit(double x, double y, t_parameters *info);
+int				ft_check_wall(double x, double y, t_parameters *info);
 int				fill_rolls(t_parameters *info);
 int				validate_map(t_map *map);
 int				get_map_info(t_parameters *info, char *line, int *row,
@@ -285,7 +285,7 @@ int				key_release(int keycode, t_parameters *info);
 void			start_player(t_player *player);
 int				parse_initial_position(t_parameters *info, char c, int row,
 					int column);
-void			calculate_next_move(int keycode, float move_step,
+void			calculate_next_move(int keycode, double move_step,
 					t_coordinates *next, t_parameters *info);
 void			ft_update_player(int keycode, t_parameters *info);
 
@@ -295,7 +295,7 @@ void			ft_update_player(int keycode, t_parameters *info);
 
 void			compare_distance(t_parameters *info, int ray_id);
 void			facing_position(t_parameters *info, t_ray *ray);
-void			cast_rays(t_parameters *info, float dist_proj_plan);
+void			cast_rays(t_parameters *info, double dist_proj_plan);
 void			cast_all_rays(t_parameters *info);
 
 /*
@@ -313,16 +313,16 @@ void			vertical_intersection(t_parameters *info, t_ray *ray);
 ** wall.c
 */
 
-void			draw_3dwall(float wall_proj_height, int id,
+void			draw_3dwall(double wall_proj_height, int id,
 					t_img *img, t_parameters *info);
 void			wall_limits(t_parameters *info,
-					float wall_height, int column_id);
+					double wall_height, int column_id);
 
 /*
 ** sprite.c
 */
 
-t_sprite		**start_sprites(t_parameters *info);
+void			start_sprites(t_parameters *info);
 
 /*
 ** error_messages.c
@@ -342,7 +342,7 @@ int				clean_and_close(t_parameters *info);
 ** ft_free_functions.c
 */
 
-void			ft_free_sprites(t_parameters *info);
+void			ft_free_map_sprites(t_parameters *info);
 void			ft_free_rays(t_parameters *info);
 void			ft_free_map(t_parameters *info);
 void			ft_free_img(t_parameters *info, t_img *img);

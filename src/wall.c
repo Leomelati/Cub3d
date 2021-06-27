@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:39:43 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/07 06:55:21 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/27 08:31:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	get_texture(t_parameters *info, int i, int column_id,
 	return (0);
 }
 
-void	wall_limits(t_parameters *info, float wall_height, int column_id)
+void	wall_limits(t_parameters *info, double wall_height, int column_id)
 {
 	int		top_pixel;
 	int		bottom_pixel;
