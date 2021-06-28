@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:45:11 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/27 08:55:54 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/28 07:35:23 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	ft_free_sprites(t_parameters *info)
 	int	i;
 
 	i = 0;
-	while (i <= info->map->n_sprites)
+	while (i < info->map->n_sprites)
 	{
+		free(info->sprites[i]->pos);
+		info->sprites[i]->pos = NULL;
 		free(info->sprites[i]);
 		info->sprites[i] = NULL;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:41:50 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/27 08:31:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/28 08:15:30 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	start_player(t_player *player)
 {
 	player->fov = FOV_ANGLE * (PI / 180);
-	player->size = 5;
 	player->turn_dir = FALSE;
 	player->walk_direction = FALSE;
 	player->move_speed = 10;

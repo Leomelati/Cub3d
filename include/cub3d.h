@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/27 08:51:12 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/28 08:58:08 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_player
 {
 	double		pos_x;
 	double		pos_y;
-	int			size;
 	int			turn_dir;
 	int			walk_direction;
 	double		fov;
@@ -65,6 +64,7 @@ typedef struct s_sprite
 	int				width;
 	double			distance;
 	double			angle;
+	double			angle_inc;
 }				t_sprite;
 
 typedef struct s_map
@@ -216,6 +216,8 @@ int				end_of_file(int fd, char **line);
 t_coordinates	*create_point(double x, double y);
 int				is_identifier(char *line);
 int				read_info_if(char *readed, int *fd, int	*i, t_parameters *info);
+int				is_end_window(t_parameters *info, int x, int y);
+void			order_sprites_array(t_parameters *info);
 
 /*
 ** error.c
@@ -234,6 +236,7 @@ t_ray			**start_rays(t_parameters *info);
 void			**allocate_new(void **buffer, int size, int line);
 void			start_map(t_map *map);
 void			start_infos(t_parameters *info);
+void			start_sprites(t_parameters *info);
 
 /*
 ** parse.c
@@ -313,6 +316,9 @@ void			vertical_intersection(t_parameters *info, t_ray *ray);
 ** wall.c
 */
 
+int				get_color(t_img *img, int x, int y);
+int				get_texture(t_parameters *info, int i, int column_id,
+					int top_pixel, int bottom_pixel);
 void			draw_3dwall(double wall_proj_height, int id,
 					t_img *img, t_parameters *info);
 void			wall_limits(t_parameters *info,
@@ -322,7 +328,14 @@ void			wall_limits(t_parameters *info,
 ** sprite.c
 */
 
-void			start_sprites(t_parameters *info);
+void			check_if_possible_draw(t_parameters *info, t_coordinates *tex,
+					t_coordinates *in, t_coordinates *c);
+void			draw_sprite(t_parameters *info, int i_sprite, int i);
+void			calculate_sprites_angle(t_parameters *info, double dist_plane,
+					int i_sprite);
+
+void			calculate_sprites_distances(t_parameters *info);
+void			cast_sprites(t_parameters *info);
 
 /*
 ** error_messages.c

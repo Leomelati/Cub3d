@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 08:51:39 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/28 07:38:57 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,21 @@ void	start_infos(t_parameters *info)
 	info->mlx = mlx_init();
 	if (!info->mlx)
 		ft_error(info, ERROR_MLX);
+}
+
+void	start_sprites(t_parameters *info)
+{
+	int			i;
+
+	info->sprites = ft_calloc(info->map->n_sprites + 2, sizeof(t_sprite *));
+	i = 0;
+	while (i < info->map->n_sprites)
+	{
+		info->sprites[i] = ft_calloc(1, sizeof(t_sprite));
+		info->sprites[i]->pos = ft_calloc(1, sizeof(t_coordinates));
+		info->sprites[i]->pos->x = info->map->sprites_map[i]->x * TILE_SIZE + TILE_SIZE / 2;
+		info->sprites[i]->pos->y = info->map->sprites_map[i]->y * TILE_SIZE + TILE_SIZE / 2;
+		i++;
+	}
+	ft_free_map_sprites(info);
 }

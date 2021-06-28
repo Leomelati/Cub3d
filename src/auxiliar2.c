@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 09:02:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/27 08:31:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/28 08:58:08 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,30 @@ int	read_info_if(char *readed, int *fd, int	*i, t_parameters *info)
 	else if (!(is_empty_line(readed)) || (ismap && !end_of_file(*fd, &readed)))
 		return (ft_error(info, ERROR_INVALID_LINE));
 	return (TRUE);
+}
+
+int	is_end_window(t_parameters *info, int x, int y)
+{
+	if (x < 0 || x >= info->width ||
+		y < 0 || y >= info->height)
+		return (1);
+	return (0);
+}
+
+void	order_sprites_array(t_parameters *info)
+{
+	t_sprite	*tmp;
+	int			i;
+
+	i = 0;
+	while (i < info->map->n_sprites - 1)
+	{
+		if (info->sprites[i]->distance < info->sprites[i + 1]->distance)
+		{
+			tmp = info->sprites[i];
+			info->sprites[i] = info->sprites[i + 1];
+			info->sprites[i + 1] = tmp;
+		}
+		i++;
+	}
 }
