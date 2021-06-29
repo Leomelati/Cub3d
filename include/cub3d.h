@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/28 08:58:08 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/06/29 07:40:14 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ typedef struct s_sprite
 	int				width;
 	double			distance;
 	double			angle;
-	double			angle_inc;
+	double			init[2];
+	double			end[2];
+	int				visible;
 }				t_sprite;
 
 typedef struct s_map
@@ -217,7 +219,6 @@ t_coordinates	*create_point(double x, double y);
 int				is_identifier(char *line);
 int				read_info_if(char *readed, int *fd, int	*i, t_parameters *info);
 int				is_end_window(t_parameters *info, int x, int y);
-void			order_sprites_array(t_parameters *info);
 
 /*
 ** error.c
@@ -328,13 +329,9 @@ void			wall_limits(t_parameters *info,
 ** sprite.c
 */
 
-void			check_if_possible_draw(t_parameters *info, t_coordinates *tex,
-					t_coordinates *in, t_coordinates *c);
-void			draw_sprite(t_parameters *info, int i_sprite, int i);
-void			calculate_sprites_angle(t_parameters *info, double dist_plane,
-					int i_sprite);
-
-void			calculate_sprites_distances(t_parameters *info);
+void			order_sprites_array(t_parameters *info);
+void			draw_sprite(t_parameters *info, t_sprite *sprite);
+void			calculate_sprites_distances(t_parameters *info, t_sprite *sprite);
 void			cast_sprites(t_parameters *info);
 
 /*
