@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/07/05 07:47:18 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/07/05 08:36:13 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ typedef struct s_parameters
 # define PI 3.14159265358979323846
 # define HOR 0
 # define VER 1
+# define TOP 0
+# define BOTTOM 1
 
 /*
 ** Error Defines
@@ -320,12 +322,21 @@ void			vertical_intersection(t_parameters *info, t_ray *ray);
 */
 
 int				get_color(t_img *img, int x, int y);
-int				get_texture(t_parameters *info, int i, int column_id,
-					int top_pixel, int bottom_pixel);
+int				get_texture(t_parameters *info, int i, t_ray *ray, int *pixel);
 void			draw_3dwall(double wall_proj_height, int id,
 					t_img *img, t_parameters *info);
 void			wall_limits(t_parameters *info,
 					double wall_height, int column_id);
+
+/*
+** texture.c
+*/
+
+int	get_texture_north(t_parameters *info, int i, t_ray *ray, int *pixel);
+int	get_texture_south(t_parameters *info, int i, t_ray *ray, int *pixel);
+int	get_texture_east(t_parameters *info, int i, t_ray *ray, int *pixel);
+int	get_texture_west(t_parameters *info, int i, t_ray *ray, int *pixel);
+int	get_texture(t_parameters *info, int i, t_ray *ray, int *pixel);
 
 /*
 ** sprite.c
