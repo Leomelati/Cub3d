@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 09:02:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/29 07:52:49 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/07/05 07:29:34 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int	read_info_if(char *readed, int *fd, int	*i, t_parameters *info)
 
 int	is_end_window(t_parameters *info, int x, int y)
 {
-	if (x < 0 || x > info->width ||
-		y < 0 || y > info->height)
+	if (x < 0 || x > info->width
+		|| y < 0 || y > info->height)
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/28 07:39:58 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/07/05 07:31:41 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	start_img(t_parameters *info)
 int	ft_run(t_parameters *info)
 {
 	cast_all_rays(info);
-	cast_sprites(info);
+	// cast_sprites(info);
 	mlx_put_image_to_window(info->mlx, info->win, info->img->img, 0, 0);
 	return (1);
 }
