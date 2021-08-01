@@ -6,120 +6,135 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 22:06:52 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/29 08:02:15 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/01 09:58:02 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	order_sprites_array(t_parameters *info)
+void	calculate_sprites_distances(t_parameters *info)
 {
-	t_sprite	*tmp;
+	int			i;
+
+	i = 0;
+	while (i < info->map->n_sprites)
+	{
+		info->sprites[i]->distance = calculate_distance(
+			info->player->pos_x,
+			info->player->pos_y,
+			info->sprites[i]->pos->x,
+			info->sprites[i]->pos->y);
+		i++;
+	}
+}
+
+void	order_sprites_distance(t_parameters *info)
+{
+	t_sprite	*temp;
 	int			i;
 
 	i = 0;
 	while (i < info->map->n_sprites - 1)
 	{
-		if (info->sprites[i]->distance < info->sprites[i + 1]->distance)
+		if (info->sprites[i + 1]->distance > info->sprites[i]->distance)
 		{
-			tmp = info->sprites[i];
+			temp = info->sprites[i];
 			info->sprites[i] = info->sprites[i + 1];
-			info->sprites[i + 1] = tmp;
+			info->sprites[i + 1] = temp;
 		}
 		i++;
 	}
 }
 
-int		get_sprite_color(t_parameters *info, t_sprite *sprite, t_coordinates *pos)
+void	calculate_sprite_angles(t_parameters *info, t_sprite *sprite)
 {
-	t_coordinates	offset;
-	int				dist_top;
-	int				diff;
-
-	diff = (pos->x - sprite->init[0]);
-	offset.x = diff * info->sprite_tex->width / sprite->width;
-	if (offset.x < 0)
-		offset.x *= -1;
-	dist_top = pos->y + (sprite->height / 2) - (info->height / 2);
-	offset.y = dist_top * ((double)info->sprite_tex->height / (double)sprite->height);
-	return (*(unsigned int *)(info->sprite_tex->img + ((int)offset.y
-		* info->sprite_tex->line_length + (int)offset.x
-		* (info->sprite_tex->bits_per_pixel / 8))));
+	sprite->angle = atan2((sprite->pos->y - info->player->pos_y),
+		(sprite->pos->x - info->player->pos_x));
+	sprite->angle_dif = (info->player->rot_angle - sprite->angle);
+	if (sprite->angle_dif < -1 * PI)
+		sprite->angle_dif += 2 * PI;
+	if (sprite->angle_dif > PI)
+		sprite->angle_dif -= 2 * PI;
+	sprite->angle_dif = fabs(sprite->angle_dif);
 }
 
-void	draw_sprite(t_parameters *info, t_sprite *sprite)
+void	calculate_sprite_size(t_parameters *info, t_sprite *sprite)
 {
-	t_coordinates	pos;
-	int				color;
+	double	dist_proj_plan;
+	int		x;
 
-	pos.x = (int)sprite->init[0];
-	while (pos.x < sprite->end[0])
+	x = 0;
+	dist_proj_plan = (info->width / 2) / tan((info->player->fov / 2));
+	sprite->distance *= (cos(sprite->angle_dif));
+	if (sprite->angle_dif < info->player->fov / 2)
 	{
-		pos.y = (int)sprite->init[1];
-		while (pos.y < sprite->end[1])
-		{
-			if (!is_end_window(info, pos.x, pos.y))
-			{
-				if (sprite->distance < info->ray[(int)pos.x - 1]->distance)
-				{
-					color = get_color(info->sprite_tex, pos.x, pos.y);
-					if (color)
-						ft_pixel_put(info->img, pos.x, pos.y, color);
-				}
-			}
-			pos.y++;
-		}
-		pos.x++;
+		sprite->height = (TILE_SIZE * dist_proj_plan / sprite->distance);
+		sprite->width = (sprite->height * info->sprite_tex-> width
+		/ info->sprite_tex->height);
+		x = tan(sprite->angle - info->player->rot_angle) * dist_proj_plan + (info->width / 2);
+		draw_sprite(info, sprite, x);
 	}
 }
 
-void	calculate_sprites_distances(t_parameters *info, t_sprite *sprite)
+void	draw_sprite(t_parameters *info, t_sprite *sprite, int x)
 {
-	double	dist_plane;
+	t_coordinates	tex;
+	t_coordinates	in;
+	t_coordinates	c;
+	unsigned int	color;
+	int				ray_sprite;
 
-	dist_plane = (info->width / 2) / (tan(info->player->fov / 2));
-	sprite->distance = calculate_distance(info->player->pos_x,
-			info->player->pos_y, sprite->pos->x, sprite->pos->y);
-	sprite->height = (info->sprite_tex->height / sprite->distance * dist_plane);
-	sprite->height = (info->sprite_tex->height / sprite->distance) * dist_plane;
-	sprite->width = (info->sprite_tex->width / sprite->distance) * dist_plane;
-	sprite->init[1] = (info->height / 2) - (sprite->height / 2);
-	if (sprite->init[1] < 0)
-		sprite->init[1] = 0;
-	sprite->end[1] = (info->height / 2) + (sprite->height / 2);
-	if (sprite->end[1] > info->height)
-		sprite->end[1] = info->height;
-	sprite->angle = atan2(sprite->pos->y - info->player->pos_y, sprite->pos->x
-			- info->player->pos_x) - info->player->rot_angle;
-	sprite->init[0] = info->width + (tan(sprite->angle) * dist_plane);
-	sprite->end[0] = sprite->init[0] + sprite->width;
+	in.x = x - sprite->width / 2;
+	in.y = (info->height / 2) - (sprite->height / 2);
+	c.x = 0;
+	while (c.x < sprite->width)
+	{
+		c.y = 0;
+		tex.x = c.x * info->sprite_tex->width / sprite->width;
+		ray_sprite = (in.x + c.x);
+		while (c.y < sprite->height)
+		{
+			tex.y = c.y * info->sprite_tex->height / sprite->height;
+			if (!is_end_window(info, (in.x + c.x), (in.y + c.y)) &&
+			sprite->distance < info->ray[(int)(ray_sprite)]->distance)
+				(color = get_texture_color(info->sprite_tex, tex.x, tex.y)) ?
+				my_mlx_pixel_put(info->img, in.x + c.x, in.y + c.y, color) : 0;
+			c.y++;
+		}
+		c.x++;
+	}
+}
+
+void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
+{
+	char	*dst;
+	int		offset;
+
+	offset = (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = data->addr + offset;
+	*(unsigned int*)dst = color;
+}
+
+int			get_texture_color(t_img *tex, int x, int y)
+{
+	int		offset;
+
+	offset = (y * tex->line_length + x * (tex->bits_per_pixel / 8));
+	return (*(unsigned int *)(tex->addr + offset + 2) << 16 |
+			*(unsigned int *)(tex->addr + offset + 1) << 8 |
+			*(unsigned int *)(tex->addr + offset + 0) << 0);
 }
 
 void	cast_sprites(t_parameters *info)
 {
 	int		i;
 
+	calculate_sprites_distances(info);
+	order_sprites_distance(info);
 	i = 0;
 	while (i < info->map->n_sprites)
 	{
-		calculate_sprites_distances(info, info->sprites[i]);
-		if (info->sprites[i]->angle > PI)
-			info->sprites[i]->angle -= (2 * PI);
-		if (info->sprites[i]->angle < -PI)
-			info->sprites[i]->angle += (2 * PI);
-		info->sprites[i]->angle = fabs(info->sprites[i]->angle);
-		if (info->sprites[i]->angle < ((info->player->fov / 2) + 0.2))
-			info->sprites[i]->visible = TRUE;
-		else
-			info->sprites[i]->visible = FALSE;
-		i++;
-	}
-	order_sprites_array(info);
-	i = 0;
-	while (i < info->map->n_sprites)
-	{
-		if (info->sprites[i]->visible)
-			draw_sprite(info, info->sprites[i]);
-		i++;
+		calculate_sprite_angles(info, info->sprites[i]);
+		calculate_sprite_size(info, info->sprites[i]);
 	}
 }

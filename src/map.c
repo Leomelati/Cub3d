@@ -6,11 +6,20 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/27 08:31:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/01 09:46:52 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	ft_pixel_put(t_img *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x
+			* (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
 
 int	ft_window_limit(double x, double y, t_parameters *info)
 {
@@ -34,6 +43,25 @@ int	ft_check_wall(double x, double y, t_parameters *info)
 		return (TRUE);
 	letter = info->map->map[map_index_y][map_index_x];
 	if (letter == WALL)
+		return (TRUE);
+	return (FALSE);
+}
+
+
+int	ft_check_sprite(double x, double y, t_parameters *info)
+{
+	int		map_index_x;
+	int		map_index_y;
+	char	letter;
+
+	if (ft_window_limit(x, y, info))
+		return (TRUE);
+	map_index_x = floor(x / TILE_SIZE);
+	map_index_y = floor(y / TILE_SIZE);
+	if (map_index_x >= info->map->map_x || map_index_y >= info->map->map_y)
+		return (TRUE);
+	letter = info->map->map[map_index_y][map_index_x];
+	if (letter == SPRITE)
 		return (TRUE);
 	return (FALSE);
 }

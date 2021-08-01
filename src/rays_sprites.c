@@ -1,39 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rays.c                                             :+:      :+:    :+:   */
+/*   rays_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/07/27 08:54:58 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/07/27 08:55:36 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	compare_distance(t_parameters *info, int ray_id)
-{
-	if (info->ray[ray_id]->hor_distance
-		<= info->ray[ray_id]->vert_distance)
-	{
-		info->ray[ray_id]->collision_x = info->ray[ray_id]->horz_coll_x;
-		info->ray[ray_id]->collision_y = info->ray[ray_id]->horz_coll_y;
-		info->ray[ray_id]->distance = info->ray[ray_id]->hor_distance;
-		info->ray[ray_id]->content = info->ray[ray_id]->horz_content;
-		info->ray[ray_id]->vertical_hit = FALSE;
-	}
-	else
-	{
-		info->ray[ray_id]->collision_x = info->ray[ray_id]->vert_coll_x;
-		info->ray[ray_id]->collision_y = info->ray[ray_id]->vert_coll_y;
-		info->ray[ray_id]->distance = info->ray[ray_id]->vert_distance;
-		info->ray[ray_id]->content = info->ray[ray_id]->vert_content;
-		info->ray[ray_id]->vertical_hit = TRUE;
-	}
-}
-
-void	facing_position(t_parameters *info, t_ray *ray)
+void	facing_sprite_position(t_parameters *info, t_ray *ray)
 {
 	if (ray->angle > 0 && ray->angle < PI)
 	{
@@ -55,14 +34,14 @@ void	facing_position(t_parameters *info, t_ray *ray)
 		ray->facing_right = FALSE;
 		ray->facing_left = TRUE;
 	}
-	horizontal_intersection(info, ray);
-	vertical_intersection(info, ray);
+	horizontal_sprite_intersection(info, ray);
+	vertical_sprite_intersection(info, ray);
 }
 
-void	cast_all_rays(t_parameters *info)
+void	cast_all_sprite_rays(t_parameters *info)
 {
 	double	dist_proj_plan;
-	double	wall_proj_height;
+	double	spr_proj_height;
 	double	fixed_dist;
 	int		i;
 
@@ -73,12 +52,13 @@ void	cast_all_rays(t_parameters *info)
 		info->ray[i]->angle = info->player->rot_angle
 			+ atan2((i - info->map->num_rays / 2), dist_proj_plan);
 		info->ray[i]->angle = normalize_angle(info->ray[i]->angle);
-		facing_position(info, info->ray[i]);
+		facing_sprite_position(info, info->ray[i]);
 		compare_distance(info, i);
 		fixed_dist = info->ray[i]->distance * cos(info->ray[i]->angle
 				- info->player->rot_angle);
-		wall_proj_height = TILE_SIZE / fixed_dist * dist_proj_plan;
-		wall_limits(info, wall_proj_height, i);
+		spr_proj_height = TILE_SIZE / fixed_dist * dist_proj_plan;
+		if (info->ray[i]->content == SPRITE)
+			sprite_limits(info, spr_proj_height, i);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/07/05 08:36:13 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/01 09:47:23 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_sprite
 	int				width;
 	double			distance;
 	double			angle;
+	double			angle_dif;
 	double			init[2];
 	double			end[2];
 	int				visible;
@@ -96,6 +97,9 @@ typedef struct s_ray
 	int			facing_up;
 	int			facing_right;
 	int			facing_left;
+	int			vert_content;
+	int			horz_content;
+	int			content;
 }				t_ray;
 typedef struct s_parameters
 {
@@ -316,6 +320,10 @@ void			horizontal_intersection(t_parameters *info, t_ray *ray);
 void			find_vert_intersection(t_coordinates *check,
 					t_coordinates *step, t_parameters *info, t_ray *ray);
 void			vertical_intersection(t_parameters *info, t_ray *ray);
+void	define_intercept(t_parameters *info, t_ray *ray,
+	t_coordinates	*intercept, int option);
+void	define_step(t_parameters *info, t_ray *ray,
+	t_coordinates	*step, int option);
 
 /*
 ** wall.c
@@ -342,10 +350,15 @@ int	get_texture(t_parameters *info, int i, t_ray *ray, int *pixel);
 ** sprite.c
 */
 
-void			order_sprites_array(t_parameters *info);
-void			draw_sprite(t_parameters *info, t_sprite *sprite);
-void			calculate_sprites_distances(t_parameters *info, t_sprite *sprite);
-void			cast_sprites(t_parameters *info);
+void	calculate_sprites_distances(t_parameters *info);
+void	order_sprites_distance(t_parameters *info);
+void	calculate_sprite_angles(t_parameters *info, t_sprite *sprite);
+void	calculate_sprite_size(t_parameters *info, t_sprite *sprite);
+void	draw_sprite(t_parameters *info, t_sprite *sprite, int x);
+int		get_texture_color(t_img *tex, int x, int y);
+void	cast_sprites(t_parameters *info);
+void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
+
 
 /*
 ** error_messages.c
@@ -370,5 +383,24 @@ void			ft_free_rays(t_parameters *info);
 void			ft_free_map(t_parameters *info);
 void			ft_free_img(t_parameters *info, t_img *img);
 void			ft_free_mlx(t_parameters *info);
+
+/*
+** rays_sprites_intercept.c
+*/
+
+void	find_sprite_hoz_intersection(t_coordinates *check, t_coordinates *step,
+	t_parameters *info, t_ray *ray);
+void	horizontal_sprite_intersection(t_parameters *info, t_ray *ray);
+void	find_sprite_vert_intersection(t_coordinates *check, t_coordinates *step,
+	t_parameters *info, t_ray *ray);
+void	vertical_sprite_intersection(t_parameters *info, t_ray *ray);
+
+void	sprite_limits(t_parameters *info, double sprite_height, int column_id);
+
+
+void	facing_sprite_position(t_parameters *info, t_ray *ray);
+void	cast_all_sprite_rays(t_parameters *info);
+
+int	ft_check_sprite(double x, double y, t_parameters *info);
 
 #endif

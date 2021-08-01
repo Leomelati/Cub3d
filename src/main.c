@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/07/05 07:31:41 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/01 09:46:07 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,6 @@ void	read_image_path(char *readed, t_parameters *info, t_img *texture)
 	ft_split_free(path);
 }
 
-void	ft_pixel_put(t_img *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x
-			* (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
 void	start_img(t_parameters *info)
 {
 	info->img->img = mlx_new_image(info->mlx, info->width, info->height);
@@ -51,7 +42,8 @@ void	start_img(t_parameters *info)
 int	ft_run(t_parameters *info)
 {
 	cast_all_rays(info);
-	// cast_sprites(info);
+	//cast_all_sprite_rays(info);
+	cast_sprites(info);
 	mlx_put_image_to_window(info->mlx, info->win, info->img->img, 0, 0);
 	return (1);
 }

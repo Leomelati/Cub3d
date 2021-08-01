@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:45:11 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/28 07:35:23 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/07/27 08:30:51 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	close_program(void)
 int	clean_and_close(t_parameters *info)
 {
 	ft_free_rays(info);
-	ft_free_sprites(info);
+	// ft_free_sprites(info);
 	ft_free_img(info, info->img);
 	ft_free_img(info, info->north_tex);
 	ft_free_img(info, info->south_tex);
@@ -55,7 +55,7 @@ int	clean_and_close(t_parameters *info)
 int	destroy_window(t_parameters *info)
 {
 	ft_free_rays(info);
-	ft_free_sprites(info);
+	// ft_free_sprites(info);
 	ft_free_map(info);
 	ft_free_img(info, info->img);
 	ft_free_img(info, info->north_tex);
