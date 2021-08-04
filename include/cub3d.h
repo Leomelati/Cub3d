@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/01 09:47:23 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/04 09:53:40 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_sprite
 	double			distance;
 	double			angle;
 	double			angle_dif;
+	
 	double			init[2];
 	double			end[2];
 	int				visible;
@@ -191,7 +192,7 @@ typedef struct s_parameters
 # define SOUTH 'S'
 # define WEST 'W'
 # define EAST 'E'
-# define TILE_SIZE 81
+# define TILE_SIZE 64
 
 /*
 ** Cub3D Prototypes
@@ -214,7 +215,7 @@ int				ft_run(t_parameters *info);
 void			**allocate_dynamic(void **buffer, int size, int m);
 int				check_char(t_map *map, int i, int j);
 int				convert_color(char *readed, t_parameters *info);
-double			calculate_distance(double x1, double y1, double x2, double y2);
+double			calculate_distance(double x0, double y0, double x1, double y1);
 double			normalize_angle(double ray_angle);
 
 /*

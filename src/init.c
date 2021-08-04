@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/07/27 08:32:11 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/04 09:20:51 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,5 @@ void	start_sprites(t_parameters *info)
 			* TILE_SIZE + TILE_SIZE / 2;
 		i++;
 	}
-	// ft_free_map_sprites(info);
+	ft_free_map_sprites(info);
 }

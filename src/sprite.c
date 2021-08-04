@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 22:06:52 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/01 09:58:02 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/04 09:57:56 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,9 @@ void	cast_sprites(t_parameters *info)
 	i = 0;
 	while (i < info->map->n_sprites)
 	{
+		printf("%d: %f\n", i, info->sprites[i]->distance);
 		calculate_sprite_angles(info, info->sprites[i]);
 		calculate_sprite_size(info, info->sprites[i]);
+		i++;
 	}
 }
