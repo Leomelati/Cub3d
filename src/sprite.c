@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 22:06:52 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/04 09:57:56 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/05 09:27:49 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,17 @@ void	calculate_sprite_size(t_parameters *info, t_sprite *sprite)
 	}
 }
 
+int		get_texture_color(t_img *tex, int x, int y)
+{
+	int		offset;
+
+	offset = (y * tex->line_length + x * (tex->bits_per_pixel / 8));
+	printf("%s\n", tex->addr);
+	return (*(unsigned int *)(tex->addr + offset + 2) << 16 |
+			*(unsigned int *)(tex->addr + offset + 1) << 8 |
+			*(unsigned int *)(tex->addr + offset + 0) << 0);
+}
+
 void	draw_sprite(t_parameters *info, t_sprite *sprite, int x)
 {
 	t_coordinates	tex;
@@ -87,7 +98,8 @@ void	draw_sprite(t_parameters *info, t_sprite *sprite, int x)
 	in.x = x - sprite->width / 2;
 	in.y = (info->height / 2) - (sprite->height / 2);
 	c.x = 0;
-	while (c.x < sprite->width)
+	//while (c.x < sprite->width)
+	while (c.x < 1)
 	{
 		c.y = 0;
 		tex.x = c.x * info->sprite_tex->width / sprite->width;
@@ -97,8 +109,9 @@ void	draw_sprite(t_parameters *info, t_sprite *sprite, int x)
 			tex.y = c.y * info->sprite_tex->height / sprite->height;
 			if (!is_end_window(info, (in.x + c.x), (in.y + c.y)) &&
 			sprite->distance < info->ray[(int)(ray_sprite)]->distance)
-				(color = get_texture_color(info->sprite_tex, tex.x, tex.y)) ?
+				(color = get_color(info->sprite_tex, tex.x, tex.y)) ?
 				my_mlx_pixel_put(info->img, in.x + c.x, in.y + c.y, color) : 0;
+				printf("%ud \n", color);
 			c.y++;
 		}
 		c.x++;
@@ -115,16 +128,6 @@ void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int			get_texture_color(t_img *tex, int x, int y)
-{
-	int		offset;
-
-	offset = (y * tex->line_length + x * (tex->bits_per_pixel / 8));
-	return (*(unsigned int *)(tex->addr + offset + 2) << 16 |
-			*(unsigned int *)(tex->addr + offset + 1) << 8 |
-			*(unsigned int *)(tex->addr + offset + 0) << 0);
-}
-
 void	cast_sprites(t_parameters *info)
 {
 	int		i;
@@ -134,7 +137,6 @@ void	cast_sprites(t_parameters *info)
 	i = 0;
 	while (i < info->map->n_sprites)
 	{
-		printf("%d: %f\n", i, info->sprites[i]->distance);
 		calculate_sprite_angles(info, info->sprites[i]);
 		calculate_sprite_size(info, info->sprites[i]);
 		i++;
