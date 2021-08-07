@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 06:20:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/04 09:43:49 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 06:34:18 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,6 @@ int	key_press(int keycode, t_parameters *info)
 		info->player->turn_dir = LEFT;
 	else if (keycode == KEY_ARROW_RIGHT)
 		info->player->turn_dir = RIGHT;
-	ft_update_player(keycode, info);
-	ft_run(info);
-	return (1);
-}
-
-int	key_release(int keycode, t_parameters *info)
-{
-	if (keycode == KEY_ESC)
-		clean_and_close(info);
-	else if (keycode == KEY_A)
-		info->player->walk_direction = FALSE;
-	else if (keycode == KEY_D)
-		info->player->walk_direction = FALSE;
-	else if (keycode == KEY_W)
-		info->player->walk_direction = FALSE;
-	else if (keycode == KEY_S)
-		info->player->walk_direction = FALSE;
-	else if (keycode == KEY_ARROW_LEFT)
-		info->player->turn_dir = FALSE;
-	else if (keycode == KEY_ARROW_RIGHT)
-		info->player->turn_dir = FALSE;
 	ft_update_player(keycode, info);
 	ft_run(info);
 	return (1);
