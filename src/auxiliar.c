@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 04:56:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/04 09:53:13 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 07:01:48 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int	check_char(t_map *map, int i, int j)
 {
 	if (i > 0 && i < (map->map_y - 1) && j > 0 && j < (map->map_x - 1))
 	{
-		if (!(ft_strchr("012", map->map[i - 1][j - 1])) ||
-			!(ft_strchr("012", map->map[i][j - 1])) ||
-			!(ft_strchr("012", map->map[i + 1][j - 1])) ||
-			!(ft_strchr("012", map->map[i - 1][j])) ||
-			!(ft_strchr("012", map->map[i + 1][j])) ||
-			!(ft_strchr("012", map->map[i - 1][j + 1])) ||
-			!(ft_strchr("012", map->map[i][j + 1])) ||
-			!(ft_strchr("012", map->map[i + 1][j + 1])))
+		if (!(ft_strchr("01", map->map[i - 1][j - 1])) ||
+			!(ft_strchr("01", map->map[i][j - 1])) ||
+			!(ft_strchr("01", map->map[i + 1][j - 1])) ||
+			!(ft_strchr("01", map->map[i - 1][j])) ||
+			!(ft_strchr("01", map->map[i + 1][j])) ||
+			!(ft_strchr("01", map->map[i - 1][j + 1])) ||
+			!(ft_strchr("01", map->map[i][j + 1])) ||
+			!(ft_strchr("01", map->map[i + 1][j + 1])))
 			return (FALSE);
 	}
 	return (TRUE);

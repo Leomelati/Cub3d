@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 07:59:04 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/06 08:02:54 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 07:04:03 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*define_error_message(int error_code)
 	else if (error_code == ERROR_SCREEN)
 		return ("Error: Invalid resolution.");
 	else if (error_code == ERROR_PLAYER)
-		return ("Error: More than one or invalid player player position.");
+		return ("Error: More than one or invalid player position.");
 	else if (error_code == ERROR_CHAR)
 		return ("Error: Invalid map char.");
 	else if (error_code == ERROR_EXTENSION)

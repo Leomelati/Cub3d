@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 09:02:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/04 09:40:26 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 07:02:43 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	is_identifier(char *line)
 	if ((line[0] == 'R' && line[1] == ' ')
 		|| (line[0] == 'F' && line[1] == ' ')
 		|| (line[0] == 'C' && line[1] == ' ')
-		|| (line[0] == 'S' && line[1] == ' ')
 		|| (line[0] == 'N' && line[1] == 'O')
 		|| (line[0] == 'W' && line[1] == 'E')
 		|| (line[0] == 'E' && line[1] == 'A')

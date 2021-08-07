@@ -6,26 +6,11 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 08:05:31 by lmartins          #+#    #+#             */
-/*   Updated: 2021/06/27 08:54:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 08:26:41 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	ft_free_map_sprites(t_parameters *info)
-{
-	int	i;
-
-	i = 0;
-	while (i <= info->map->n_sprites)
-	{
-		free(info->map->sprites_map[i]);
-		info->map->sprites_map[i] = NULL;
-		i++;
-	}
-	free(info->map->sprites_map);
-	info->map->sprites_map = NULL;
-}
 
 void	ft_free_rays(t_parameters *info)
 {

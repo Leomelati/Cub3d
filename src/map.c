@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/01 09:46:52 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 07:11:15 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,6 @@ int	ft_check_wall(double x, double y, t_parameters *info)
 	return (FALSE);
 }
 
-
-int	ft_check_sprite(double x, double y, t_parameters *info)
-{
-	int		map_index_x;
-	int		map_index_y;
-	char	letter;
-
-	if (ft_window_limit(x, y, info))
-		return (TRUE);
-	map_index_x = floor(x / TILE_SIZE);
-	map_index_y = floor(y / TILE_SIZE);
-	if (map_index_x >= info->map->map_x || map_index_y >= info->map->map_y)
-		return (TRUE);
-	letter = info->map->map[map_index_y][map_index_x];
-	if (letter == SPRITE)
-		return (TRUE);
-	return (FALSE);
-}
-
 int	fill_rolls(t_parameters *info)
 {
 	int	i;
@@ -97,7 +78,7 @@ int	validate_map(t_map *map)
 		j = 0;
 		while (j < map->map_x)
 		{
-			if ((map->map[i][j] == '0' || map->map[i][j] == '2') &&
+			if ((map->map[i][j] == '0') &&
 			((i == 0 || j == 0 || i == map->map_y - 1 || j == map->map_x - 1)
 			|| !check_char(map, i, j)))
 				return (FALSE);
