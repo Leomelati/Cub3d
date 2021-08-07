@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 08:31:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 09:17:22 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ t_ray	**start_rays(t_parameters *info, int n_rays)
 	t_ray	**rays;
 	int		i;
 
-	if (info->map->num_rays)
-		ft_free_rays(info);
 	info->map->num_rays = n_rays;
 	rays = ft_calloc(info->map->num_rays, sizeof(t_ray *));
 	i = 0;
@@ -27,6 +25,7 @@ t_ray	**start_rays(t_parameters *info, int n_rays)
 		rays[i] = ft_calloc(1, sizeof(t_ray));
 		i++;
 	}
+	info->parsed->rays = TRUE;
 	return (rays);
 }
 
@@ -50,7 +49,6 @@ void	**allocate_new(void **buffer, int size, int line)
 void	start_infos(t_parameters *info)
 {
 	info->map = ft_calloc(1, sizeof(t_map));
-	info->ray = start_rays(info, 1);
 	info->player = ft_calloc(1, sizeof(t_player));
 	info->img = ft_calloc(1, sizeof(t_img));
 	start_player(info->player);
@@ -63,6 +61,7 @@ void	start_infos(t_parameters *info)
 	info->south_tex = ft_calloc(1, sizeof(t_img));
 	info->west_tex = ft_calloc(1, sizeof(t_img));
 	info->east_tex = ft_calloc(1, sizeof(t_img));
+	info->parsed = ft_calloc(1, sizeof(t_parsed));
 	info->mlx = mlx_init();
 	if (!info->mlx)
 		ft_error(info, ERROR_MLX);

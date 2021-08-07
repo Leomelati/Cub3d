@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 08:21:32 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 09:07:15 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_player
 	double		rot_angle;
 	double		move_speed;
 	double		rot_speed;
-
 }				t_player;
 
 typedef struct s_coordinates
@@ -64,6 +63,18 @@ typedef struct s_map
 	int				map_y;
 	int				num_rays;
 }					t_map;
+
+typedef struct s_parsed
+{
+	int				rays;
+	int				map;
+	int				img;
+	int				north_tex;
+	int				south_tex;
+	int				east_tex;
+	int				west_tex;
+	int				win;
+}					t_parsed;
 
 typedef struct s_ray
 {
@@ -102,6 +113,7 @@ typedef struct s_parameters
 	t_player	*player;
 	t_map		*map;
 	t_ray		**ray;
+	t_parsed	*parsed;
 }				t_parameters;
 
 /*
@@ -129,10 +141,9 @@ typedef struct s_parameters
 # define ERROR_EXTENSION -6
 # define ERROR_MLX -7
 # define ERROR_COLOR -8
-# define ERROR_INVALID_ARGUMENT -9
-# define ERROR_INVALID_LINE -10
-# define ERROR_INVALID_MAP -11
-# define ERROR_TEXTURE -12
+# define ERROR_INVALID_LINE -9
+# define ERROR_INVALID_MAP -10
+# define ERROR_TEXTURE -11
 
 /*
 ** Player Defines
@@ -214,7 +225,6 @@ int		ft_error(t_parameters *info, int i);
 int		ft_arg_error(int i);
 int		ft_path_error(t_parameters *info);
 void	check_starting_errors(int argc, char **argv);
-void	check_extension(char *file);
 
 /*
 ** free.c

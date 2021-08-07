@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 08:09:19 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 09:03:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	read_infos(char *file, t_parameters *info)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (ft_error(info, ERROR_INVALID_ARGUMENT));
+		return (ft_error(info, ERROR_ARGC));
 	i = 0;
 	while (get_next_line(fd, &readed))
 	{

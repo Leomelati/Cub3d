@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 07:59:04 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 07:04:03 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 09:03:56 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*define_error_message(int error_code)
 	else if (error_code == ERROR_PATH)
 		return ("Error: Invalid texture path.");
 	else if (error_code == ERROR_ARGC)
-		return ("Error: Invalid number of arguments.");
+		return ("Error: Invalid argument.");
 	else if (error_code == ERROR_SCREEN)
 		return ("Error: Invalid resolution.");
 	else if (error_code == ERROR_PLAYER)
@@ -30,8 +30,6 @@ char	*define_error_message(int error_code)
 		return ("Error: Invalid file format.");
 	else if (error_code == ERROR_MLX)
 		return ("Error: Mlx error.");
-	else if (error_code == ERROR_INVALID_ARGUMENT)
-		return ("Error: Invalid argument.");
 	else if (error_code == ERROR_INVALID_LINE)
 		return ("Error: Invalid line.");
 	else if (error_code == ERROR_INVALID_MAP)

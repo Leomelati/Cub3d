@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 02:36:48 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 07:04:22 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 08:56:53 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,17 @@ int	ft_path_error(t_parameters *info)
 
 void	check_starting_errors(int argc, char **argv)
 {
-	if (argc < 2 || argc > 3)
-		ft_arg_error(ERROR_ARGC);
-	else if (argc == 3 && ft_memcmp(argv[2], "--save", 6))
-		ft_arg_error(ERROR_INVALID_ARGUMENT);
-	check_extension(argv[1]);
-}
-
-void	check_extension(char *file)
-{
 	char	*extension;
 	int		len;
 	int		i;
 
-	len = ft_strlen(file);
+	if (argc != 2)
+		ft_arg_error(ERROR_ARGC);
+	len = ft_strlen(argv[1]);
 	i = len - 4;
 	if (i < 4)
 		ft_arg_error(ERROR_EXTENSION);
-	extension = ft_strdup(&file[i]);
+	extension = ft_strdup(&argv[1][i]);
 	if (ft_strncmp(extension, ".cub", 5))
 		ft_arg_error(ERROR_EXTENSION);
 	free(extension);
