@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:45:11 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 09:18:00 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 10:06:14 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	clean_and_close(t_parameters *info)
 	ft_free_img(info, info->west_tex);
 	ft_free_map(info);
 	free(info->player);
-	free(info->parsed);
+	ft_free_parsed(info);
 	mlx_destroy_window(info->mlx, info->win);
 	ft_free_mlx(info);
 	return (close_program());
@@ -45,9 +45,8 @@ int	clean_and_close(t_parameters *info)
 
 int	destroy_window(t_parameters *info)
 {
-	ft_free_map(info);
 	if (info->parsed->rays == TRUE)
-	ft_free_rays(info);
+		ft_free_rays(info);
 	if (info->parsed->img == TRUE)
 		ft_free_img(info, info->img);
 	if (info->parsed->north_tex == TRUE)
@@ -59,9 +58,10 @@ int	destroy_window(t_parameters *info)
 	if (info->parsed->west_tex == TRUE)
 		ft_free_img(info, info->west_tex);
 	if (info->parsed->win == TRUE)
-	mlx_destroy_window(info->mlx, info->win);
+		mlx_destroy_window(info->mlx, info->win);
+	ft_free_map(info);
 	free(info->player);
-	free(info->parsed);
+	ft_free_parsed(info);
 	ft_free_mlx(info);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 09:03:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 09:46:21 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ int	assign_non_map_info(char *line, t_parameters *info)
 	else if (line[0] == 'C' && line[1] == ' ' && info->ceil_color == MISS)
 		info->ceil_color = convert_color(line, info);
 	else if (line[0] == 'N' && line[1] == 'O' && info->north_tex->img == NULL)
-		read_image_path(line, info, info->north_tex);
+		read_image_path(line, info, info->north_tex, NORTH);
 	else if (line[0] == 'S' && line[1] == 'O' && info->south_tex->img == NULL)
-		read_image_path(line, info, info->south_tex);
+		read_image_path(line, info, info->south_tex, SOUTH);
 	else if (line[0] == 'W' && line[1] == 'E' && info->west_tex->img == NULL)
-		read_image_path(line, info, info->west_tex);
+		read_image_path(line, info, info->west_tex, WEST);
 	else if (line[0] == 'E' && line[1] == 'A' && info->east_tex->img == NULL)
-		read_image_path(line, info, info->east_tex);
+		read_image_path(line, info, info->east_tex, EAST);
 	else
 	{
 		free(line);

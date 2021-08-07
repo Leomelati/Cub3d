@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 08:05:31 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 08:26:41 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 10:04:54 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ void	ft_free_map(t_parameters *info)
 	}
 	free(info->map);
 	info->map = NULL;
+}
+
+void	ft_free_parsed(t_parameters *info)
+{
+	free(info->parsed);
+	info->parsed = NULL;
 }
 
 void	ft_free_img(t_parameters *info, t_img *img)

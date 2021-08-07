@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 09:07:15 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/07 10:05:21 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,7 @@ int		destroy_window(t_parameters *info);
 */
 
 void	ft_free_rays(t_parameters *info);
+void	ft_free_parsed(t_parameters *info);
 void	ft_free_map(t_parameters *info);
 void	ft_free_img(t_parameters *info, t_img *img);
 void	ft_free_mlx(t_parameters *info);
@@ -272,7 +273,8 @@ void	ft_draw_line(t_img *img, t_coordinates p0, t_coordinates p1, int color);
 ** main.c
 */
 
-void	read_image_path(char *readed, t_parameters *info, t_img *texture);
+void	change_parsed_status(t_parameters *info, char parsed);
+void	read_image_path(char *readed, t_parameters *info, t_img *texture, char parsed);
 void	start_img(t_parameters *info);
 int		ft_run(t_parameters *info);
 int		main(int argc, char **argv);
@@ -337,7 +339,7 @@ int		get_texture_west(t_parameters *info, int i, t_ray *ray, int *pixel);
 int		get_texture(t_parameters *info, int i, t_ray *ray, int *pixel);
 
 /*
-** texture.c
+** wall.c
 */
 
 int		get_color(t_img *img, int x, int y);
