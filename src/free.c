@@ -6,20 +6,11 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:45:11 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 10:06:14 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 09:43:54 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	check_before_free(void *ptr)
-{
-	if (ptr)
-	{
-		free(ptr);
-		ptr = NULL;
-	}
-}
 
 int	close_program(void)
 {

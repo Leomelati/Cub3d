@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 09:02:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 07:02:43 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 09:54:10 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,6 @@ int	end_of_file(int fd, char **line)
 	}
 	free(*line);
 	return (TRUE);
-}
-
-t_coordinates	*create_point(double x, double y)
-{
-	t_coordinates	*point;
-
-	point = ft_calloc(1, sizeof(t_coordinates));
-	point->x = x;
-	point->y = y;
-	return (point);
 }
 
 int	is_identifier(char *line)
@@ -81,10 +71,11 @@ int	read_info_if(char *readed, int *fd, int	*i, t_parameters *info)
 	return (TRUE);
 }
 
-int	is_end_window(t_parameters *info, int x, int y)
+void	ft_pixel_put(t_img *data, int x, int y, int color)
 {
-	if (x < 0 || x > info->width
-		|| y < 0 || y > info->height)
-		return (1);
-	return (0);
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x
+			* (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }

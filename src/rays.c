@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 07:16:34 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 09:55:33 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,53 @@ void	cast_all_rays(t_parameters *info)
 		wall_proj_height = TILE_SIZE / fixed_dist * dist_proj_plan;
 		wall_limits(info, wall_proj_height, i);
 		i++;
+	}
+}
+
+void	define_intercept(t_parameters *info, t_ray *ray,
+	t_coordinates	*intercept, int option)
+{
+	if (option == HOR)
+	{
+		intercept->y = floor(info->player->pos_y / TILE_SIZE) * TILE_SIZE;
+		if (ray->facing_down == TRUE)
+			intercept->y += TILE_SIZE;
+		intercept->x = info->player->pos_x
+			+ ((intercept->y - info->player->pos_y) / tan(ray->angle));
+	}
+	else
+	{
+		intercept->x = floor(info->player->pos_x / TILE_SIZE) * TILE_SIZE;
+		if (ray->facing_right == TRUE)
+			intercept->x += TILE_SIZE;
+		intercept->y = info->player->pos_y
+			+ ((intercept->x - info->player->pos_x) * tan(ray->angle));
+	}
+}
+
+void	define_step(t_parameters *info, t_ray *ray,
+	t_coordinates	*step, int option)
+{
+	if (option == HOR)
+	{
+		step->y = TILE_SIZE;
+		if (ray->facing_up == TRUE)
+			step->y *= -1;
+		step->x = TILE_SIZE / tan(ray->angle);
+		if ((ray->facing_left == TRUE) && (step->x > 0))
+			step->x *= -1;
+		if ((ray->facing_right == TRUE) && (step->x < 0))
+			step->x *= -1;
+	}
+	else
+	{
+		step->x = TILE_SIZE;
+		if (ray->facing_left == TRUE)
+			step->x *= -1;
+		step->y = TILE_SIZE * tan(ray->angle);
+		if ((ray->facing_up == TRUE) && (step->y > 0))
+			step->y *= -1;
+		if ((ray->facing_down == TRUE) && (step->y < 0))
+			step->y *= -1;
 	}
 }

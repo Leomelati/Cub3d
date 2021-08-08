@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/08 09:23:34 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 09:58:37 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,18 +204,11 @@ double	normalize_angle(double ray_angle);
 ** auxiliar2.c
 */
 
-int				is_empty_line(char *line);
-int				end_of_file(int fd, char **line);
-t_coordinates	*create_point(double x, double y);
-int				is_identifier(char *line);
-int				read_info_if(char *readed, int *fd, int	*i, t_parameters *info);
-int				is_end_window(t_parameters *info, int x, int y);
-
-/*
-** error_messages.c
-*/
-
-char	*define_error_message(int error_code);
+int		is_empty_line(char *line);
+int		end_of_file(int fd, char **line);
+int		is_identifier(char *line);
+int		read_info_if(char *readed, int *fd, int	*i, t_parameters *info);
+void	ft_pixel_put(t_img *data, int x, int y, int color);
 
 /*
 ** error.c
@@ -223,14 +216,13 @@ char	*define_error_message(int error_code);
 
 int		ft_error(t_parameters *info, int i);
 int		ft_arg_error(int i);
-int		ft_path_error(t_parameters *info);
 void	check_starting_errors(int argc, char **argv);
+char	*define_error_message(int error_code);
 
 /*
 ** free.c
 */
 
-void	check_before_free(void *ptr);
 int		close_program(void);
 int		clean_and_close(t_parameters *info);
 int		destroy_window(t_parameters *info);
@@ -249,8 +241,8 @@ void	ft_free_mlx(t_parameters *info);
 ** init.c
 */
 
+void	define_resolution(t_parameters *info, char *readed);
 t_ray	**start_rays(t_parameters *info, int n_rays);
-void	**allocate_new(void **buffer, int size, int line);
 void	start_infos(t_parameters *info);
 
 /*
@@ -258,16 +250,6 @@ void	start_infos(t_parameters *info);
 */
 
 int		key_press(int keycode, t_parameters *info);
-
-/*
-** line.c
-*/
-
-void	loop_ray_x(t_img *img, t_coordinates p1, int *array, t_coordinates loop);
-void	increment_x(t_img *img, t_coordinates p0, t_coordinates p1, int *array);
-void	loop_ray_y(t_img *img, t_coordinates p1, int *array, t_coordinates loop);
-void	increment_y(t_img *img, t_coordinates p0, t_coordinates p1, int *array);
-void	ft_draw_line(t_img *img, t_coordinates p0, t_coordinates p1, int color);
 
 /*
 ** main.c
@@ -283,7 +265,6 @@ int		main(int argc, char **argv);
 ** map.c
 */
 
-void	ft_pixel_put(t_img *data, int x, int y, int color);
 int		ft_window_limit(double x, double y, t_parameters *info);
 int		ft_check_wall(double x, double y, t_parameters *info);
 int		fill_rolls(t_parameters *info);
@@ -294,7 +275,6 @@ int		get_map_info(t_parameters *info, char *line, int *row, int *ismap);
 ** parse.c
 */
 
-void	define_resolution(t_parameters *info, char *readed);
 int		assign_non_map_info(char *line, t_parameters *info);
 int		check_non_map_info(t_parameters *info);
 int		check_parsed_info(t_parameters *info);
@@ -315,8 +295,6 @@ void	ft_update_player(int keycode, t_parameters *i);
 */
 
 void	find_hoz_intersection(t_coordinates *check, t_coordinates *step, t_parameters *info, t_ray *ray);
-void	define_intercept(t_parameters *info, t_ray *ray, t_coordinates	*intercept, int option);
-void	define_step(t_parameters *info, t_ray *ray, t_coordinates	*step, int option);
 void	horizontal_intersection(t_parameters *info, t_ray *ray);
 void	find_vert_intersection(t_coordinates *check, t_coordinates *step, t_parameters *info, t_ray *ray);
 void	vertical_intersection(t_parameters *info, t_ray *ray);
@@ -328,6 +306,8 @@ void	vertical_intersection(t_parameters *info, t_ray *ray);
 void	compare_distance(t_parameters *info, int ray_id);
 void	facing_position(t_parameters *info, t_ray *ray);
 void	cast_all_rays(t_parameters *info);
+void	define_intercept(t_parameters *info, t_ray *ray, t_coordinates	*intercept, int option);
+void	define_step(t_parameters *info, t_ray *ray, t_coordinates	*step, int option);
 
 /*
 ** texture.c

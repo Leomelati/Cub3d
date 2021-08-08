@@ -6,11 +6,40 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 22:42:30 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 09:55:14 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 09:58:07 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	define_resolution(t_parameters *info, char *readed)
+{
+	char	**string;
+	int		x;
+	int		y;
+	int		elements;
+
+	mlx_get_screen_size(info->mlx, &x, &y);
+	string = ft_split(readed, ' ');
+	elements = 0;
+	while (string[elements])
+		elements++;
+	if (elements == 3)
+	{
+		if (ft_atoi(string[1]) > x)
+			info->width = x;
+		else
+			info->width = ft_atoi(string[1]);
+		if (ft_atoi(string[2]) > y)
+			info->height = y;
+		else
+			info->height = ft_atoi(string[2]);
+	}
+	if (info->width <= 0 || info->height <= 0)
+		ft_error(info, ERROR_SCREEN);
+	info->ray = start_rays(info, info->width);
+	ft_split_free(string);
+}
 
 t_ray	**start_rays(t_parameters *info, int n_rays)
 {
@@ -27,23 +56,6 @@ t_ray	**start_rays(t_parameters *info, int n_rays)
 	}
 	info->parsed->rays = TRUE;
 	return (rays);
-}
-
-void	**allocate_new(void **buffer, int size, int line)
-{
-	void	**new;
-	int		i;
-
-	new = ft_calloc(line + 2, size);
-	i = 0;
-	while (i < line)
-	{
-		new[i] = buffer[i];
-		i++;
-	}
-	if (line > 0)
-		free(buffer);
-	return (new);
 }
 
 void	start_infos(t_parameters *info)

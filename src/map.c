@@ -6,20 +6,11 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/08 09:22:45 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 09:54:12 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	ft_pixel_put(t_img *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x
-			* (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
 
 int	ft_window_limit(double x, double y, t_parameters *info)
 {

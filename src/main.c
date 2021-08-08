@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 09:40:01 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 09:47:49 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 09:51:27 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	change_parsed_status(t_parameters *info, char parsed)
 		info->parsed->east_tex = TRUE;
 }
 
-void	read_image_path(char *readed, t_parameters *info, t_img *texture, char parsed)
+void	read_image_path(char *readed, t_parameters *info, t_img *texture,
+	char parsed)
 {
 	char	**path;
 
