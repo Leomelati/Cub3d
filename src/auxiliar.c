@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 04:56:35 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 07:01:48 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 09:32:22 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	convert_color(char *readed, t_parameters *info)
 
 	string = ft_split(readed, ',');
 	temp = string[0];
-	while (!ft_isdigit(*temp))
+	while (!ft_isdigit(*temp) && *temp != '-')
 		temp++;
 	numbers[0] = ft_atoi(temp);
 	numbers[1] = ft_atoi(string[1]);

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 10:05:21 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 09:23:34 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,6 +296,7 @@ int		get_map_info(t_parameters *info, char *line, int *row, int *ismap);
 
 void	define_resolution(t_parameters *info, char *readed);
 int		assign_non_map_info(char *line, t_parameters *info);
+int		check_non_map_info(t_parameters *info);
 int		check_parsed_info(t_parameters *info);
 int		parse_row_map(t_parameters *info, char *line, int row);
 int		read_infos(char *file, t_parameters *info);

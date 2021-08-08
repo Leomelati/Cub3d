@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/08 08:23:44 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 09:22:45 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	get_map_info(t_parameters *info, char *line, int *row, int *ismap)
 	int	i;
 
 	*ismap = TRUE;
+	check_non_map_info(info);
 	i = *row;
 	n_col = 0;
 	info->map->map = (char **)allocate_dynamic((void **)info->map->map,

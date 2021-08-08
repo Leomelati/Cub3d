@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 01:47:39 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/08 08:46:58 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 09:22:07 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,18 @@ int	assign_non_map_info(char *line, t_parameters *info)
 	return (TRUE);
 }
 
+int	check_non_map_info(t_parameters *info)
+{
+	if (!info->width || !info->height)
+		return (ft_error(info, ERROR_SCREEN));
+	else if (info->ceil_color < 0 || info->floor_color < 0)
+		return (ft_error(info, ERROR_COLOR));
+	else if (!info->north_tex->img || !info->south_tex->img
+		|| !info->east_tex->img || !info->west_tex->img)
+		return (ft_error(info, ERROR_PATH));
+	return (TRUE);
+}
+
 int	check_parsed_info(t_parameters *info)
 {
 	if (!(validate_map(info->map)))
@@ -75,13 +87,9 @@ int	check_parsed_info(t_parameters *info)
 	else if (!info->width || !info->height
 		|| info->width < info->map->map_x || info->height < info->map->map_y)
 		return (ft_error(info, ERROR_SCREEN));
-	else if (info->ceil_color < 0 || info->floor_color < 0)
-		return (ft_error(info, ERROR_COLOR));
-	else if (!info->north_tex->img || !info->south_tex->img
-		|| !info->east_tex->img || !info->west_tex->img)
-		return (ft_error(info, ERROR_PATH));
 	else if (info->player->pos_x == MISS || info->player->pos_y == MISS)
 		return (ft_error(info, ERROR_PLAYER));
+	check_non_map_info(info);
 	start_img(info);
 	return (TRUE);
 }
