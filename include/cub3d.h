@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/08 09:58:37 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 10:01:57 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,7 +256,8 @@ int		key_press(int keycode, t_parameters *info);
 */
 
 void	change_parsed_status(t_parameters *info, char parsed);
-void	read_image_path(char *readed, t_parameters *info, t_img *texture, char parsed);
+void	read_image_path(char *readed, t_parameters *info, t_img *texture,
+			char parsed);
 void	start_img(t_parameters *info);
 int		ft_run(t_parameters *info);
 int		main(int argc, char **argv);
@@ -287,16 +288,19 @@ int		read_infos(char *file, t_parameters *info);
 
 void	start_player(t_player *player);
 int		parse_initial_position(t_parameters *info, char c, int row, int column);
-void	calculate_next_move(int keycode, double move_step, t_coordinates *next, t_parameters *info);
+void	calculate_next_move(int keycode, double move_step, t_coordinates *next,
+			t_parameters *info);
 void	ft_update_player(int keycode, t_parameters *i);
 
 /*
 ** rays_intercept.c
 */
 
-void	find_hoz_intersection(t_coordinates *check, t_coordinates *step, t_parameters *info, t_ray *ray);
+void	find_hoz_intersection(t_coordinates *check, t_coordinates *step,
+			t_parameters *info, t_ray *ray);
 void	horizontal_intersection(t_parameters *info, t_ray *ray);
-void	find_vert_intersection(t_coordinates *check, t_coordinates *step, t_parameters *info, t_ray *ray);
+void	find_vert_intersection(t_coordinates *check, t_coordinates *step,
+			t_parameters *info, t_ray *ray);
 void	vertical_intersection(t_parameters *info, t_ray *ray);
 
 /*
@@ -306,8 +310,10 @@ void	vertical_intersection(t_parameters *info, t_ray *ray);
 void	compare_distance(t_parameters *info, int ray_id);
 void	facing_position(t_parameters *info, t_ray *ray);
 void	cast_all_rays(t_parameters *info);
-void	define_intercept(t_parameters *info, t_ray *ray, t_coordinates	*intercept, int option);
-void	define_step(t_parameters *info, t_ray *ray, t_coordinates	*step, int option);
+void	define_intercept(t_parameters *info, t_ray *ray,
+			t_coordinates	*intercept, int option);
+void	define_step(t_parameters *info, t_ray *ray, t_coordinates *step,
+			int option);
 
 /*
 ** texture.c
