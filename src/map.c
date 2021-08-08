@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 06:51:46 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/07 07:11:15 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 08:23:44 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	fill_rolls(t_parameters *info)
 			j++;
 		if (j < info->map->map_x)
 			info->map->map[i] = ft_strjoin_free(info->map->map[i],
-					ft_calloc_char(info->map->map_x - j, '1'));
+					ft_calloc_char(info->map->map_x - j, ' '));
 		i++;
 	}
 	return (check_parsed_info(info));
