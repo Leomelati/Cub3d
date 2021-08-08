@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 04:27:47 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/08 09:55:36 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 10:10:19 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	horizontal_intersection(t_parameters *info, t_ray *ray)
 	t_coordinates	check;
 
 	define_intercept(info, ray, &intercept, HOR);
-	define_step(info, ray, &step, HOR);
+	define_step(ray, &step, HOR);
 	check.y = intercept.y;
 	check.x = intercept.x;
 	find_hoz_intersection(&check, &step, info, ray);
@@ -88,7 +88,7 @@ void	vertical_intersection(t_parameters *info, t_ray *ray)
 	t_coordinates	check;
 
 	define_intercept(info, ray, &intercept, VER);
-	define_step(info, ray, &step, VER);
+	define_step(ray, &step, VER);
 	check.y = intercept.y;
 	check.x = intercept.x;
 	find_vert_intersection(&check, &step, info, ray);

@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 07:45:59 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/08 09:55:33 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 10:10:28 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,7 @@ void	define_intercept(t_parameters *info, t_ray *ray,
 	}
 }
 
-void	define_step(t_parameters *info, t_ray *ray,
-	t_coordinates	*step, int option)
+void	define_step(t_ray *ray, t_coordinates	*step, int option)
 {
 	if (option == HOR)
 	{

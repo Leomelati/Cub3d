@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/08 10:01:57 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 10:10:06 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,8 +312,7 @@ void	facing_position(t_parameters *info, t_ray *ray);
 void	cast_all_rays(t_parameters *info);
 void	define_intercept(t_parameters *info, t_ray *ray,
 			t_coordinates	*intercept, int option);
-void	define_step(t_parameters *info, t_ray *ray, t_coordinates *step,
-			int option);
+void	define_step(t_ray *ray, t_coordinates *step, int option);
 
 /*
 ** texture.c
