@@ -6,7 +6,7 @@
 /*   By: lmartins <lmartins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 10:11:40 by lmartins          #+#    #+#             */
-/*   Updated: 2021/08/08 10:10:06 by lmartins         ###   ########.fr       */
+/*   Updated: 2021/08/08 10:20:21 by lmartins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@
 
 # include "libft.h"
 # include "mlx.h"
-# include <stdio.h>
 # include <math.h>
-# include <limits.h>
 
 /*
 ** Struct
